@@ -1,0 +1,19 @@
+{
+  "target": "commons",
+  "channel_name": "stable",
+  "candidate_id": "cand-002",
+  "artifacts": [
+    {
+      "name": "manifest",
+      "path": "tests/fixtures/missing_required/consumers/manifest.json",
+      "required": true,
+      "load_order": 10
+    },
+    {
+      "name": "index",
+      "path": "tests/fixtures/missing_required/consumers/index.json",
+      "required": true,
+      "load_order": 20
+    }
+  ]
+}
