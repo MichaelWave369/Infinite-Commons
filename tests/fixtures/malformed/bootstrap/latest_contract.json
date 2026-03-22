@@ -1,0 +1,13 @@
+{
+  "target": "commons",
+  "channel_name": "dev",
+  "candidate_id": "cand-003",
+  "artifacts": [
+    {
+      "name": "manifest",
+      "path": "tests/fixtures/malformed/consumers/manifest.json",
+      "required": true,
+      "load_order": 1
+    }
+  ]
+}
