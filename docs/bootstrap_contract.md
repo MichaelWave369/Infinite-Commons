@@ -1,12 +1,20 @@
-# Commons Bootstrap Contract (Local)
+# Commons Bootstrap Contract
 
-Infinite Commons consumes Pantheon-produced bootstrap data from local disk only.
+Infinite Commons consumes a deterministic bootstrap contract plus repository-relative artifacts from local disk.
+
+The contract is intentionally producer-agnostic. Any application can generate it.
 
 ## Canonical contract location
 
-- `pantheon_data/bootstrap/commons/latest_contract.json`
+`commons_data/bootstrap/latest_contract.json`
 
-## Minimal contract shape consumed in this phase
+For compatibility with the earliest internal prototype, the loader also accepts:
+
+`pantheon_data/bootstrap/commons/latest_contract.json`
+
+The canonical path has priority when both exist.
+
+## Minimal contract
 
 ```json
 {
@@ -16,7 +24,7 @@ Infinite Commons consumes Pantheon-produced bootstrap data from local disk only.
   "artifacts": [
     {
       "name": "commons_manifest",
-      "path": "pantheon_data/consumers/commons/manifest.json",
+      "path": "commons_data/artifacts/manifest.json",
       "required": true,
       "load_order": 10
     }
@@ -29,12 +37,22 @@ Infinite Commons consumes Pantheon-produced bootstrap data from local disk only.
 - `artifacts` are loaded in ascending `load_order`.
 - `required=true` artifacts must exist and parse as JSON.
 - `required=false` artifacts produce warnings if missing.
-- Relative artifact paths are resolved against repository root.
-- Absolute paths are rejected for deterministic local safety.
+- Artifact paths are resolved relative to the supplied repository root.
+- Absolute paths are rejected.
+- Parent traversal such as `../` is rejected.
+- Producers do not receive execution authority merely by supplying a contract.
 
 ## Failure classes
 
-- Missing latest contract path.
+- Missing canonical and legacy contract paths.
 - Missing required artifact.
-- Malformed contract JSON or artifact JSON.
-- Unreadable paths.
+- Malformed contract JSON.
+- Malformed artifact JSON.
+- Unsafe artifact path.
+- Unreadable path.
+
+## Compatibility
+
+The legacy Pantheon path remains a read-only compatibility input. New producers should write the canonical `commons_data/` layout.
+
+See [PANTHEON_COMPATIBILITY.md](PANTHEON_COMPATIBILITY.md).
