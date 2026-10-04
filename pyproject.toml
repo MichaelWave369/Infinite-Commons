@@ -5,15 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "infinite-commons"
 version = "0.1.0"
-description = "Private proprietary deterministic bootstrap consumer for Phi-Pantheon Commons artifacts."
+description = "Deterministic local-first bootstrap contracts for shared artifact bundles."
 readme = "README.md"
 requires-python = ">=3.12"
-authors = [{ name = "PHI369 Labs" }]
-license = { text = "Proprietary" }
+authors = [{ name = "Michael Hughes" }]
+license = { text = "MIT" }
 classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "License :: Other/Proprietary License",
+  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
 ]
 dependencies = []
