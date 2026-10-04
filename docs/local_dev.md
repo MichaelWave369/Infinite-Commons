@@ -8,6 +8,14 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 ```
 
+On Windows PowerShell:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -e ".[dev]"
+```
+
 ## Run checks
 
 ```bash
@@ -17,7 +25,11 @@ pytest
 
 ## Run deterministic Commons proof
 
-From repository root:
+From a project root containing:
+
+`commons_data/bootstrap/latest_contract.json`
+
+run:
 
 ```bash
 commons bootstrap-check
@@ -26,16 +38,20 @@ commons bootstrap-check
 Optional custom root:
 
 ```bash
-commons bootstrap-check --repo-root /absolute/path/to/Infinite-Commons
+commons bootstrap-check --repo-root /absolute/path/to/project
 ```
 
 ## Interpreting proof output
 
-The command prints:
+The command reports:
+
 - target/channel/candidate context
-- loaded artifact list (in load order)
-- missing required list
-- warnings list
+- contract path selected
+- loaded artifact list in load order
+- missing required artifacts
+- warnings
 - success status and summary
 
-A successful proof indicates Infinite Commons can boot from the current Pantheon bootstrap artifact set present on local disk.
+A successful proof means the local contract and all required referenced JSON artifacts were readable and structurally loadable. It does not imply that artifact claims are externally verified or trustworthy beyond that contract boundary.
+
+The legacy Pantheon path remains accepted for compatibility, but new development should use the canonical `commons_data/` layout.

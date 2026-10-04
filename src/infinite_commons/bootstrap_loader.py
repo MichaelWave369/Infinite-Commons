@@ -12,7 +12,26 @@ from .errors import (
 )
 from .models import BootstrapArtifactRef, CommonsBootstrapContext
 
-LATEST_CONTRACT_RELATIVE_PATH = Path("pantheon_data/bootstrap/commons/latest_contract.json")
+LATEST_CONTRACT_RELATIVE_PATH = Path("commons_data/bootstrap/latest_contract.json")
+LEGACY_PANTHEON_CONTRACT_RELATIVE_PATH = Path(
+    "pantheon_data/bootstrap/commons/latest_contract.json"
+)
+
+
+def _resolve_contract_path(repo_root: Path) -> Path:
+    """Resolve the canonical Commons contract, with a legacy compatibility fallback."""
+    canonical = repo_root / LATEST_CONTRACT_RELATIVE_PATH
+    if canonical.exists():
+        return canonical
+
+    legacy = repo_root / LEGACY_PANTHEON_CONTRACT_RELATIVE_PATH
+    if legacy.exists():
+        return legacy
+
+    raise BootstrapContractNotFoundError(
+        "Missing bootstrap contract. Checked canonical path "
+        f"{canonical.as_posix()} and legacy compatibility path {legacy.as_posix()}."
+    )
 
 
 def _normalize_artifact_path(raw_path: str) -> str:
@@ -28,12 +47,8 @@ def _normalize_artifact_path(raw_path: str) -> str:
 
 
 def load_bootstrap_context(repo_root: Path) -> CommonsBootstrapContext:
-    """Load and validate Commons bootstrap context from local disk."""
-    contract_path = repo_root / LATEST_CONTRACT_RELATIVE_PATH
-    if not contract_path.exists():
-        raise BootstrapContractNotFoundError(
-            f"Missing bootstrap contract: {contract_path.as_posix()}"
-        )
+    """Load and validate a Commons bootstrap context from local disk."""
+    contract_path = _resolve_contract_path(repo_root)
 
     try:
         raw = json.loads(contract_path.read_text(encoding="utf-8"))

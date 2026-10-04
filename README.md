@@ -1,45 +1,72 @@
 # Infinite Commons
 
-**Infinite Commons is the public-safe downstream consumer for Phi-Pantheon, built to load deterministic bootstrap contracts, channel-selected candidates, and Commons-ready artifact bundles.**
+**Infinite Commons is a small, deterministic layer for publishing and consuming shared machine-readable artifact bundles.**
 
-This repository is private and proprietary, and currently focused on:
-- public-safe consumer integration behavior
-- local deterministic bootstrap ingestion
-- no network dependence
-- private build-phase integration with Phi-Pantheon
+It is designed for local-first workflows where a producer writes a bootstrap contract plus referenced artifacts, and a consumer verifies and loads those artifacts in a predictable order.
 
-## Scope (current pass)
+Infinite Commons is intentionally:
 
-Infinite Commons currently proves one deterministic local handoff contract:
-1. Read Pantheon Commons bootstrap contract data from local disk.
-2. Resolve target/channel/candidate context.
-3. Load required artifacts in ordered sequence.
-4. Fail clearly on missing or malformed required artifacts.
-5. Expose a clean local proof command.
+- producer-agnostic
+- local-first
+- deterministic
+- explicit about required vs optional artifacts
+- safe about repository-relative paths
+- usable without an account, server, cloud service, or network bootstrap
 
-No server, UI, OAuth, remote API sync, or network bootstrap is used in this phase.
+The project does **not** require Infinite Porch, PhiOS, Phi-Pantheon, or any other specific producer. Those systems may integrate with Infinite Commons through the same contract boundary as any other application.
 
-## Expected bootstrap contract path
+## Current scope
 
-By default, the CLI checks:
+Infinite Commons 0.1.x proves one compact handoff contract:
+
+1. Read a Commons bootstrap contract from local disk.
+2. Resolve target, channel, and candidate context.
+3. Load referenced artifacts in deterministic order.
+4. Fail clearly when required artifacts are missing or malformed.
+5. Expose the result through a simple CLI.
+
+The current implementation is deliberately small. There is no server, UI, OAuth flow, remote API, or background synchronization layer.
+
+## Canonical bootstrap contract
+
+By default the CLI reads:
+
+`commons_data/bootstrap/latest_contract.json`
+
+For compatibility with the project's earliest internal prototype, the loader can also read the legacy path:
 
 `pantheon_data/bootstrap/commons/latest_contract.json`
 
+The canonical Commons path always wins when both exist. See [Pantheon compatibility](docs/PANTHEON_COMPATIBILITY.md).
+
 ## CLI
 
-Run the deterministic proof check:
+Run the deterministic proof:
 
 ```bash
 commons bootstrap-check
 ```
 
-You can also provide a custom repo root:
+Or point it at another repository root:
 
 ```bash
-commons bootstrap-check --repo-root /path/to/local/repo
+commons bootstrap-check --repo-root /path/to/project
 ```
 
+The command reports:
+
+- success/failure
+- target
+- channel
+- candidate
+- contract path used
+- loaded artifacts
+- missing required artifacts
+- warnings
+
 ## Development
+
+Requires Python 3.12+.
 
 ```bash
 python -m venv .venv
@@ -49,10 +76,31 @@ ruff check .
 pytest
 ```
 
-See docs:
-- `docs/bootstrap_contract.md`
-- `docs/local_dev.md`
+On Windows PowerShell:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -e ".[dev]"
+ruff check .
+pytest
+```
+
+## Contract documentation
+
+- [Bootstrap contract](docs/bootstrap_contract.md)
+- [Local development](docs/local_dev.md)
+- [Legacy Pantheon compatibility](docs/PANTHEON_COMPATIBILITY.md)
+
+## Relationship to Infinite Porch
+
+Infinite Commons and Infinite Porch solve different problems.
+
+- **Infinite Commons** defines deterministic shared artifact handoffs.
+- **Infinite Porch** provides governed peer identity, networking, messaging, storage, compute, and model routing.
+
+They may integrate, but neither project is required to run the other.
 
 ## License
 
-Private proprietary. See `LICENSE`.
+MIT. See [LICENSE](LICENSE).

@@ -1,17 +1,17 @@
-"""Deterministic proof service for commons bootstrap."""
+"""Deterministic proof service for Commons bootstrap contracts."""
 
 from __future__ import annotations
 
 from pathlib import Path
 
 from .artifact_loader import load_json_artifact
-from .bootstrap_loader import load_bootstrap_context
+from .bootstrap_loader import LATEST_CONTRACT_RELATIVE_PATH, load_bootstrap_context
 from .errors import ArtifactMalformedError, ArtifactNotFoundError, CommonsError
 from .models import CommonsBootResult
 
 
 def run_bootstrap_proof(repo_root: Path) -> CommonsBootResult:
-    """Run deterministic bootstrap proof using local Pantheon artifacts."""
+    """Run a deterministic bootstrap proof using local Commons artifacts."""
     context = load_bootstrap_context(repo_root)
     loaded_artifacts: list[str] = []
     missing_required: list[str] = []
@@ -28,9 +28,7 @@ def run_bootstrap_proof(repo_root: Path) -> CommonsBootResult:
             warnings.append(f"Optional artifact missing: {artifact.path}")
         except ArtifactMalformedError as exc:
             if artifact.required:
-                summary = (
-                    f"Bootstrap failed: required artifact malformed ({artifact.path})."
-                )
+                summary = f"Bootstrap failed: required artifact malformed ({artifact.path})."
                 return CommonsBootResult(
                     bootstrap_contract_path=context.contract_path.as_posix(),
                     target=context.target,
@@ -46,8 +44,7 @@ def run_bootstrap_proof(repo_root: Path) -> CommonsBootResult:
 
     if missing_required:
         summary = (
-            "Bootstrap failed: missing required artifacts: "
-            + ", ".join(missing_required)
+            "Bootstrap failed: missing required artifacts: " + ", ".join(missing_required)
         )
         return CommonsBootResult(
             bootstrap_contract_path=context.contract_path.as_posix(),
@@ -81,9 +78,7 @@ def safe_run_bootstrap_proof(repo_root: Path) -> CommonsBootResult:
         return run_bootstrap_proof(repo_root)
     except CommonsError as exc:
         return CommonsBootResult(
-            bootstrap_contract_path=(
-                repo_root / "pantheon_data/bootstrap/commons/latest_contract.json"
-            ).as_posix(),
+            bootstrap_contract_path=(repo_root / LATEST_CONTRACT_RELATIVE_PATH).as_posix(),
             target="commons",
             channel_name=None,
             candidate_id=None,
