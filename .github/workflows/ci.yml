@@ -43,6 +43,14 @@ jobs:
           test -s apps/commons-react/dist/index.html
           grep -q '/Infinite-Commons/assets/' apps/commons-react/dist/index.html
 
+      - name: Install Chromium for live-render verification
+        run: |
+          cd apps/commons-react
+          npx playwright install --with-deps chromium
+
+      - name: Verify production React renders and responds in a browser
+        run: npm run test:browser --prefix apps/commons-react
+
       - name: Ruff
         run: ruff check .
 
