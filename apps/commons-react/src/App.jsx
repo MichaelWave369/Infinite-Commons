@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PACKS, WORLD_FINGERPRINT, WORLD_NODES, resolvePack, styleVariables } from "../../../web/packs.mjs";
 import { phiSpacePanel, validatePublicPhiSpace } from "../../../web/phispace-public.mjs";
 import { createLocalPreviewController, localPreviewPanel } from "../../../web/phispace-local-preview.mjs";
