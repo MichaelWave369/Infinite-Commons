@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import trustedSceneHtml from "../../../web/index.html?raw";
 
 /**
