@@ -12,6 +12,8 @@ export default defineConfig({
   },
   webServer: {
     command: "npm run preview -- --host 127.0.0.1 --port 4173 --strictPort",
+    // Preview must resolve the identical asset base used by production build.
+    env: { COMMONS_BASE_PATH: "/Infinite-Commons/" },
     url: baseURL,
     reuseExistingServer: false,
     timeout: 60_000
