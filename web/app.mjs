@@ -1,6 +1,7 @@
 import {
   PACKS, WORLD_NODES, WORLD_FINGERPRINT, resolvePack, styleVariables
 } from "./packs.mjs";
+import { loadExamplePhiSpace, phiSpacePanel } from "./phispace-public.mjs";
 
 export const ARRIVAL_ID = "commons.arrival";
 
@@ -82,16 +83,6 @@ const DETAILS = Object.freeze({
       ["003 · OLD-SCHOOL RULE", "Respect the guestbook. Don't confuse curiosity with consent."]
     ]
   },
-  "phispace.example": {
-    kind: "PHISPACE · NON-NETWORKED EXAMPLE",
-    title: "Someone's little corner of infinity",
-    description: "A sample public home, rendered locally. No real person's Porch or private files are queried.",
-    cards: [
-      ["THE FRONT ROOM", "A music shelf, a custom background, and a rather suspicious talking radio."],
-      ["PUBLIC GUESTBOOK", "The guestbook will use an explicit public publishing contract, not unrestricted access to a private Porch."],
-      ["YOUR HOME, YOUR RULES", "Future integration must check published capabilities and permissions before entering any personal space."]
-    ]
-  },
   "how-it-works": {
     kind: "DESIGN CONTRACT · V0.1",
     title: "One world, twenty interpretations",
@@ -100,14 +91,29 @@ const DETAILS = Object.freeze({
       ["FOUNDATION", "The existing deterministic Python bootstrap loader is unchanged; no Porch authority or network protocols are modified."],
       ["PRESENTATION", "Theme packs select validated colors and a city or floating-island illustration. Two scenes are curated; eighteen are palette previews."],
       ["SHARED STATE", "The same four example destination IDs remain available after every theme switch."],
-      ["HONEST BOUNDARY", "Real accounts, real BBS messages, local Porch permissions, multi-user networking and WebXR are future integrations, not simulated as live."]
+      ["HONEST BOUNDARY", "PhiSpace loads only a reviewed same-origin sample manifest. Real accounts, permissions, community messages, networking and WebXR remain unimplemented."]
     ]
   }
 });
 
-function openPanel(id) {
-  const detail = DETAILS[id];
-  if (!detail) return;
+let latestPanelRequest = 0;
+async function openPanel(id) {
+  const requestId = ++latestPanelRequest;
+  let detail = DETAILS[id];
+  if (id === "phispace.example") {
+    try {
+      detail = phiSpacePanel(await loadExamplePhiSpace());
+    } catch {
+      // Fail closed: never substitute private Porch data or a made-up live home.
+      detail = {
+        kind: "PHISPACE · PUBLIC FIXTURE UNAVAILABLE",
+        title: "The doorway stays closed",
+        description: "No verified sample public home could be loaded from this site.",
+        cards: [["NO PRIVATE FALLBACK", "No device files, personal Porch API, private identity or remote URL was queried."]]
+      };
+    }
+  }
+  if (requestId !== latestPanelRequest || !detail) return;
   const dialog = document.getElementById("location-dialog");
   document.getElementById("dialog-kind").textContent = detail.kind;
   document.getElementById("dialog-title").textContent = detail.title;
@@ -124,7 +130,7 @@ function openPanel(id) {
     section.append(strong, paragraph);
     holder.append(section);
   }
-  dialog.showModal();
+  if (!dialog.open) dialog.showModal();
 }
 
 function readPreference() {
