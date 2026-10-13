@@ -2,6 +2,7 @@ import {
   PACKS, WORLD_NODES, WORLD_FINGERPRINT, resolvePack, styleVariables
 } from "./packs.mjs";
 import { loadExamplePhiSpace, phiSpacePanel } from "./phispace-public.mjs";
+import { createLocalPreviewController, localPreviewPanel } from "./phispace-local-preview.mjs";
 
 export const ARRIVAL_ID = "commons.arrival";
 
@@ -96,14 +97,19 @@ const DETAILS = Object.freeze({
   }
 });
 
+const localPreview = createLocalPreviewController();
 let latestPanelRequest = 0;
 async function openPanel(id) {
   const requestId = ++latestPanelRequest;
   let detail = DETAILS[id];
   if (id === "phispace.example") {
-    try {
-      detail = phiSpacePanel(await loadExamplePhiSpace());
-    } catch {
+    const local = localPreview.get();
+    if (local) {
+      detail = localPreviewPanel(local);
+    } else {
+      try {
+        detail = phiSpacePanel(await loadExamplePhiSpace());
+      } catch {
       // Fail closed: never substitute private Porch data or a made-up live home.
       detail = {
         kind: "PHISPACE · PUBLIC FIXTURE UNAVAILABLE",
@@ -111,6 +117,7 @@ async function openPanel(id) {
         description: "No verified sample public home could be loaded from this site.",
         cards: [["NO PRIVATE FALLBACK", "No device files, personal Porch API, private identity or remote URL was queried."]]
       };
+      }
     }
   }
   if (requestId !== latestPanelRequest || !detail) return;
@@ -210,6 +217,44 @@ function mount() {
     target.addEventListener("click", () => openPanel(target.dataset.node));
   }
   document.getElementById("explain-world").addEventListener("click", () => openPanel("how-it-works"));
+
+  const selector = document.getElementById("select-local-phispace");
+  const input = document.getElementById("local-phispace-file");
+  const withdraw = document.getElementById("withdraw-local-phispace");
+  const status = document.getElementById("local-phispace-status");
+  const dialog = document.getElementById("location-dialog");
+  const clearLocal = () => {
+    ++latestPanelRequest;
+    localPreview.withdraw();
+    input.value = "";
+    withdraw.hidden = true;
+    status.textContent = "Local preview withdrawn. No network publication was changed.";
+    if (dialog.open) dialog.close();
+  };
+  selector.addEventListener("click", () => input.click());
+  withdraw.addEventListener("click", clearLocal);
+  input.addEventListener("change", async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    ++latestPanelRequest;
+    withdraw.hidden = true;
+    status.textContent = "Validating selected file locally…";
+    if (dialog.open) dialog.close();
+    try {
+      const accepted = await localPreview.load(file);
+      if (!accepted) return; // withdrawn or superseded while reading
+      withdraw.hidden = false;
+      status.textContent = "Unverified local preview loaded for this tab only. Not published.";
+      openPanel("phispace.example");
+    } catch {
+      // Never echo unknown file contents or reveal local file paths.
+      withdraw.hidden = true;
+      status.textContent = "Local preview rejected. Choose a valid owner-curated export.";
+    } finally {
+      input.value = ""; // selecting the same file can still prompt another review
+    }
+  });
+
   select(readPreference() ?? "midnight-sierra");
 }
 
