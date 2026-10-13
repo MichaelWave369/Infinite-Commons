@@ -88,6 +88,31 @@ Withdrawal only clears this one local session. It **cannot revoke content
 already published or copied elsewhere**; true distributed revocation needs
 a separately reviewed protocol.
 
+## Live React experience (GitHub Pages candidate)
+
+The new [Infinite Commons React experience](docs/REACT_PAGES_V0_1.md) is a
+proper React/Vite application living in `apps/commons-react/`. It preserves
+the original SVG Midnight Sierra terrace, twenty theme packs, three public
+sample destination panels, and owner-selected **local-only** PhiSpace
+preview/withdraw from merged PR #6. React imports the existing
+`web/` contracts rather than replacing them.
+
+It targets **https://michaelwave369.github.io/Infinite-Commons/** after
+the GitHub Pages deployment workflow is merged, green, and Pages is set to
+**GitHub Actions** under repository settings. The presence of this text is
+not proof of a successful deployment.
+
+Local start:
+
+```sh
+cd apps/commons-react
+npm install
+npm run dev
+```
+
+No private Porch, real account, remote BBS, federation or VR/WebXR features
+are available in the public site yet.
+
 ## Canonical bootstrap contract
 
 By default the CLI reads:

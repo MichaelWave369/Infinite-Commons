@@ -1,0 +1,64 @@
+name: Deploy Infinite Commons React Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: infinite-commons-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install React app dependencies
+        run: npm install --prefix apps/commons-react --no-audit --no-fund
+
+      - name: Test React contracts
+        run: npm test --prefix apps/commons-react
+
+      - name: Test existing Commons browser contracts
+        run: node --test web/tests/*.test.mjs
+
+      - name: Build for GitHub Pages project base
+        env:
+          COMMONS_BASE_PATH: /Infinite-Commons/
+        run: npm run build --prefix apps/commons-react
+
+      - name: Verify compiled Pages entrypoint
+        run: |
+          test -s apps/commons-react/dist/index.html
+          grep -q '/Infinite-Commons/assets/' apps/commons-react/dist/index.html
+          test -n "$(find apps/commons-react/dist/assets -name '*.js' -print -quit)"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/commons-react/dist
+
+      - name: Publish Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
