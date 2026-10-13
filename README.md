@@ -46,6 +46,19 @@ Test the presentation contract with
 `node --test web/tests/experience.test.mjs`. The Python bootstrap proof and
 existing permissions remain unchanged.
 
+## PhiSpace doorway: public manifest demo
+
+The [PhiSpace public manifest v0.1](docs/PHISPACE_PUBLIC_V0_1.md) adds a
+read-only **fictional example home** to the Commons Experience. Clicking its
+doorway loads a fixed **same-origin** JSON fixture, validates a small allowlisted
+public presentation shape, and displays plain-text visitor content. Missing or
+invalid fixtures fail closed.
+
+This is **not** a live Infinite Porch connection or an authorization proof.
+A `public` field in a manifest is merely a claim. Explicit owner-controlled
+publishing, authentication, revocation, real accounts, BBS posting and WebXR
+still require separate design and verification.
+
 ## Canonical bootstrap contract
 
 By default the CLI reads:
