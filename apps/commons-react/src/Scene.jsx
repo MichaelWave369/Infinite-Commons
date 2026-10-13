@@ -142,6 +142,11 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
       <button className="hotspot hotspot-door" type="button"
         aria-label="Open the example or locally selected PhiSpace"
         onClick={() => onVisit("phispace.example")}>↗ <span>PHISPACE</span></button>
+      {active3D && (
+        <button className="hotspot hotspot-radio" type="button"
+          aria-label="Tune the fictional Midnight Radio"
+          onClick={() => onVisit("midnight.radio")}>♫ <span>TUNE RADIO</span></button>
+      )}
       <button className="hotspot hotspot-bbs" type="button"
         aria-label="Visit offline sample BBS Lounge"
         onClick={() => onVisit("commons.bbs")}>⌘ <span>BBS LOUNGE</span></button>
