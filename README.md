@@ -25,7 +25,26 @@ Infinite Commons 0.1.x proves one compact handoff contract:
 4. Fail clearly when required artifacts are missing or malformed.
 5. Expose the result through a simple CLI.
 
-The current implementation is deliberately small. There is no server, UI, OAuth flow, remote API, or background synchronization layer.
+The core library remains deliberately small: there is no server, OAuth flow, remote API, or background synchronization. A separate **local-only, optional browser experience prototype** now lives in `web/`; it does not confer any network or artifact authority.
+
+## Commons Experience: Midnight Sierra (prototype)
+
+The optional [Commons Experience v0.1](docs/COMMONS_EXPERIENCE_V0_1.md) adds a
+standalone illustrated arrival terrace, twenty appearance presets (two curated
+scene treatments, eighteen palette previews), a style switcher, and three
+**offline sample** hotspots for a Commons plaza, BBS and PhiSpace. It is not a
+live Porch, social network or VR application.
+
+Try it locally without adding dependencies:
+
+```sh
+python -m http.server 8000 --directory web
+# visit http://127.0.0.1:8000/
+```
+
+Test the presentation contract with
+`node --test web/tests/experience.test.mjs`. The Python bootstrap proof and
+existing permissions remain unchanged.
 
 ## Canonical bootstrap contract
 
