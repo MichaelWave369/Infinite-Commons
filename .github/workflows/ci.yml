@@ -27,7 +27,7 @@ jobs:
           node-version: "22"
 
       - name: Browser experience contract tests
-        run: node --test web/tests/experience.test.mjs
+        run: node --test web/tests/*.test.mjs
 
       - name: Ruff
         run: ruff check .
