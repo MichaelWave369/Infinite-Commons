@@ -113,6 +113,23 @@ npm run dev
 No private Porch, real account, remote BBS, federation or VR/WebXR features
 are available in the public site yet.
 
+## Midnight Sierra Living City · opt-in WebGL 2 prototype
+
+The [Living City renderer decision](docs/ADR_009_LIVING_CITY_RENDERER.md)
+documents the 2026 graphics research and a deliberately small interactive
+3D slice added to the React Pages application.
+
+**Midnight Sierra stays painted by default.** A visitor can select
+**Explore Living City 3D** to lazy-load original Three.js geometry:
+architectural depth, warm doorway lights, a procedural city of towers,
+decorative windows, stairs, chair/table and slow atmospheric cloud movement.
+**Return to Painted View** tears down the optional 3D renderer.
+
+The existing 20-style catalog, HTML BBS/PhiSpace buttons, local-only export
+preview, permission boundaries, and deterministic Python CLI are not
+replaced. WebGL 2 is used today; WebGPU and Quest/WebXR are separate future
+experiments, not currently shipped capabilities.
+
 ## Canonical bootstrap contract
 
 By default the CLI reads:

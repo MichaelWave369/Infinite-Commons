@@ -1,17 +1,23 @@
-import React, { useEffect, useRef } from "react";
+import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
 import trustedSceneHtml from "../../../web/index.html?raw";
 
-/**
- * Existing, reviewed Commons illustration is the single art source of truth.
- * Clone ONLY the repository-owned svg.vista node; never parse user content
- * or inject an untrusted theme's HTML.
- */
+const LivingCity = lazy(() => import("./LivingCity.jsx"));
+
+export function canUseWebGL2() {
+  if (typeof document === "undefined") return false;
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl2", { powerPreference: "low-power" }));
+  } catch {
+    return false;
+  }
+}
+
 function drawCity(svg) {
   const ns = "http://www.w3.org/2000/svg";
   const buildings = svg.querySelector("#city-buildings");
   const lights = svg.querySelector("#city-lights");
   if (!buildings || !lights) throw new Error("Commons scene is missing its city layers");
-
   const rect = (x, y, width, height, fill, opacity = 1) => {
     const element = document.createElementNS(ns, "rect");
     for (const [key, value] of Object.entries({ x, y, width, height, fill, opacity })) {
@@ -45,25 +51,94 @@ function drawCity(svg) {
   lights.append(fragment);
 }
 
-export function Scene({ scene, onVisit }) {
+function PaintedScene() {
   const drawing = useRef(null);
   useEffect(() => {
     const container = drawing.current;
     const parsed = new DOMParser().parseFromString(trustedSceneHtml, "text/html");
     const source = parsed.querySelector("svg.vista");
     if (!source || !container) throw new Error("Reviewed Commons scene unavailable");
-    // importNode is used for SVG namespace correctness. No script nodes are read.
     const svg = document.importNode(source, true);
     drawCity(svg);
     container.replaceChildren(svg);
     return () => container.replaceChildren();
   }, []);
+  return (
+    <div className="react-scene-drawing" ref={drawing}
+      role="img" aria-label="Painted modernist terrace with amber doorway overlooking the blue-hour Commons" />
+  );
+}
+
+class ThreeBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { failed: false };
+  }
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {
+    this.props.onError();
+  }
+  render() {
+    return this.state.failed ? <PaintedScene /> : this.props.children;
+  }
+}
+
+export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
+  const [threeRequested, setThreeRequested] = useState(false);
+  const [threeNotice, setThreeNotice] = useState("");
+  const [reducedMotion, setReducedMotion] = useState(() => {
+    try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
+    catch { return false; }
+  });
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(preference.matches);
+    preference.addEventListener?.("change", update);
+    return () => preference.removeEventListener?.("change", update);
+  }, []);
+
+  const availableForStyle = styleId === "midnight-sierra";
+  const active3D = availableForStyle && threeRequested;
+  const use3D = () => {
+    if (!canUseWebGL2()) {
+      setThreeNotice("WebGL 2 unavailable. The painted Commons remains fully usable.");
+      setThreeRequested(false);
+      return;
+    }
+    setThreeNotice("WebGL 2 preview. The same Commons locations and permissions are unchanged.");
+    setThreeRequested(true);
+  };
+  const returnToPainted = () => {
+    setThreeRequested(false);
+    setThreeNotice("Painted adventure view restored.");
+  };
 
   return (
-    <div className="scene-frame" data-scene={scene}>
-      <div className="react-scene-drawing" ref={drawing}
-        role="img" aria-label="Modernist terrace with a warm illuminated doorway overlooking the Commons, displayed as a blue-hour city or floating gardens" />
+    <div className="scene-frame" data-scene={scene}
+      data-renderer={active3D ? "webgl2" : "painted"}>
+      {active3D ? (
+        <ThreeBoundary key={styleId} onError={returnToPainted}>
+          <Suspense fallback={<div className="scene-loading" role="status">Building the Living City…</div>}>
+            <LivingCity reducedMotion={reducedMotion} onError={returnToPainted} />
+          </Suspense>
+        </ThreeBoundary>
+      ) : <PaintedScene />}
       <div className="scene-vignette" aria-hidden="true" />
+      <div className="scene-render-controls" role="group" aria-label="Choose the Midnight Sierra display mode">
+        {availableForStyle && (active3D ? (
+          <button type="button" className="render-toggle" onClick={returnToPainted}>
+            ◧ Return to Painted View
+          </button>
+        ) : (
+          <button type="button" className="render-toggle" onClick={use3D}>
+            ◈ Explore Living City 3D
+          </button>
+        ))}
+        {threeNotice && <span className="scene-render-note" role="status">{threeNotice}</span>}
+      </div>
       <button className="hotspot hotspot-door" type="button"
         aria-label="Open the example or locally selected PhiSpace"
         onClick={() => onVisit("phispace.example")}>↗ <span>PHISPACE</span></button>

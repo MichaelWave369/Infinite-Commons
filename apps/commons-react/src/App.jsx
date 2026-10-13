@@ -218,7 +218,7 @@ export function App() {
                 <span className="online-badge">● LOCAL-ONLY DEMO</span>
               </div>
             </div>
-            <Scene scene={pack.scene} onVisit={visit} />
+            <Scene scene={pack.scene} styleId={pack.id} onVisit={visit} />
             <div className="below-scene">
               <div className="story-copy">
                 <div className="eyebrow">THE FIRST THRESHOLD</div>
