@@ -2,8 +2,19 @@ import { test, expect } from "@playwright/test";
 
 test("production React Pages entry actually renders instead of a blue blank screen", async ({ page }) => {
   const errors = [];
-  page.on("pageerror", (error) => errors.push(error.message));
+  page.on("pageerror", (error) => {
+    errors.push(error.message);
+    console.log("BROWSER PAGE ERROR:", error.stack ?? error.message);
+  });
+  page.on("console", (message) => {
+    if (message.type() === "error") console.log("BROWSER CONSOLE ERROR:", message.text());
+  });
+  page.on("response", (response) => {
+    if (response.status() >= 400) console.log("FAILED RESOURCE:", response.status(), response.url());
+  });
   const response = await page.goto("./", { waitUntil: "networkidle" });
+  await page.waitForTimeout(700);
+  if (errors.length) throw new Error("Browser startup failed: " + errors.join(" | "));
   expect(response?.ok()).toBeTruthy();
   await expect(page.getByRole("heading", { name: "Midnight Sierra" })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Change the world/ })).toBeVisible();
