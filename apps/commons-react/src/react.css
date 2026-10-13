@@ -106,13 +106,19 @@
 
 /* 3D-only native HTML story marker; no canvas event handlers or extra grants. */
 .hotspot-radio {
-  top: 65%;
-  left: 53%;
+  /* Adjacent to the physical radio table in the 3D scene, not the planter. */
+  top: 74%;
+  left: 32%;
   z-index: 4;
   border-color: rgba(139, 241, 210, .68);
   color: #c9fff1;
   box-shadow: 0 0 20px rgba(85, 202, 175, .25);
 }
+.scene-frame[data-renderer="webgl2"] .hotspot-bbs {
+  left: 49%;
+  top: 72%;
+}
 @media (max-width: 550px) {
-  .hotspot-radio { top: 64%; left: 56%; }
+  .hotspot-radio { top: 75%; left: 32%; }
+  .scene-frame[data-renderer="webgl2"] .hotspot-bbs { left: 61%; top: 70%; }
 }
