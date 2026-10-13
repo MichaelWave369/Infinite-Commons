@@ -40,7 +40,13 @@ def _text(value: Any, length: int, label: str) -> str:
         raise PublicationRejected(f"{label}: missing or oversized text")
     for char in value:
         point = ord(char)
-        if point < 32 or point == 127 or 0x202A <= point <= 0x202E or 0x2066 <= point <= 0x2069:
+        if (
+            point < 32
+            or point == 127
+            or 0xD800 <= point <= 0xDFFF
+            or 0x202A <= point <= 0x202E
+            or 0x2066 <= point <= 0x2069
+        ):
             raise PublicationRejected(f"{label}: control/bidi characters prohibited")
     return value
 
