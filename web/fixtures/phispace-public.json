@@ -1,0 +1,37 @@
+{
+  "schema": "commons.phispace.public.v0.1",
+  "space_id": "phispace.example",
+  "visibility": "public",
+  "publication_mode": "example-fixture",
+  "profile": {
+    "display_name": "The Lantern Room",
+    "tagline": "A little music, a little mystery, and plenty of places to sit.",
+    "welcome": "Welcome, traveler. This fictional PhiSpace is a public demonstration of a future self-hosted home, not a connection to a real individual's Infinite Porch."
+  },
+  "sections": [
+    {
+      "id": "about",
+      "kind": "about",
+      "title": "THE FRONT ROOM",
+      "body": "An imaginary host's cozy blue-hour lounge. Pull up a chair and browse the objects they chose to share."
+    },
+    {
+      "id": "music",
+      "kind": "music",
+      "title": "THE RECORD SHELF",
+      "body": "Picture a collection of original synthwave tracks playing on a vintage hi-fi. Music playback and uploads are not enabled in this prototype."
+    },
+    {
+      "id": "projects",
+      "kind": "projects",
+      "title": "THE WORKSHOP",
+      "body": "Prototype sketches and public project exhibits would live here. Nothing is automatically imported from the owner's device."
+    },
+    {
+      "id": "guestbook",
+      "kind": "guestbook",
+      "title": "THE GUESTBOOK",
+      "body": "The old internet's favorite tradition. A future guestbook will require moderation and explicit published-message permissions; this demo is read-only."
+    }
+  ]
+}
