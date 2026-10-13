@@ -1,0 +1,29 @@
+{
+  "schema": "commons.phispace.draft.v0.1",
+  "space_id": "phispace.lantern-room",
+  "profile": {
+    "display_name": "The Lantern Room",
+    "tagline": "A small night-time listening lounge.",
+    "welcome": "Welcome to an entirely fictional public home. This example contains no private machine data."
+  },
+  "sections": [
+    {
+      "id": "about",
+      "kind": "about",
+      "title": "Front Room",
+      "body": "An imaginary gathering space overlooking the midnight city."
+    },
+    {
+      "id": "music",
+      "kind": "music",
+      "title": "Record Shelf",
+      "body": "A showcase idea for original music; no tracks or private libraries are connected."
+    },
+    {
+      "id": "guestbook",
+      "kind": "guestbook",
+      "title": "Guestbook",
+      "body": "An old-school guestbook would need moderation and a separate approved publishing boundary."
+    }
+  ]
+}
