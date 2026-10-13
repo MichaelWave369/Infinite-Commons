@@ -59,6 +59,7 @@ jobs:
           path: |
             apps/commons-react/test-results/midnight-sierra-v04.png
             apps/commons-react/test-results/midnight-sierra-v05.png
+            apps/commons-react/test-results/midnight-sierra-v06.png
           if-no-files-found: ignore
 
       - name: Ruff
