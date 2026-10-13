@@ -144,6 +144,20 @@ The default painted adventure view remains unchanged.
 See the [v0.5 artwork and acceptance ledger](docs/MIDNIGHT_SIERRA_HUMAN_WARMTH_V0_5.md)
 for the exact review criteria.
 
+## Midnight Sierra v0.6 · Architectural Soul (review candidate)
+
+The optional Three.js Living City gains original Art Deco-inspired tower
+facades, balcony rails, small rooftop gardens, and decorative illuminated
+skywalks. These are *visual scenery only*, not real navigable connections,
+user locations, or permissions.
+
+The chair-back cushion is resized, the doorway light is softened, and the
+3D-only Tune Radio marker is moved toward the actual tabletop. The default
+painted view, original four semantic nodes, 20 styles, and local-first
+PhiSpace controls remain unchanged.
+
+See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
+
 ## Canonical bootstrap contract
 
 By default the CLI reads:
