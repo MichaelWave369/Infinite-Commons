@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 
 test("painted view still loads, 3D story interaction is optional, and original doors work", async ({ page }, info) => {
+  // Software WebGL2 + full-page capture can take longer than ordinary DOM E2E.
+  test.setTimeout(75_000);
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
   await page.goto("./");
@@ -17,7 +19,12 @@ test("painted view still loads, 3D story interaction is optional, and original d
     await expect(page.getByText(/not an actual radio stream/i)).toBeVisible();
     await page.getByRole("button", { name: "Close panel" }).click();
 
-    await page.screenshot({ path: "test-results/midnight-sierra-v05.png", fullPage: true });
+    await page.screenshot({
+      path: "test-results/midnight-sierra-v05.png",
+      fullPage: false,
+      animations: "disabled",
+      timeout: 15_000
+    });
     await page.getByRole("button", { name: /Return to Painted View/ }).click();
   } else {
     info.annotations.push({ type: "gpu-fallback", description: "WebGL2 unavailable in this CI environment; use desktop visual review." });
