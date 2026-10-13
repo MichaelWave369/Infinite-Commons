@@ -6,17 +6,17 @@ The existing deterministic Python Infinite Commons CLI and the first vanilla
 browser prototype (PRs #3-6) are preserved.
 
 This contribution adds a genuine **React 19 + Vite 7** browser experience in
-\`apps/commons-react/\` and a GitHub Actions pipeline to build and serve it on
+`apps/commons-react/` and a GitHub Actions pipeline to build and serve it on
 **GitHub Pages** after review and merge.
 
 Expected project Pages address:
 
-\`\`\`
+```
 https://michaelwave369.github.io/Infinite-Commons/
-\`\`\`
+```
 
 That URL is the deployment **target**, not proof that publishing has completed.
-See the successful \`Deploy Infinite Commons React Pages\` workflow receipt for
+See the successful `Deploy Infinite Commons React Pages` workflow receipt for
 the actual deployment state.
 
 ## What visitors can do
@@ -44,35 +44,35 @@ are made by this application.
 
 Node.js 22+ recommended:
 
-\`\`\`sh
+```sh
 cd apps/commons-react
 npm install
 npm run dev
-\`\`\`
+```
 
-Open the localhost address Vite prints, usually \`http://127.0.0.1:5173/\`.
+Open the localhost address Vite prints, usually `http://127.0.0.1:5173/`.
 
 Build for the GitHub Pages project subpath:
 
-\`\`\`sh
+```sh
 COMMONS_BASE_PATH=/Infinite-Commons/ npm run build
-\`\`\`
+```
 
 Windows PowerShell:
 
-\`\`\`powershell
+```powershell
 $env:COMMONS_BASE_PATH="/Infinite-Commons/"
 npm run build
-\`\`\`
+```
 
-Build artifacts are \`apps/commons-react/dist/\`, which must not be committed.
+Build artifacts are `apps/commons-react/dist/`, which must not be committed.
 
 ## Deploy
 
-\`.github/workflows/deploy-commons-pages.yml\` runs on a push to \`main\`
+`.github/workflows/deploy-commons-pages.yml` runs on a push to `main`
 or a manual workflow dispatch. It installs the React dependencies, runs the
-shared contract tests, builds under \`/Infinite-Commons/\`, validates generated
-asset paths, and publishes only the \`dist/\` folder as a Pages artifact.
+shared contract tests, builds under `/Infinite-Commons/`, validates generated
+asset paths, and publishes only the `dist/` folder as a Pages artifact.
 
 To allow deployments, the GitHub repository's
 **Settings → Pages → Build and deployment → Source**
@@ -88,12 +88,12 @@ the workflow logs. A green CI build is not the same as a green Pages deployment.
 
 From the repository root:
 
-\`\`\`sh
+```sh
 node --test web/tests/*.test.mjs
 node --test apps/commons-react/tests/*.test.mjs
 ruff check .
 pytest
-\`\`\`
+```
 
 CI additionally installs packages and performs a real production React build.
 
@@ -117,9 +117,9 @@ do not grant access to those systems.
 ### Dependency note
 
 React/React DOM 19.2.0 and Vite 7.1.12 are exact direct dependency versions.
-The build uses \`npm install\` rather than \`npm ci\` until an audited,
+The build uses `npm install` rather than `npm ci` until an audited,
 committed lockfile is generated in an online build environment; a later
 hardening milestone should commit the resolved lockfile and switch to
-\`npm ci\`.
+`npm ci`.
 
-The core Python CLI, \`web/\` prototype, and their test suites remain intact.
+The core Python CLI, `web/` prototype, and their test suites remain intact.
