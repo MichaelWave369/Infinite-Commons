@@ -7,6 +7,7 @@ import { CityRooflines, LandmarkArchitecture, TerraceStoneSurface, EntranceDetai
 import { LivingCityDistricts } from "./LivingCityDistricts.jsx";
 import { LivingCityWarmth } from "./LivingCityWarmth.jsx";
 import { LivingCityMotion } from "./LivingCityMotion.jsx";
+import { LivingCityArchitecture, PorchFacadeSoul } from "./LivingCityArchitecture.jsx";
 
 /**
  * Optional three-dimensional art interpretation of commons.arrival.
@@ -145,7 +146,7 @@ function Terrace() {
       <Structure position={[-4.95, 1.54, -2.05]} scale={[0.085, 5.0, 0.16]} color="#45253d" />
       <Structure position={[-6.5, 1.54, -2.06]} scale={[0.12, 5.0, 0.16]} color="#48253e" />
       <Structure position={[-3.4, 1.54, -2.06]} scale={[0.12, 5.0, 0.16]} color="#48253e" />
-      <pointLight position={[-4.95, 2.5, 0.1]} color="#ffac67" intensity={38} distance={14} decay={2} />
+      <pointLight position={[-4.95, 2.5, 0.1]} color="#ffac67" intensity={27} distance={12} decay={2} />
       {/* Glass balustrade and brass piping. */}
       <Structure position={[5.8, 0.15, 5.3]} scale={[0.10, 2.6, 0.12]} color="#8397aa" />
       <Structure position={[9.0, 0.15, 5.3]} scale={[0.10, 2.6, 0.12]} color="#8397aa" />
@@ -201,12 +202,14 @@ function LivingEnvironment({ reducedMotion }) {
       <CityInstances />
       <CityRooflines />
       <LivingCityDistricts />
+      <LivingCityArchitecture />
       <LandmarkArchitecture />
       <Terrace />
       <TerraceStoneSurface />
       <EntranceDetails />
       <LoungeCushions />
       <LivingCityWarmth />
+      <PorchFacadeSoul />
       <ArchitecturalAtmosphere />
       <LivingCityMotion reducedMotion={reducedMotion} />
     </>
