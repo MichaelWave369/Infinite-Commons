@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Color, Object3D } from "three";
 import { livingCityBlueprint } from "./livingCityBlueprint.mjs";
 import { PaintedSky, ArchitecturalAtmosphere } from "./LivingCityAtmosphere.jsx";
+import { CityRooflines, LandmarkArchitecture, TerraceStoneSurface, EntranceDetails, LoungeCushions } from "./LivingCityFinishes.jsx";
 
 /**
  * Optional three-dimensional art interpretation of commons.arrival.
@@ -132,16 +133,16 @@ function Terrace() {
             emissive="#ff9d58" emissiveIntensity={1.6} />
         </group>
       ))}
-      <Structure position={[-7.2, 3.8, -3.1]} scale={[7.3, 10.0, 1.5]} color="#214b71" />
-      <Structure position={[-7.2, 8.95, -3.1]} scale={[8.1, 0.38, 2.0]} color="#0e2747" />
-      <Structure position={[-4.65, 1.48, -2.25]} scale={[3.15, 5.4, 0.10]}
+      <Structure position={[-7.2, 3.8, -3.1]} scale={[8.4, 10.0, 1.5]} color="#214b71" />
+      <Structure position={[-7.2, 8.95, -3.1]} scale={[8.8, 0.38, 2.0]} color="#0e2747" />
+      <Structure position={[-4.95, 1.48, -2.25]} scale={[3.15, 5.4, 0.10]}
         color="#9e3a36" emissive="#ed663d" emissiveIntensity={1.5} />
-      <Structure position={[-4.65, 1.65, -2.15]} scale={[2.62, 4.98, 0.11]}
-        color="#f28c60" emissive="#fe8759" emissiveIntensity={2.15} />
-      <Structure position={[-4.65, 1.54, -2.05]} scale={[0.085, 5.0, 0.16]} color="#45253d" />
-      <Structure position={[-6.2, 1.54, -2.06]} scale={[0.12, 5.0, 0.16]} color="#48253e" />
-      <Structure position={[-3.1, 1.54, -2.06]} scale={[0.12, 5.0, 0.16]} color="#48253e" />
-      <pointLight position={[-4.6, 2.5, 0.1]} color="#ffac67" intensity={38} distance={14} decay={2} />
+      <Structure position={[-4.95, 1.65, -2.15]} scale={[2.62, 4.98, 0.11]}
+        color="#b36b50" emissive="#e98353" emissiveIntensity={0.6} />
+      <Structure position={[-4.95, 1.54, -2.05]} scale={[0.085, 5.0, 0.16]} color="#45253d" />
+      <Structure position={[-6.5, 1.54, -2.06]} scale={[0.12, 5.0, 0.16]} color="#48253e" />
+      <Structure position={[-3.4, 1.54, -2.06]} scale={[0.12, 5.0, 0.16]} color="#48253e" />
+      <pointLight position={[-4.95, 2.5, 0.1]} color="#ffac67" intensity={38} distance={14} decay={2} />
       {/* Glass balustrade and brass piping. */}
       <Structure position={[5.8, 0.15, 5.3]} scale={[0.10, 2.6, 0.12]} color="#8397aa" />
       <Structure position={[9.0, 0.15, 5.3]} scale={[0.10, 2.6, 0.12]} color="#8397aa" />
@@ -195,7 +196,12 @@ function LivingEnvironment({ reducedMotion }) {
       <Stars />
       <Clouds reducedMotion={reducedMotion} />
       <CityInstances />
+      <CityRooflines />
+      <LandmarkArchitecture />
       <Terrace />
+      <TerraceStoneSurface />
+      <EntranceDetails />
+      <LoungeCushions />
       <ArchitecturalAtmosphere />
     </>
   );
