@@ -68,6 +68,10 @@ a{color:inherit}
 .below-scene{display:flex;justify-content:space-between;gap:16px;align-items:center;margin:17px 0 22px}
 .story-copy p{font-family:Georgia,serif;font-size:clamp(15px,1.6vw,20px);font-style:italic;color:#e3e0de;line-height:1.5;margin:6px 0}
 .tertiary-btn{white-space:nowrap;background:#0d253e}
+.local-preview-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:6px 0 18px;padding:12px 0}
+.local-preview-tools button{flex-shrink:0}
+.local-preview-tools span{font-size:11px;color:#a8c6db;line-height:1.5}
+.local-preview-tools button[hidden]{display:none}
 .proof-strip{border-block:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 20px;padding:16px 3px;font-size:10px;color:#88a6c4;letter-spacing:.07em}
 .proof-strip span{white-space:nowrap}
 .proof-strip strong{margin-left:6px;color:#9cdef6;font-size:10px}
