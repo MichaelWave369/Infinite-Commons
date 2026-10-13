@@ -6,6 +6,16 @@ import exampleHome from "../../../web/fixtures/phispace-public.json";
 import { Scene } from "./Scene.jsx";
 
 const PANELS = Object.freeze({
+  "midnight.radio": {
+    kind: "MIDNIGHT RADIO · FICTIONAL OFFLINE STORY",
+    title: "The Midnight Frequency",
+    description: "A tiny lamp glows on an old receiver. An original, imaginary transmission waits on the dial.",
+    cards: [
+      ["87.9 · THE BLUE-HOUR SIGNAL", "To whoever finds the terrace: there are still windows left to light. Build something worth opening a door for."],
+      ["THE EMPTY CHAIR", "No visitors are connected. The second seat is simply an invitation for a future story."],
+      ["LOCAL STORY SAMPLE", "This is authored demonstration text, not an actual radio stream, real person, conversation or network signal."]
+    ]
+  },
   "commons.plaza": {
     kind: "COMMONS PROMENADE · FICTIONAL SAMPLE",
     title: "The Commons Promenade",
