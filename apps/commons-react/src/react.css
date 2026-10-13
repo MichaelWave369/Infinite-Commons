@@ -41,3 +41,65 @@
     animation: none !important;
   }
 }
+
+
+/* Optional Midnight Sierra WebGL2 viewport; HTML doors remain native buttons. */
+.living-city-canvas, .living-city-canvas canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: pan-y;
+}
+.scene-render-controls {
+  position: absolute;
+  z-index: 6;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  top: 15px;
+  right: 15px;
+  max-width: min(82%, 390px);
+  justify-content: flex-end;
+}
+.render-toggle {
+  appearance: none;
+  background: rgba(2, 24, 45, .90);
+  border: 1px solid #6ac8ed;
+  border-radius: 999px;
+  box-shadow: 0 4px 24px #00152c75;
+  color: #e8f9ff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .035em;
+  padding: 10px 15px;
+  backdrop-filter: blur(8px);
+}
+.render-toggle:hover {
+  background: rgba(24, 69, 99, .95);
+}
+.scene-render-note {
+  background: rgba(2, 20, 35, .90);
+  border-radius: 7px;
+  color: #d5eafb;
+  padding: 6px 9px;
+  font-size: 10px;
+  line-height: 1.4;
+  text-align: right;
+}
+.scene-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 650;
+  color: #d4eafa;
+  background: linear-gradient(165deg, #07294d, #0d5484 60%, #07192f);
+}
+@media (max-width: 550px) {
+  .scene-render-controls { top: 7px; right: 7px; max-width: 80%; }
+  .render-toggle { font-size: 10px; padding: 8px 10px; }
+  .scene-render-note { font-size: 9px; }
+}
