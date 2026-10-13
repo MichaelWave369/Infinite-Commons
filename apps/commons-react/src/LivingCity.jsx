@@ -4,6 +4,9 @@ import { Color, Object3D } from "three";
 import { livingCityBlueprint } from "./livingCityBlueprint.mjs";
 import { PaintedSky, ArchitecturalAtmosphere } from "./LivingCityAtmosphere.jsx";
 import { CityRooflines, LandmarkArchitecture, TerraceStoneSurface, EntranceDetails, LoungeCushions } from "./LivingCityFinishes.jsx";
+import { LivingCityDistricts } from "./LivingCityDistricts.jsx";
+import { LivingCityWarmth } from "./LivingCityWarmth.jsx";
+import { LivingCityMotion } from "./LivingCityMotion.jsx";
 
 /**
  * Optional three-dimensional art interpretation of commons.arrival.
@@ -197,12 +200,15 @@ function LivingEnvironment({ reducedMotion }) {
       <Clouds reducedMotion={reducedMotion} />
       <CityInstances />
       <CityRooflines />
+      <LivingCityDistricts />
       <LandmarkArchitecture />
       <Terrace />
       <TerraceStoneSurface />
       <EntranceDetails />
       <LoungeCushions />
+      <LivingCityWarmth />
       <ArchitecturalAtmosphere />
+      <LivingCityMotion reducedMotion={reducedMotion} />
     </>
   );
 }

@@ -130,6 +130,20 @@ preview, permission boundaries, and deterministic Python CLI are not
 replaced. WebGL 2 is used today; WebGPU and Quest/WebXR are separate future
 experiments, not currently shipped capabilities.
 
+## Midnight Sierra v0.5 · Human Warmth + Story Depth (candidate)
+
+The optional Living City WebGL2 scene adds a woven seating rug, warm
+lantern light, original notebook/mug/plant props, facade detail, layered
+residential silhouettes and barely perceptible night lights.
+
+A **TUNE RADIO** button in optional 3D mode opens a **fictional local story**.
+It is not real audio, a stream, multiplayer or evidence of a visitor.
+All original fixed Commons identities and permissions are preserved.
+The default painted adventure view remains unchanged.
+
+See the [v0.5 artwork and acceptance ledger](docs/MIDNIGHT_SIERRA_HUMAN_WARMTH_V0_5.md)
+for the exact review criteria.
+
 ## Canonical bootstrap contract
 
 By default the CLI reads:
