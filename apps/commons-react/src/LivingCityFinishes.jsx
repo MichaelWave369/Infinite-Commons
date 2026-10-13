@@ -176,8 +176,9 @@ export function LoungeCushions() {
         <sphereGeometry args={[1, 18, 12]} />
         <meshStandardMaterial color="#c7845c" roughness={1} />
       </mesh>
-      <mesh position={[0, 1.42, -0.17]} rotation={[-0.4, 0, 0]}
-        scale={[1.15, 0.67, 0.18]}>
+      {/* Smaller, flatter lumbar cushion: less orange beach-ball silhouette. */}
+      <mesh position={[0, 1.29, -0.20]} rotation={[-0.4, 0, 0]}
+        scale={[0.95, 0.39, 0.13]}>
         <sphereGeometry args={[1, 18, 12]} />
         <meshStandardMaterial color="#af6448" roughness={1} />
       </mesh>
