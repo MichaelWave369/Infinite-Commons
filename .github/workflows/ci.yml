@@ -51,6 +51,14 @@ jobs:
       - name: Verify production React renders and responds in a browser
         run: npm run test:browser --prefix apps/commons-react
 
+      - name: Archive optional Living City visual receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: midnight-sierra-v04-browser
+          path: apps/commons-react/test-results/midnight-sierra-v04.png
+          if-no-files-found: ignore
+
       - name: Ruff
         run: ruff check .
 
