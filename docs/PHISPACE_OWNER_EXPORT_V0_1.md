@@ -76,9 +76,12 @@ Use only these exact fields:
 }
 ```
 
-Only manual text is supported. Unknown fields, paths, credentials, section
-extras, metadata, duplicate JSON keys, executable types, control characters
-and unsafe IDs are rejected. One to six sections may be selected from
+Only manual text is supported. Unexpected structured fields (including file
+paths, credential fields, extra section metadata, and executable types),
+duplicate JSON keys, control characters and unsafe IDs are rejected.
+**Freeform visitor text is not secret-scanned:** an operator can still type a
+private fact, URL or path inside an allowed text field, so the full preview
+must be carefully inspected before approval. One to six sections may be selected from
 `about`, `music`, `gallery`, `projects`, and `guestbook`.
 
 The export adds:
