@@ -59,6 +59,22 @@ A `public` field in a manifest is merely a claim. Explicit owner-controlled
 publishing, authentication, revocation, real accounts, BBS posting and WebXR
 still require separate design and verification.
 
+## Owner-curated PhiSpace offline export (candidate)
+
+The optional [PhiSpace owner-curated export guide](docs/PHISPACE_OWNER_EXPORT_V0_1.md)
+shows how to manually select visitor-facing public text, preview its complete
+JSON and SHA-256 digest, and explicitly approve a **local** export file.
+
+```sh
+python -m infinite_commons.phispace_publisher preview --draft path/to/manual-draft.json
+```
+
+The CLI never scans an Infinite Porch, performs network requests or
+automatically publishes any content. The exported
+`owner-curated-export` artifact is **not accepted by the v0.1 browser
+demo**, which remains locked to its fictional local fixture. A hash check
+is not a verified identity or signature.
+
 ## Canonical bootstrap contract
 
 By default the CLI reads:
