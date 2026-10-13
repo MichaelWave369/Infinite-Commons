@@ -160,7 +160,7 @@ export function EntranceDetails() {
         <meshStandardMaterial color="#755449" roughness={0.78} />
       </mesh>
       {/* Low warm spill on the terrace; lamp is existing. */}
-      <mesh position={[-4.95, -0.854, -0.05]}>
+      <mesh position={[-4.95, -0.854, -0.05]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[3.1, 3.5]} />
         <meshBasicMaterial color="#f8a464" transparent opacity={0.16}
           depthWrite={false} toneMapped={false} side={2} />
