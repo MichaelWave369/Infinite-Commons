@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Color, Object3D } from "three";
 import { livingCityBlueprint } from "./livingCityBlueprint.mjs";
+import { PaintedSky, ArchitecturalAtmosphere } from "./LivingCityAtmosphere.jsx";
 
 /**
  * Optional three-dimensional art interpretation of commons.arrival.
@@ -190,10 +191,12 @@ function LivingEnvironment({ reducedMotion }) {
       <ambientLight intensity={1.15} color="#93b9e3" />
       <hemisphereLight args={["#96c4ee", "#17233b", 1.45]} />
       <directionalLight position={[-10, 19, 8]} color="#f3ba86" intensity={1.5} />
+      <PaintedSky />
       <Stars />
       <Clouds reducedMotion={reducedMotion} />
       <CityInstances />
       <Terrace />
+      <ArchitecturalAtmosphere />
     </>
   );
 }
