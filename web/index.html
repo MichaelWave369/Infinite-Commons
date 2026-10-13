@@ -150,6 +150,12 @@
             <p id="narration">Somewhere below, one window still glows. You wonder whose it is.</p></div>
           <button id="explain-world" class="tertiary-btn" type="button">How this works <span aria-hidden="true">↗</span></button>
         </div>
+        <div class="local-preview-tools" aria-label="Local PhiSpace preview controls">
+          <button type="button" id="select-local-phispace" class="secondary-btn">Preview a local PhiSpace JSON</button>
+          <button type="button" id="withdraw-local-phispace" class="tertiary-btn" hidden>Withdraw local preview</button>
+          <input type="file" id="local-phispace-file" accept=".json,application/json" hidden>
+          <span id="local-phispace-status" role="status" aria-live="polite">No local PhiSpace selected. Files stay on this device.</span>
+        </div>
         <div class="proof-strip" role="status" aria-live="polite">
           <span>WORLD ID <strong id="world-id">commons.arrival</strong></span>
           <span>NODE MAP <strong>UNCHANGED</strong></span>

@@ -75,6 +75,19 @@ automatically publishes any content. The exported
 demo**, which remains locked to its fictional local fixture. A hash check
 is not a verified identity or signature.
 
+## Local preview of owner-curated PhiSpace exports (candidate)
+
+The [PhiSpace local preview v0.1](docs/PHISPACE_LOCAL_PREVIEW_V0_1.md)
+connects the browser demo to a **user-selected** offline JSON export.
+Choose the file explicitly in the browser, see its plain-text public
+profile as an **unverified local preview**, or withdraw it from the
+current tab. No network publishing, private Porch access, cloud sync,
+identity verification, or persistent directory is added.
+
+Withdrawal only clears this one local session. It **cannot revoke content
+already published or copied elsewhere**; true distributed revocation needs
+a separately reviewed protocol.
+
 ## Canonical bootstrap contract
 
 By default the CLI reads:
