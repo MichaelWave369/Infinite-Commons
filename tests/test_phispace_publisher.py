@@ -110,6 +110,7 @@ def test_changed_draft_invalidates_prior_approval(tmp_path: Path, capsys) -> Non
         lambda x: x["profile"].update({"welcome": ""}),
         lambda x: x["profile"].update({"welcome": "a" * 501}),
         lambda x: x["profile"].update({"welcome": "\u202esecret"}),
+        lambda x: x["profile"].update({"welcome": "\ud800"}),
         lambda x: x["sections"].append(x["sections"][0].copy()),
         lambda x: x["sections"].clear(),
         lambda x: x["sections"][0].update({"kind": "exec"}),
