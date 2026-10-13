@@ -107,7 +107,7 @@ private storage access, dynamic remote asset fetching or automatic publishing.
 | Original arrival terrace scene | Implemented in browser prototype |
 | Twenty style selections | Implemented (2 scene treatments + 18 palette previews) |
 | Theme selection persists on same browser | Implemented, best-effort localStorage |
-| BBS, promenade and PhiSpace hotspots | Implemented as explicitly labeled sample panels |
+| BBS and promenade hotspots | Explicitly labeled sample panels |\n| PhiSpace hotspot | Fixed same-origin, validated fictional public JSON fixture (v0.1; no live sharing) |
 | Semantic world invariants | Automated tests |
 | Live Porch node / PhiPie integration | Not implemented |
 | Community accounts, BBS, sharing or guestbooks | Not implemented |
@@ -117,10 +117,14 @@ private storage access, dynamic remote asset fetching or automatic publishing.
 
 ## Next independent milestone
 
-Build a small, **read-only, permission-checked published PhiSpace manifest**
-adapter to local test fixtures first. That adapter must never accept file paths
-or LAN addresses chosen by an untrusted theme pack. Only after reviewing the
-real Infinite Porch API and threat model should we consider a network bridge.
+The next PR adds a strict **read-only sample PhiSpace manifest adapter**
+for a fixed same-origin JSON fixture. See
+[PhiSpace Public Manifest v0.1](PHISPACE_PUBLIC_V0_1.md). The adapter is not a
+permission authority or live Porch connection.
+
+A real Porch publication bridge still requires an explicit owner-approved
+export mechanism, provenance, revocation and threat-model review before any
+private data or network integration is considered.
 
 Anti-M completion boundary: this PR is DONE only when the page works locally,
 the suite is green, the existing Python bootstrap proof is unaffected, and the
