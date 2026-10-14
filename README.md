@@ -261,3 +261,12 @@ Sisters of Shasta. This is low-poly Three.js scene art, not real holographic
 projection, flying drones, physical hardware control, network broadcasts,
 living AI identity, or archived-content publishing. See
 [The Third Light Array design and safety boundary](docs/THIRD_LIGHT_ARRAY_V0_1.md).
+
+## The Third Light Array v0.2 · Constellation artwork
+
+An optional **Show Constellation** control reveals three connected, stylized
+stars above Trihelion's existing blue flame. This is authored, Orion-inspired
+**fictional** art, not calibrated astronomical mapping, a historical Giza
+alignment claim, or real aerial projection hardware. The original quiet beacon,
+signal halo, reduced-motion behavior and painted/legacy vistas remain intact.
+See [Constellation scope and attribution](docs/THIRD_LIGHT_ARRAY_V0_2_CONSTELLATION.md).

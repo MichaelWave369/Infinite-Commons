@@ -137,6 +137,14 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
             onClick={() => setArrayMode(mode => mode === "beacon" ? "signal" : "beacon")}>
             {arrayMode === "beacon" ? "✧ Activate Signal Halo" : "✧ Return to Quiet Beacon"}
           </button>
+          <button type="button" className="third-light-button"
+            aria-pressed={arrayMode === "constellation"}
+            onClick={() => setArrayMode(mode => mode === "constellation" ? "beacon" : "constellation")}>
+            {arrayMode === "constellation" ? "✧ Close Constellation" : "✧ Show Constellation"}
+          </button>
+          {arrayMode === "constellation" && (
+            <span role="status">ORION-INSPIRED ART · NOT A HISTORICAL SKY RECONSTRUCTION</span>
+          )}
         </div>
       )}
       <div className="scene-render-controls" role="group" aria-label="Choose the Midnight Sierra display mode">
