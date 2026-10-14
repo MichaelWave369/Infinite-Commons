@@ -39,3 +39,6 @@ export function HeritageArchiveDialog({onClose}){
     </footer>
   </dialog>;
 }
+
+// React.lazy expects a default export from a dynamically imported module.
+export default HeritageArchiveDialog;
