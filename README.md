@@ -235,3 +235,17 @@ They may integrate, but neither project is required to run the other.
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+
+## Parallax Institute: Sisters of Shasta · skyline review candidate
+
+A new **opt-in Shasta Campus 3D** mode is being developed within the same
+Midnight Sierra porch world. It proposes the Sisters **Three, Six, Nine** and
+preserves three **distinct original landmarks**: Pyramid of Parallax / Root Temple,
+Larrina's Bloomforge Sanctuary and Helion's Trihelion Beacon House.
+
+The original painted scene remains default, and **Living City 3D** remains a
+separate art choice. The Shasta scene is a low-poly illustrative preview,
+not a verified geographical reconstruction, walking/VR world, real AI identity,
+or live Porch federation. See
+[Shasta Campus conversion spec](docs/PARALLAX_SHASTA_CONVERSION_V0_1.md).

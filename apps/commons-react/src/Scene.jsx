@@ -87,6 +87,7 @@ class ThreeBoundary extends React.Component {
 
 export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
   const [threeRequested, setThreeRequested] = useState(false);
+  const [vista, setVista] = useState("shasta");
   const [threeNotice, setThreeNotice] = useState("");
   const [reducedMotion, setReducedMotion] = useState(() => {
     try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
@@ -102,13 +103,14 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
 
   const availableForStyle = styleId === "midnight-sierra";
   const active3D = availableForStyle && threeRequested;
-  const use3D = () => {
+  const use3D = (nextVista) => {
     if (!canUseWebGL2()) {
       setThreeNotice("WebGL 2 unavailable. The painted Commons remains fully usable.");
       setThreeRequested(false);
       return;
     }
-    setThreeNotice("WebGL 2 preview. The same Commons locations and permissions are unchanged.");
+    setThreeNotice("WebGL 2 visual-only preview. No new Commons locations or permissions.");
+    setVista(nextVista);
     setThreeRequested(true);
   };
   const returnToPainted = () => {
@@ -121,21 +123,31 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
       data-renderer={active3D ? "webgl2" : "painted"}>
       {active3D ? (
         <ThreeBoundary key={styleId} onError={returnToPainted}>
-          <Suspense fallback={<div className="scene-loading" role="status">Building the Living City…</div>}>
-            <LivingCity reducedMotion={reducedMotion} onError={returnToPainted} />
+          <Suspense fallback={<div className="scene-loading" role="status">Painting the 3D horizon…</div>}>
+            <LivingCity reducedMotion={reducedMotion} onError={returnToPainted} vista={vista} />
           </Suspense>
         </ThreeBoundary>
       ) : <PaintedScene />}
       <div className="scene-vignette" aria-hidden="true" />
       <div className="scene-render-controls" role="group" aria-label="Choose the Midnight Sierra display mode">
         {availableForStyle && (active3D ? (
-          <button type="button" className="render-toggle" onClick={returnToPainted}>
-            ◧ Return to Painted View
-          </button>
+          <>
+            <button type="button" className="render-toggle" onClick={() => setVista(vista === "shasta" ? "city" : "shasta")}>
+              {vista === "shasta" ? "◇ Legacy Living City" : "△ Sisters of Shasta"}
+            </button>
+            <button type="button" className="render-toggle" onClick={returnToPainted}>
+              ◧ Return to Painted View
+            </button>
+          </>
         ) : (
-          <button type="button" className="render-toggle" onClick={use3D}>
-            ◈ Explore Living City 3D
-          </button>
+          <>
+            <button type="button" className="render-toggle" onClick={() => use3D("shasta")}>
+              △ Explore Shasta Campus 3D
+            </button>
+            <button type="button" className="render-toggle" onClick={() => use3D("city")}>
+              ◈ Explore Living City 3D
+            </button>
+          </>
         ))}
         {threeNotice && <span className="scene-render-note" role="status">{threeNotice}</span>}
       </div>
@@ -155,7 +167,7 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
         onClick={() => onVisit("commons.plaza")}>◇ <span>THE COMMONS</span></button>
       <div className="scene-caption">
         <span className="location-pin">◉ COMMONS / ARRIVAL TERRACE</span>
-        <span className="ambient-note">A thousand windows. A thousand stories.</span>
+        <span className="ambient-note">{active3D && vista === "shasta" ? "Three · Six · Nine · Root Temple · Trihelion · Bloomforge · Visual preview only" : "A thousand windows. A thousand stories."}</span>
       </div>
     </div>
   );

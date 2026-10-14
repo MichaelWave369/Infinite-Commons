@@ -8,6 +8,7 @@ import { LivingCityDistricts } from "./LivingCityDistricts.jsx";
 import { LivingCityWarmth } from "./LivingCityWarmth.jsx";
 import { LivingCityMotion } from "./LivingCityMotion.jsx";
 import { LivingCityArchitecture, PorchFacadeSoul } from "./LivingCityArchitecture.jsx";
+import { ShastaCampus } from "./ShastaCampus.jsx";
 
 /**
  * Optional three-dimensional art interpretation of commons.arrival.
@@ -188,7 +189,7 @@ function Terrace() {
   );
 }
 
-function LivingEnvironment({ reducedMotion }) {
+function LivingEnvironment({ reducedMotion, vista }) {
   return (
     <>
       <color attach="background" args={["#0b3d78"]} />
@@ -199,11 +200,15 @@ function LivingEnvironment({ reducedMotion }) {
       <PaintedSky />
       <Stars />
       <Clouds reducedMotion={reducedMotion} />
-      <CityInstances />
-      <CityRooflines />
-      <LivingCityDistricts />
-      <LivingCityArchitecture />
-      <LandmarkArchitecture />
+      {vista === "shasta" ? <ShastaCampus /> : (
+        <>
+          <CityInstances />
+          <CityRooflines />
+          <LivingCityDistricts />
+          <LivingCityArchitecture />
+          <LandmarkArchitecture />
+        </>
+      )}
       <Terrace />
       <TerraceStoneSurface />
       <EntranceDetails />
@@ -216,7 +221,7 @@ function LivingEnvironment({ reducedMotion }) {
   );
 }
 
-export default function LivingCity({ reducedMotion = false, onError }) {
+export default function LivingCity({ reducedMotion = false, onError, vista = "city" }) {
   return (
     <Canvas
       className="living-city-canvas"
@@ -230,7 +235,7 @@ export default function LivingCity({ reducedMotion = false, onError }) {
       }}
       onError={onError}
     >
-      <LivingEnvironment reducedMotion={reducedMotion} />
+      <LivingEnvironment reducedMotion={reducedMotion} vista={vista} />
     </Canvas>
   );
 }
