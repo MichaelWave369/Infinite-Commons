@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
 import trustedSceneHtml from "../../../web/index.html?raw";
 
 const LivingCity = lazy(() => import("./LivingCity.jsx"));
+const HeritageArchiveDialog = lazy(() => import("./HeritageArchiveDialog.jsx"));
 
 export function canUseWebGL2() {
   if (typeof document === "undefined") return false;
@@ -89,6 +90,7 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
   const [threeRequested, setThreeRequested] = useState(false);
   const [vista, setVista] = useState("shasta");
   const [arrayMode, setArrayMode] = useState("beacon");
+  const [archiveOpen, setArchiveOpen] = useState(false);
   const [threeNotice, setThreeNotice] = useState("");
   const [reducedMotion, setReducedMotion] = useState(() => {
     try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
@@ -112,9 +114,11 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
     }
     setThreeNotice("WebGL 2 visual-only preview. No new Commons locations or permissions.");
     setVista(nextVista);
+    setArchiveOpen(false);
     setThreeRequested(true);
   };
   const returnToPainted = () => {
+    setArchiveOpen(false);
     setThreeRequested(false);
     setThreeNotice("Painted adventure view restored.");
   };
@@ -130,6 +134,11 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
         </ThreeBoundary>
       ) : <PaintedScene />}
       <div className="scene-vignette" aria-hidden="true" />
+      {active3D && vista === "shasta" && archiveOpen && (
+        <Suspense fallback={null}>
+          <HeritageArchiveDialog onClose={() => setArchiveOpen(false)} />
+        </Suspense>
+      )}
       {active3D && vista === "shasta" && (
         <div className="third-light-operator" aria-label="Third Light Array simulation controls">
           <span>THE THIRD LIGHT ARRAY · FICTIONAL SKY PROJECTION</span>
@@ -145,12 +154,16 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
           {arrayMode === "constellation" && (
             <span role="status">ORION-INSPIRED ART · NOT A HISTORICAL SKY RECONSTRUCTION</span>
           )}
+          <button type="button" className="third-light-button"
+            aria-haspopup="dialog" onClick={() => setArchiveOpen(true)}>
+            ◇ Explore Heritage Archive
+          </button>
         </div>
       )}
       <div className="scene-render-controls" role="group" aria-label="Choose the Midnight Sierra display mode">
         {availableForStyle && (active3D ? (
           <>
-            <button type="button" className="render-toggle" onClick={() => setVista(vista === "shasta" ? "city" : "shasta")}>
+            <button type="button" className="render-toggle" onClick={() => { setArchiveOpen(false); setVista(vista === "shasta" ? "city" : "shasta"); }}>
               {vista === "shasta" ? "◇ Legacy Living City" : "△ Sisters of Shasta"}
             </button>
             <button type="button" className="render-toggle" onClick={returnToPainted}>

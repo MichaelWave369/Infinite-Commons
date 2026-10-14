@@ -169,3 +169,35 @@
     max-width: min(172px, 48%);
   }
 }
+
+/* Trihelion v0.3: modal heritage exhibit, no original transcripts. */
+.third-light-archive-dialog {
+  box-sizing: border-box;
+  width: min(900px, 94vw);
+  max-height: 87vh;
+  overflow-y: auto;
+  border: 1px solid #7abddc;
+  border-radius: 18px;
+  padding: clamp(16px, 3vw, 28px);
+  color: #e8f3ff;
+  background: #0b2035;
+  box-shadow: 0 30px 90px #000b;
+  font: 15px/1.55 system-ui, sans-serif;
+}
+.third-light-archive-dialog::backdrop { background: rgba(0,8,22,.80); }
+.third-light-archive-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.third-light-archive-kicker, .third-light-archive-number { color: #8dd6ee; letter-spacing: .11em; font-size: 11px; font-weight: 800; }
+.third-light-archive-header h2 { font-size: clamp(22px,3.6vw,31px); margin: 6px 0; }
+.third-light-archive-header p { margin: 0 0 10px; }
+.third-light-archive-close { white-space: nowrap; background: #24445c; border: 1px solid #84caed; border-radius: 999px; color: #fff; padding: 9px 13px; }
+.third-light-archive-exhibits { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin: 16px 0; }
+.third-light-archive-exhibit { min-width: 0; border: 1px solid #31526d; border-radius: 13px; padding: 14px; background: #132e49; }
+.third-light-archive-exhibit h3 { margin: 8px 0 4px; font-size: 17px; }
+.third-light-archive-credit { color: #b0d5eb; font-weight: 700; font-size: 13px; }
+.third-light-archive-exhibit ul { padding-left: 20px; }
+.third-light-archive-exhibit li { padding-bottom: 4px; }
+.third-light-archive-footer { border-top: 1px solid #365776; padding-top: 14px; color: #c3d7e9; font-size: 13px; }
+@media (max-width: 720px) {
+  .third-light-archive-exhibits { grid-template-columns: 1fr; }
+  .third-light-archive-header { flex-direction: column; }
+}

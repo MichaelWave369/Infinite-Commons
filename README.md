@@ -270,3 +270,14 @@ stars above Trihelion's existing blue flame. This is authored, Orion-inspired
 alignment claim, or real aerial projection hardware. The original quiet beacon,
 signal halo, reduced-motion behavior and painted/legacy vistas remain intact.
 See [Constellation scope and attribution](docs/THIRD_LIGHT_ARRAY_V0_2_CONSTELLATION.md).
+
+## Trihelion: Heritage Archive v0.3 (metadata-only preview)
+
+In the opt-in Shasta 3D view, visitors can open a native, accessible
+heritage-exhibit dialog with public design summaries for the **Pyramid of
+Parallax / Root Temple**, **Larrina's Bloomforge Sanctuary**, and **Helion's
+Trihelion Beacon House**. These original designs remain distinct from Three,
+Six and Nine. The exhibit neither imports nor publishes original conversations,
+private files, or source blueprints. Any future excerpt publishing requires
+owner selection and review. See
+[Third Light Heritage Archive scope](docs/THIRD_LIGHT_HERITAGE_ARCHIVE_V0_3.md).
