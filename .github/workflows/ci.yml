@@ -60,6 +60,7 @@ jobs:
             apps/commons-react/test-results/midnight-sierra-v04.png
             apps/commons-react/test-results/midnight-sierra-v05.png
             apps/commons-react/test-results/midnight-sierra-v06.png
+            apps/commons-react/test-results/shasta-v01-browser.png
           if-no-files-found: ignore
 
       - name: Ruff
