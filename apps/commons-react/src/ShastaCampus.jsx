@@ -1,6 +1,7 @@
 import React, {useMemo} from "react";
 import {Shape, DoubleSide} from "three";
 import {SHASTA_CAMPUS_V01 as campus} from "./shastaCampusPlan.mjs";
+import {ThirdLightArray} from "./ThirdLightArray.jsx";
 
 // Original low-poly, visual-only skyline proxies; no actual locations or model/Porch connections.
 const BASE=-7;
@@ -41,7 +42,7 @@ function RootTemple(){
     <mesh position={[0,11.15,0]}><cylinderGeometry args={[0.7,0.7,0.3,12]}/><meshBasicMaterial color="#e5c996" toneMapped={false}/></mesh>
   </group>;
 }
-function Trihelion(){
+function Trihelion({reducedMotion=false,arrayMode="beacon"}){
   const site=campus.heritage[1];
   return <group position={[site.x,BASE,site.z]}>
     <mesh position={[0,6.1,0]} rotation={[0,Math.PI/6,0]}>
@@ -52,8 +53,7 @@ function Trihelion(){
     {Array.from({length:9},(_,i)=><mesh key={i} position={[0,0.7+i*1.34,0]} rotation={[0,Math.PI/6,0]}>
       <cylinderGeometry args={[2.85,2.85,0.09,3]}/><meshBasicMaterial color="#90c8ed" toneMapped={false}/>
     </mesh>)}
-    <mesh position={[0,13.3,0]}><coneGeometry args={[0.75,2.4,8]}/><meshBasicMaterial color="#b9f5ff" toneMapped={false}/></mesh>
-    <mesh position={[0,14.6,0]}><sphereGeometry args={[0.3,8,8]}/><meshBasicMaterial color="#6dbaf5" toneMapped={false}/></mesh>
+    <ThirdLightArray mode={arrayMode} reducedMotion={reducedMotion}/>
   </group>;
 }
 function Bloomforge(){
@@ -83,10 +83,10 @@ function Trace({a,b,blue=false}){
 }
 function CausewaysAndGardens(){
   const segments=[
-    [[-6,-13],[-1,-27]], [[-1,-27],[-7,-37]], [[-7,-37],[-2,-48]],
+    [[-6,-13],[-1,-27]], [[-1,-27],[1,-37]], [[1,-37],[-2,-48]],
     [[-2,-48],[-12,-55]], [[-12,-55],[-17,-67]], [[-17,-67],[-22,-84]],
     [[-17,-67],[0,-77]],[[0,-77],[0,-88]], [[-17,-67],[18,-72]],[[18,-72],[21,-82]],
-    [[-7,-37],[14,-31]], [[-7,-37],[-13,-44]], [[-13,-44],[-12,-55]]
+    [[1,-37],[14,-31]], [[1,-37],[-13,-44]], [[-13,-44],[-12,-55]]
   ];
   return <group>
     {segments.map(([a,b],i)=><Trace key={i} a={a} b={b} blue={i>7}/>)}
@@ -106,12 +106,12 @@ function CausewaysAndGardens(){
     <mesh position={[-12,BASE+0.76,-43]}><sphereGeometry args={[0.48,10,8]}/><meshStandardMaterial color="#e2c28b"/></mesh>
   </group>;
 }
-export function ShastaCampus(){
+export function ShastaCampus({reducedMotion=false,arrayMode="beacon"}){
   return <group name="parallax-shasta-skyline-proxy">
     <Mountain/>
     <mesh position={[1,BASE-0.28,-60]}><boxGeometry args={[95,0.55,72]}/><meshStandardMaterial color="#263d48" roughness={1}/></mesh>
     <CausewaysAndGardens/>
     {campus.sisters.map(site=><Sister key={site.id} site={site}/>)}
-    <RootTemple/><Trihelion/><Bloomforge/>
+    <RootTemple/><Trihelion reducedMotion={reducedMotion} arrayMode={arrayMode}/><Bloomforge/>
   </group>;
 }
