@@ -160,3 +160,12 @@
   .third-light-operator { left: 7px; top: 7px; max-width: 155px; padding: 7px; font-size: 8px; }
   .third-light-button { padding: 7px 8px; font-size: 10px; }
 }
+
+/* Avoid overlap with 3D/painterly view controls on narrow screens. */
+@media (max-width: 650px) {
+  .third-light-operator {
+    top: 94px;
+    left: 7px;
+    max-width: min(172px, 48%);
+  }
+}

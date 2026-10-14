@@ -11,7 +11,7 @@ test("The Third Light Array belongs to Trihelion and preserves source credit",()
   assert.equal(campus.heritage.find(x=>x.id==="trihelion").canonicalSideM,36.9);
   assert.equal(array.emitterCount,9);
   assert.equal(array.haloSides,3);
-  assert.deepEqual(array.modes,["beacon","signal"]);
+  assert.deepEqual(array.modes,["beacon","signal","constellation"]);
 });
 test("modes stay fictional and disconnected from live systems",()=>{
   assert.equal(array.origin,"FICTIONAL_VISUAL_SIMULATION");

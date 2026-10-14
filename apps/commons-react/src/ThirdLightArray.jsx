@@ -2,6 +2,7 @@ import React, {useEffect,useMemo,useRef} from "react";
 import {useFrame} from "@react-three/fiber";
 import {DoubleSide} from "three";
 import {THIRD_LIGHT_ARRAY_V01 as spec,thirdLightState} from "./thirdLightArrayPlan.mjs";
+import {ConstellationProjection} from "./ConstellationProjection.jsx";
 
 /**
  * Virtual crown artwork ONLY. No hardware control, drones, physical projector,
@@ -82,5 +83,6 @@ export function ThirdLightArray({mode="beacon",reducedMotion=false}){
       <meshBasicMaterial ref={beamMaterial} color="#65c6ff" transparent opacity={0.075}
         depthWrite={false} side={DoubleSide} toneMapped={false}/>
     </mesh>
+    {mode==="constellation" && <ConstellationProjection/>}
   </group>;
 }

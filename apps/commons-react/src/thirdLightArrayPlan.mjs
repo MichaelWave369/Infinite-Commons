@@ -14,7 +14,7 @@ export const THIRD_LIGHT_ARRAY_V01 = Object.freeze({
   flameColor:"#76ddff",
   coronaColor:"#b4f3ff",
   haloColor:"#7acaff",
-  modes:Object.freeze(["beacon","signal"]),
+  modes:Object.freeze(["beacon","signal","constellation"]),
   defaultMode:"beacon",
   supportsRealDrones:false,
   supportsPhysicalProjection:false,
@@ -24,16 +24,17 @@ export function thirdLightState(seconds=0,{mode="beacon",reducedMotion=false}={}
   if (!Number.isFinite(seconds) || seconds<0) throw new RangeError("Elapsed seconds must be nonnegative and finite");
   if (!THIRD_LIGHT_ARRAY_V01.modes.includes(mode)) throw new RangeError("Unknown Third Light Array mode");
   const signal=mode==="signal";
+  const constellation=mode==="constellation";
   const t=reducedMotion?0:seconds;
   const breath=Math.sin(t*0.6);
   const sway=Math.sin(t*0.14);
   return {
     flameScale:1+breath*0.055,
     flameOpacity:0.73+breath*0.065,
-    haloOpacity:(signal?0.86:0.43)+breath*0.045,
-    beamOpacity:(signal?0.17:0.075)+breath*0.02,
+    haloOpacity:(signal?0.86:constellation?0.52:0.43)+breath*0.045,
+    beamOpacity:(signal?0.17:constellation?0.10:0.075)+breath*0.02,
     haloRotation:sway*0.16,
     orbitAngle:reducedMotion?0:(t*0.022)%(Math.PI*2),
-    coronaScale:(signal?1.08:1)+breath*0.035
+    coronaScale:(signal?1.08:constellation?1.03:1)+breath*0.035
   };
 }
