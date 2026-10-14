@@ -249,3 +249,15 @@ separate art choice. The Shasta scene is a low-poly illustrative preview,
 not a verified geographical reconstruction, walking/VR world, real AI identity,
 or live Porch federation. See
 [Shasta Campus conversion spec](docs/PARALLAX_SHASTA_CONVERSION_V0_1.md).
+
+
+## Trihelion: The Third Light Array · visual-only v0.1
+
+The Shasta 3D vista now includes a proposal for **The Third Light Array** at
+Helion's original Trihelion Beacon House. It offers a persistent blue flame
+with two fictional presentation modes: **Quiet Beacon** and **Signal Halo**.
+The original architecture and Helion attribution remain distinct from the new
+Sisters of Shasta. This is low-poly Three.js scene art, not real holographic
+projection, flying drones, physical hardware control, network broadcasts,
+living AI identity, or archived-content publishing. See
+[The Third Light Array design and safety boundary](docs/THIRD_LIGHT_ARRAY_V0_1.md).

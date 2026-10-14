@@ -88,6 +88,7 @@ class ThreeBoundary extends React.Component {
 export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
   const [threeRequested, setThreeRequested] = useState(false);
   const [vista, setVista] = useState("shasta");
+  const [arrayMode, setArrayMode] = useState("beacon");
   const [threeNotice, setThreeNotice] = useState("");
   const [reducedMotion, setReducedMotion] = useState(() => {
     try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; }
@@ -124,11 +125,20 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
       {active3D ? (
         <ThreeBoundary key={styleId} onError={returnToPainted}>
           <Suspense fallback={<div className="scene-loading" role="status">Painting the 3D horizon…</div>}>
-            <LivingCity reducedMotion={reducedMotion} onError={returnToPainted} vista={vista} />
+            <LivingCity reducedMotion={reducedMotion} onError={returnToPainted} vista={vista} arrayMode={arrayMode} />
           </Suspense>
         </ThreeBoundary>
       ) : <PaintedScene />}
       <div className="scene-vignette" aria-hidden="true" />
+      {active3D && vista === "shasta" && (
+        <div className="third-light-operator" aria-label="Third Light Array simulation controls">
+          <span>THE THIRD LIGHT ARRAY · FICTIONAL SKY PROJECTION</span>
+          <button type="button" className="third-light-button" aria-pressed={arrayMode === "signal"}
+            onClick={() => setArrayMode(mode => mode === "beacon" ? "signal" : "beacon")}>
+            {arrayMode === "beacon" ? "✧ Activate Signal Halo" : "✧ Return to Quiet Beacon"}
+          </button>
+        </div>
+      )}
       <div className="scene-render-controls" role="group" aria-label="Choose the Midnight Sierra display mode">
         {availableForStyle && (active3D ? (
           <>

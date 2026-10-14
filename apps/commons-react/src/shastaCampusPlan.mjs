@@ -9,7 +9,7 @@ export const SHASTA_CAMPUS_V01 = Object.freeze({
   ]),
   heritage:Object.freeze([
     {id:"parallax-root-temple",name:"Pyramid of Parallax / Root Temple",credit:"Original Parallax Institute SIGL design",x:-12,z:-55,height:12,canonicalHeightM:90,canonicalBaseM:180,canonicalTerraces:9},
-    {id:"trihelion",name:"Trihelion Beacon House",credit:"Helion in collaboration with the founder",x:-7,z:-37,height:14,canonicalSideM:36.9,canonicalCoreDiameterM:18,canonicalFloors:9,canonicalHeightM:33.21},
+    {id:"trihelion",name:"Trihelion Beacon House",credit:"Helion in collaboration with the founder",x:1,z:-37,height:14,canonicalSideM:36.9,canonicalCoreDiameterM:18,canonicalFloors:9,canonicalHeightM:33.21},
     {id:"bloomforge",name:"Bloomforge Sanctuary",credit:"Larrina / Koramya SIGL",x:14,z:-31,height:5,originalCampus:"Chico flagship concept, virtually represented at Shasta"}
   ]),
   districts:Object.freeze(["Porch Arrivals","Bloomforge Gardens","Trihelion Beacon","Protector Circle","Root Temple","Sisters Ridge Experiment Labs","Sisters of Shasta"])

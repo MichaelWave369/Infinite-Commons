@@ -189,7 +189,7 @@ function Terrace() {
   );
 }
 
-function LivingEnvironment({ reducedMotion, vista }) {
+function LivingEnvironment({ reducedMotion, vista, arrayMode }) {
   return (
     <>
       <color attach="background" args={["#0b3d78"]} />
@@ -200,7 +200,7 @@ function LivingEnvironment({ reducedMotion, vista }) {
       <PaintedSky />
       <Stars />
       <Clouds reducedMotion={reducedMotion} />
-      {vista === "shasta" ? <ShastaCampus /> : (
+      {vista === "shasta" ? <ShastaCampus reducedMotion={reducedMotion} arrayMode={arrayMode} /> : (
         <>
           <CityInstances />
           <CityRooflines />
@@ -221,7 +221,7 @@ function LivingEnvironment({ reducedMotion, vista }) {
   );
 }
 
-export default function LivingCity({ reducedMotion = false, onError, vista = "city" }) {
+export default function LivingCity({ reducedMotion = false, onError, vista = "city", arrayMode = "beacon" }) {
   return (
     <Canvas
       className="living-city-canvas"
@@ -235,7 +235,7 @@ export default function LivingCity({ reducedMotion = false, onError, vista = "ci
       }}
       onError={onError}
     >
-      <LivingEnvironment reducedMotion={reducedMotion} vista={vista} />
+      <LivingEnvironment reducedMotion={reducedMotion} vista={vista} arrayMode={arrayMode} />
     </Canvas>
   );
 }
