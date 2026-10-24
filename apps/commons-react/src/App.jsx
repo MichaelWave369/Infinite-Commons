@@ -4,6 +4,7 @@ import { phiSpacePanel, validatePublicPhiSpace } from "../../../web/phispace-pub
 import { createLocalPreviewController, localPreviewPanel } from "../../../web/phispace-local-preview.mjs";
 import exampleHome from "../../../web/fixtures/phispace-public.json";
 import { Scene } from "./Scene.jsx";
+import { CommonsNexus } from "./CommonsNexus.jsx";
 
 const PANELS = Object.freeze({
   "midnight.radio": {
@@ -179,6 +180,7 @@ export function App() {
             <span className="brand-symbol" aria-hidden="true">✳</span>
             <span><strong>INFINITE COMMONS</strong><small>A world you can visit</small></span>
           </a>
+          <nav aria-label="Commons destinations" className="commons-top-nav"><a href="#portal-plaza">WORLD PORTALS ↓</a><a href="#roundtable-hall">GRAND ROUNDTABLE ↓</a></nav>
           <span className="prototype-label">REACT EXPERIENCE · PUBLIC DEMO</span>
         </header>
         <main id="main-content" className="layout">
@@ -258,6 +260,7 @@ export function App() {
               Semantic locations remain unchanged for all {PACKS.length} appearances.
               <span className="sr-only">World fingerprint: {WORLD_FINGERPRINT}.</span>
             </p>
+            <CommonsNexus />
           </section>
         </main>
         <footer className="footer">
