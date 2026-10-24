@@ -67,7 +67,7 @@ test("R10 revocation overrides current human fingerprint pin but preserves valid
   await page.getByRole("checkbox",{name:/I understand this closes the selected key/}).check();
   await page.getByRole("button",{name:"Apply local key status change"}).click();
   await expect(journal).toContainText("REVOKED");
-  await expect(page.getByRole("status")).toContainText("Local key-history journal updated");
+  await expect(page.getByText(/Local key-history journal updated/)).toBeVisible();
   await page.getByRole("textbox",{name:/Trusted Ed25519 public-key SHA-256 fingerprint/})
     .fill(signature.publicKeyFingerprintSha256);
   await page.getByRole("checkbox",{name:/I independently obtained and checked/}).check();
@@ -122,6 +122,6 @@ test("R10 unsigned export/import preserves closure notes but never restores a fi
   await expect(journal).toContainText("2 tracked public keys");
   await expect(journal).toContainText("RETIRED");
   await expect(journal).toContainText("ACTIVE");
-  await expect(page.getByRole("status")).toContainText("Unsigned history imported");
+  await expect(page.getByText(/Unsigned history imported/)).toBeVisible();
   await expect(page.getByRole("button",{name:"Convene five seats"})).toBeVisible();
 });
