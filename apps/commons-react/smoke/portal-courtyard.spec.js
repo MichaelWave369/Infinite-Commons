@@ -38,18 +38,9 @@ test("four accessible 3D gateway controls route to the same canonical story pane
     }
     await controls.getByRole("link", { name: /Visit the Grand Roundtable/ }).click();
     await expect(page).toHaveURL(/#roundtable-hall/);
-    // Heavy off-screen WebGL can also lose its context *after* opening the
-    // Roundtable anchor. Check again before assuming the 3D controls exist.
-    if (await current.getAttribute("data-renderer") === "webgl2") {
-      await page.getByRole("button", { name: /Legacy Living City/ }).click();
-      if (await current.getAttribute("data-renderer") === "webgl2") {
-        await expect(page.getByRole("button", { name: /Legacy Living City/ })).toHaveAttribute("aria-pressed", "true");
-        await page.getByRole("button", { name: /Sisters of Shasta/ }).click();
-        if (await current.getAttribute("data-renderer") === "webgl2") {
-          await expect(page.getByRole("button", { name: /Sisters of Shasta/ })).toHaveAttribute("aria-pressed", "true");
-        }
-      }
-    }
+    // Scene-to-scene switching is already covered by Shasta, Heritage, and
+    // Third Light browser suites. This test only owns the four portal-to-HTML
+    // story transitions and returning safely from this optional vista.
     if (await current.getAttribute("data-renderer") === "webgl2") {
       await page.getByRole("button", { name: /Return to Painted View/ }).click();
     }
