@@ -158,6 +158,16 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Living Portal Network / Wayfinder · v0.2
+
+Commons now has a **Wayfinder Desk** beneath the original four fictional Portal Plaza previews. The Desk offers three curated public-project doors: **Field Atlas**, **Field Constellation**, and the **Nevora Codex orientation** (explicitly *not* a Nevora game). Each exact HTTPS destination was found in its owner's repository README; current uptime is **not** claimed.
+
+Visitors must inspect a link before choosing the external site in a separate tab. Bookmarks are optional and browser-local with a **Forget all bookmarks** control. Safe, shareable `?wayfinder=<known-id>` Commons links preserve the return experience and never auto-transfer.
+
+No live game-world portal, cross-site identity, agent grant, session federation, or new backend is implied. All original portal previews, Roundtable rehearsal/STATION, four semantic Commons nodes, 20 appearance styles, and PhiSpace privacy boundaries stay intact.
+
+See [Wayfinder v0.2 source review, rules and test plan](docs/LIVING_PORTAL_WAYFINDER_V0_2.md).
+
 ## Portal Plaza + Knights of the Nested Roundtables · v0.1
 
 The public React Commons experience now includes an **original four-world

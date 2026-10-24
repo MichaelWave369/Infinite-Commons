@@ -583,3 +583,43 @@
 @media (max-width: 800px) {
   .commons-top-nav { width: 100%; }
 }
+
+
+/* Wayfinder v0.2: owner-documented sites, opt-in handoff, private local bookmarks. */
+.wayfinder-desk {
+  margin: 31px 0;
+  border: 1px solid #77acc26b;
+  border-radius: 20px;
+  padding: clamp(16px,3vw,28px);
+  background: radial-gradient(ellipse at 100% 0%, #264465a8, transparent 60%), #0b2138;
+}
+.wayfinder-header { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 18px; }
+.wayfinder-header h2 { font-family: Georgia,serif; font-size: clamp(23px,3vw,35px); font-weight: 500; color: #fff0db; margin: 8px 0 10px; }
+.wayfinder-header h2 em { color: #a6e4d9; }
+.wayfinder-header p { max-width: 660px; color: #adc8d7; font-size: 12px; line-height: 1.65; margin: 0; }
+.wayfinder-summary { white-space: nowrap; border: 1px solid #6cbdac81; border-radius: 99px; padding: 9px; font-size: 9px; font-weight: 800; color: #9bddd2; letter-spacing: .07em; }
+.wayfinder-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+.wayfinder-card { min-width: 0; display: flex; align-items: flex-start; flex-direction: column; gap: 10px; border: 1px solid color-mix(in srgb,var(--wayfinder-glow),transparent 55%); border-radius: 13px; background: #122c43; padding: 17px; }
+.wayfinder-glyph { display: grid; place-items: center; width: 47px; height: 47px; color: var(--wayfinder-glow); font-size: 29px; border: 1px solid var(--wayfinder-glow); border-radius: 13px; background: #0b1e35; box-shadow: 0 0 20px color-mix(in srgb,var(--wayfinder-glow),transparent 78%); }
+.wayfinder-card > div:last-child { display: flex; flex: 1; flex-direction: column; width: 100%; }
+.wayfinder-kind { font-size: 9px; color: var(--wayfinder-glow); text-transform: uppercase; letter-spacing: .09em; font-weight: 800; }
+.wayfinder-card h3 { font-size: 21px; font-family: Georgia,serif; font-weight: 500; margin: 7px 0 2px; color: #f4eee0; }
+.wayfinder-subtitle { margin: 0 !important; font-weight: 700; color: var(--wayfinder-glow) !important; }
+.wayfinder-card p { color: #bbd3e2; font-size: 11px; line-height: 1.6; margin: 10px 0 14px; flex: 1; }
+.wayfinder-choose,.wayfinder-exit { display: inline-flex; justify-content: center; align-items: center; padding: 10px 12px; border: 1px solid #88b6d0; color: #ecf9ff; background: #174762; border-radius: 9px; text-decoration: none; font: 800 11px/1.35 system-ui,sans-serif; cursor: pointer; text-align: center; }
+.wayfinder-choose:hover,.wayfinder-exit:hover { background: #216d8a; }
+.wayfinder-exit { background: #206c5c; border-color: #9ce3c2; color: #fff; }
+.wayfinder-inspection { margin-top: 17px; border: 1px solid #75c4b8; background: #0a1c30; padding: clamp(14px,2vw,23px); border-radius: 14px; }
+.wayfinder-inspection-header { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+.wayfinder-inspection h3 { color: #f6e9d7; font: 500 25px Georgia,serif; margin: 8px 0 10px; }
+.wayfinder-inspection p { color: #bdd3e2; font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.wayfinder-inspection code { overflow-wrap: anywhere; color: #a3e6d5; }
+.wayfinder-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+.wayfinder-passport { margin-top: 17px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 13px; border: 1px dashed #7691aa; border-radius: 11px; }
+.wayfinder-passport span { font-size: 10px; font-weight: 800; color: #b5d6e6; margin-right: auto; }
+.wayfinder-passport button { font-size: 10px; background: #254964; color: #eefbff; border: 1px solid #6ba8c6; padding: 8px; border-radius: 8px; cursor: pointer; }
+.wayfinder-notice { color: #aaf2e4; font-size: 11px; overflow-wrap: anywhere; }
+.wayfinder-desk a:focus-visible,.wayfinder-desk button:focus-visible { outline: 3px solid #fff0a6; outline-offset: 3px; }
+@media(max-width: 940px) { .wayfinder-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width: 640px) { .wayfinder-grid { grid-template-columns: 1fr; } .wayfinder-header { align-items: flex-start; flex-direction: column; } .wayfinder-summary { white-space: normal; } }
+@media(prefers-reduced-motion:reduce) { .wayfinder-desk * { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }

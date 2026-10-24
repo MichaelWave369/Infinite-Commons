@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { WayfinderDesk } from "./WayfinderDesk.jsx";
 import {
   PORTALS, PORTAL_STATUSES, portalById, ROUNDTABLE_ROLES,
   ROUNDTABLE_DEFAULT_AGENDA, MAX_AGENDA_LENGTH,
@@ -99,6 +100,8 @@ export function CommonsNexus() {
           <p className="portal-boundary">This is an original in-page vignette. No account, external origin, private Porch or agent was opened.</p>
         </section>
       )}
+
+      <WayfinderDesk />
 
       <div className="roundtable-hall" id="roundtable-hall">
         <div className="roundtable-story">

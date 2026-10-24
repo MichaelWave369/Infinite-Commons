@@ -180,7 +180,7 @@ export function App() {
             <span className="brand-symbol" aria-hidden="true">✳</span>
             <span><strong>INFINITE COMMONS</strong><small>A world you can visit</small></span>
           </a>
-          <nav aria-label="Commons destinations" className="commons-top-nav"><a href="#portal-plaza">WORLD PORTALS ↓</a><a href="#roundtable-hall">GRAND ROUNDTABLE ↓</a></nav>
+          <nav aria-label="Commons destinations" className="commons-top-nav"><a href="#portal-plaza">WORLD PORTALS ↓</a><a href="#portal-wayfinder">WAYFINDER ↓</a><a href="#roundtable-hall">GRAND ROUNDTABLE ↓</a></nav>
           <span className="prototype-label">REACT EXPERIENCE · PUBLIC DEMO</span>
         </header>
         <main id="main-content" className="layout">
