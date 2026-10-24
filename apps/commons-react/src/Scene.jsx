@@ -87,7 +87,7 @@ class ThreeBoundary extends React.Component {
   }
 }
 
-export function Scene({ scene, onVisit, onPortalPreview, styleId = "midnight-sierra" }) {
+export function Scene({ scene, onVisit, onPortalPreview, activeExpeditionPortalId = null, expeditionVisited = [], styleId = "midnight-sierra" }) {
   const [threeRequested, setThreeRequested] = useState(false);
   const [vista, setVista] = useState("shasta");
   const [arrayMode, setArrayMode] = useState("beacon");
@@ -132,7 +132,8 @@ export function Scene({ scene, onVisit, onPortalPreview, styleId = "midnight-sie
       {active3D ? (
         <ThreeBoundary key={styleId} onError={returnToPainted}>
           <Suspense fallback={<div className="scene-loading" role="status">Painting the 3D horizon…</div>}>
-            <LivingCity reducedMotion={reducedMotion} onError={returnToPainted} vista={vista} arrayMode={arrayMode} />
+            <LivingCity reducedMotion={reducedMotion} onError={returnToPainted} vista={vista} arrayMode={arrayMode}
+              activeExpeditionPortalId={activeExpeditionPortalId} expeditionVisited={expeditionVisited} />
           </Suspense>
         </ThreeBoundary>
       ) : <PaintedScene />}
@@ -195,16 +196,19 @@ export function Scene({ scene, onVisit, onPortalPreview, styleId = "midnight-sie
         <div className="portal-3d-operator" role="group" aria-label="Explore the four original story gateways">
           <strong>THE LIVING PORTAL COURTYARD</strong>
           <span>Visual sculptures · original story windows only</span>
+          {activeExpeditionPortalId && <span className="portal-3d-waypoint">EXPEDITION CURRENT: {PORTALS.find(p => p.id === activeExpeditionPortalId)?.name}</span>}
           <div className="portal-3d-gates">
             {PORTALS.map(portal => (
               <button type="button" key={portal.id}
                 onClick={() => onPortalPreview?.(portal.id)}
-                aria-label={"Open " + portal.name + " story preview from 3D courtyard"}>
+                aria-label={"Open " + portal.name + " story preview from 3D courtyard"}
+                data-expedition-active={activeExpeditionPortalId === portal.id ? "true" : "false"}>
                 <span aria-hidden="true" style={{ color: portal.color }}>{portal.symbol}</span>
                 {portal.name}
               </button>
             ))}
           </div>
+          <a href="#commons-expedition">Follow the five-stop Expedition ↓</a>
           <a href="#roundtable-hall">Visit the Grand Roundtable ↓</a>
         </div>
       )}
