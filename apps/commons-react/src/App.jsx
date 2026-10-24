@@ -6,6 +6,10 @@ import exampleHome from "../../../web/fixtures/phispace-public.json";
 import { Scene } from "./Scene.jsx";
 import { CommonsNexus } from "./CommonsNexus.jsx";
 import { portalById } from "./commonsPortalRegistry.mjs";
+import {
+  beginExpedition, expeditionActivePortalId, inspectExpeditionStory,
+  advanceExpedition, finishExpedition
+} from "./commonsExpedition.mjs";
 
 const PANELS = Object.freeze({
   "midnight.radio": {
@@ -97,6 +101,7 @@ function Dialog({ panel, onDismiss, dialogRef }) {
 export function App() {
   const [pack, setPack] = useState(safeSavedStyle);
   const [selectedPortalId, setSelectedPortalId] = useState(null);
+  const [expedition, setExpedition] = useState(null);
   const [panel, setPanel] = useState(null);
   const [previewName, setPreviewName] = useState(null);
   const [importStatus, setImportStatus] = useState("No local PhiSpace selected. Files stay on this device.");
@@ -123,6 +128,8 @@ export function App() {
       return;
     }
     if (!portalById(id)) return;
+    setExpedition(current => expeditionActivePortalId(current) === id
+      ? inspectExpeditionStory(current, id) : current);
     setSelectedPortalId(id);
     // After React commits the preview, move keyboard focus to its own HTML
     // region. This works for BOTH 3D overlay controls and standard portal cards.
@@ -248,7 +255,8 @@ export function App() {
                 <span className="online-badge">● LOCAL-ONLY DEMO</span>
               </div>
             </div>
-            <Scene scene={pack.scene} styleId={pack.id} onVisit={visit} onPortalPreview={openPortalPreview} />
+            <Scene scene={pack.scene} styleId={pack.id} onVisit={visit} onPortalPreview={openPortalPreview}
+              activeExpeditionPortalId={expeditionActivePortalId(expedition)} expeditionVisited={expedition?.visited ?? []} />
             <div className="below-scene">
               <div className="story-copy">
                 <div className="eyebrow">THE FIRST THRESHOLD</div>
@@ -278,7 +286,11 @@ export function App() {
               Semantic locations remain unchanged for all {PACKS.length} appearances.
               <span className="sr-only">World fingerprint: {WORLD_FINGERPRINT}.</span>
             </p>
-            <CommonsNexus selectedPortalId={selectedPortalId} onPortalPreview={openPortalPreview} />
+            <CommonsNexus selectedPortalId={selectedPortalId} onPortalPreview={openPortalPreview}
+              expedition={expedition} onExpeditionStart={() => setExpedition(beginExpedition())}
+              onExpeditionNext={() => setExpedition(current => advanceExpedition(current))}
+              onExpeditionFinish={() => setExpedition(current => finishExpedition(current))}
+              onExpeditionReset={() => setExpedition(current => current?.finished ? beginExpedition() : null)} />
           </section>
         </main>
         <footer className="footer">

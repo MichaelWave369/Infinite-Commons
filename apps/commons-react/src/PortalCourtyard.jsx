@@ -19,7 +19,7 @@ function portalSilhouette() {
   return outline;
 }
 
-function Gate({ gate, index, reducedMotion }) {
+function Gate({ gate, index, reducedMotion, active = false, visited = false }) {
   const halo = useRef(null);
   const interior = useMemo(portalSilhouette, []);
   useFrame(({ clock }) => {
@@ -38,6 +38,18 @@ function Gate({ gate, index, reducedMotion }) {
         <cylinderGeometry args={[1.81, 1.81, 0.06, 24]} />
         <meshBasicMaterial color={gate.color} toneMapped={false} />
       </mesh>
+      {active && (
+        <mesh position={[0, 0.22, 0.16]} rotation={[-Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[2.04, 0.12, 7, 36]} />
+          <meshBasicMaterial color="#fff1c9" toneMapped={false} />
+        </mesh>
+      )}
+      {visited && (
+        <mesh position={[0, 0.6, 1.35]}>
+          <octahedronGeometry args={[0.28, 0]} />
+          <meshBasicMaterial color="#a0f5db" toneMapped={false} />
+        </mesh>
+      )}
       <mesh position={[0, 0.19, 0]}>
         <shapeGeometry args={[interior]} />
         <meshBasicMaterial color={gate.color} transparent opacity={0.27}
@@ -141,7 +153,7 @@ function PathStone({ from, to, color }) {
 }
 
 /** Courtyard of four independently themed worlds + decorative Roundtable heart. */
-export function PortalCourtyard({ reducedMotion = false }) {
+export function PortalCourtyard({ reducedMotion = false, activeExpeditionPortalId = null, expeditionVisited = [] }) {
   const plan = useMemo(portalCourtyardPlan, []);
   return (
     <group name="commons-portal-courtyard-public-art">
@@ -160,7 +172,8 @@ export function PortalCourtyard({ reducedMotion = false }) {
       {plan.gates.map((gate, index) => (
         <React.Fragment key={gate.id}>
           <PathStone from={[0, plan.centralTable.z]} to={[gate.x, gate.z + 1.7]} color={gate.color} />
-          <Gate gate={gate} index={index} reducedMotion={reducedMotion} />
+          <Gate gate={gate} index={index} reducedMotion={reducedMotion}
+            active={activeExpeditionPortalId === gate.id} visited={expeditionVisited.includes(gate.id)} />
         </React.Fragment>
       ))}
       <CouncilBeacon table={plan.centralTable} reducedMotion={reducedMotion} />

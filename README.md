@@ -158,6 +158,16 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Commons Expedition Trail / Rung 4
+
+The **Explorer's Trail** adds a guided, five-threshold journey through the four original fantasy-world story previews and into the **Grand Roundtable**. A session-only route board shows the active stop, its authored clue, inspected-story checkmarks and the next threshold. Only actually opening the **current** in-page story window advances its progress; ordinary portal cards and the optional 3D courtyard HTML buttons obey the same rule.
+
+In the 3D Portal Courtyard, the current expedition gate glows with an extra ring and inspected destinations gain small decorative markers. All visitor interaction remains in native accessible HTML. The painted mode and mobile receive the same complete story route.
+
+Expeditions **reset on refresh**, store no profile or remote data, and never invoke a game, independent AI, credentials or external destination. Their completion is *not* the five-seat STATION ceremony. The existing **STATION**, Wayfinder, PhiSpace, four core Commons nodes and 20 aesthetic packs remain unchanged.
+
+See [Rung 4 expedition acceptance, provenance and state contract](docs/EXPEDITION_TRAIL_R04.md).
+
 ## Living Portal Courtyard / Rung 3
 
 The optional 3D Midnight Sierra experience now includes a third **Portal Courtyard** vista alongside Shasta and Living City. Four independently colored original gateway sculptures and a ceremonial **Grand Roundtable beacon** turn the Portal Plaza into a visible place.

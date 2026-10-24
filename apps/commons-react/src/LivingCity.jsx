@@ -190,7 +190,7 @@ function Terrace() {
   );
 }
 
-function LivingEnvironment({ reducedMotion, vista, arrayMode }) {
+function LivingEnvironment({ reducedMotion, vista, arrayMode, activeExpeditionPortalId, expeditionVisited }) {
   return (
     <>
       <color attach="background" args={["#0b3d78"]} />
@@ -201,7 +201,7 @@ function LivingEnvironment({ reducedMotion, vista, arrayMode }) {
       <PaintedSky />
       <Stars />
       <Clouds reducedMotion={reducedMotion} />
-      {vista === "portals" ? <PortalCourtyard reducedMotion={reducedMotion} /> : (
+      {vista === "portals" ? <PortalCourtyard reducedMotion={reducedMotion} activeExpeditionPortalId={activeExpeditionPortalId} expeditionVisited={expeditionVisited} /> : (
         <>
           {vista === "shasta" ? <ShastaCampus reducedMotion={reducedMotion} arrayMode={arrayMode} /> : (
             <>
@@ -226,7 +226,7 @@ function LivingEnvironment({ reducedMotion, vista, arrayMode }) {
   );
 }
 
-export default function LivingCity({ reducedMotion = false, onError, vista = "city", arrayMode = "beacon" }) {
+export default function LivingCity({ reducedMotion = false, onError, vista = "city", arrayMode = "beacon", activeExpeditionPortalId = null, expeditionVisited = [] }) {
   return (
     <Canvas
       className="living-city-canvas"
@@ -240,7 +240,8 @@ export default function LivingCity({ reducedMotion = false, onError, vista = "ci
       }}
       onError={onError}
     >
-      <LivingEnvironment reducedMotion={reducedMotion} vista={vista} arrayMode={arrayMode} />
+      <LivingEnvironment reducedMotion={reducedMotion} vista={vista} arrayMode={arrayMode}
+        activeExpeditionPortalId={activeExpeditionPortalId} expeditionVisited={expeditionVisited} />
     </Canvas>
   );
 }
