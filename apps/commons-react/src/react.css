@@ -896,3 +896,91 @@
 @media (max-width: 690px) { .nested-chambers-intro { flex-direction: column; align-items: start; } .chamber-steps { grid-template-columns: repeat(3,minmax(0,1fr)); } .chamber-identity { align-items: start; } }
 @media (max-width: 420px) { .chamber-steps { grid-template-columns: repeat(2,minmax(0,1fr)); } .chamber-insignia { width: 45px; height: 45px; } }
 @media (prefers-reduced-motion: reduce) { .nested-chambers *, .nested-chambers *::before { animation: none !important; transition: none !important; } }
+
+
+/* Commons R6: review-only ThinkTank TT-35 local file handoff. */
+.thinktank-handoff {
+  margin: 30px 0 0;
+  padding: clamp(18px, 3vw, 27px);
+  border: 1px solid #76bac8a6;
+  border-radius: 18px;
+  background: radial-gradient(ellipse at 100% 0%, #2056629e, transparent 55%), #0a2536;
+  color: #eff7f9;
+}
+.thinktank-handoff-heading {
+  display: flex; justify-content: space-between; align-items: end; gap: 16px;
+  margin-bottom: 20px;
+}
+.thinktank-handoff-heading h2 {
+  color: #fff1d8; font: 500 clamp(24px, 3vw, 34px)/1.15 Georgia,serif;
+  margin: 7px 0 10px;
+}
+.thinktank-handoff-heading h2 em { color: #97dfe9; }
+.thinktank-handoff-heading p {
+  color: #b4d0dd; line-height: 1.62; font-size: 12px; max-width: 64ch; margin: 0;
+}
+.thinktank-handoff-stamp {
+  flex: 0 0 auto; font-weight: 800; font-size: 9px; letter-spacing: .04em;
+  color: #a4e4d8; border: 1px solid #67c9bb; border-radius: 100px; padding: 9px;
+}
+.thinktank-handoff-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.thinktank-handoff-form, .thinktank-handoff-instructions {
+  display: grid; align-content: start; gap: 10px; min-width: 0; padding: clamp(15px,2vw,22px);
+  border-radius: 14px; background: #0c1d30; border: 1px solid #5c869f;
+}
+.thinktank-handoff-form label {
+  font-size: 12px; font-weight: 800; color: #d8f4f5;
+}
+.thinktank-handoff-form :is(textarea,input,select) {
+  box-sizing: border-box; max-width: 100%; width: 100%;
+  font: 13px/1.5 system-ui,sans-serif; color: #effaff; background: #071525;
+  border: 1px solid #7396a8; border-radius: 8px; padding: 10px;
+}
+.thinktank-handoff-form textarea { resize: vertical; }
+.thinktank-handoff-form p, .thinktank-handoff-instructions p {
+  color: #bed2dc; font-size: 11px; line-height: 1.65; margin: 0;
+}
+.thinktank-handoff-secondary, .thinktank-handoff-primary {
+  justify-self: start; border-radius: 9px; padding: 11px 12px;
+  cursor: pointer; font: 800 12px/1.35 system-ui,sans-serif; color: #efffff;
+}
+.thinktank-handoff-secondary { background: #284760; border: 1px solid #92a5c0; }
+.thinktank-handoff-primary { background: #277367; border: 1px solid #a6efcc; }
+.thinktank-handoff-primary:disabled { opacity: .38; cursor: not-allowed; }
+.thinktank-contract-review {
+  background: #051523; padding: 14px; border: 1px solid #6caba5; border-radius: 10px;
+}
+.thinktank-contract-review pre {
+  box-sizing: border-box; max-width: 100%; margin: 8px 0 0; padding: 11px;
+  white-space: pre-wrap; overflow-wrap: anywhere; font: 11px/1.6 ui-monospace,monospace;
+  color: #b7f4e0; background: #0d2435; border-radius: 7px;
+}
+.thinktank-contract-review p { margin-top: 12px; color: #ffd6ac; }
+.thinktank-handoff-form .thinktank-confirmation {
+  display: flex; align-items: start; gap: 10px; font-weight: 500; font-size: 11px;
+  line-height: 1.5; color: #d4e5ee;
+}
+.thinktank-confirmation input { width: 17px; height: 17px; flex: 0 0 17px; margin-top: 2px; }
+.thinktank-handoff-success { color: #a7f6d8 !important; }
+.thinktank-handoff-error { color: #ffbca4 !important; }
+.thinktank-handoff-instructions h3 {
+  color: #fff0d5; font: 500 22px Georgia,serif; margin: 5px 0;
+}
+.thinktank-handoff-instructions ol { margin: 5px 0; padding-left: 23px; color: #c6dce7; }
+.thinktank-handoff-instructions li { margin: 0 0 10px; font-size: 11px; line-height: 1.7; overflow-wrap: anywhere; }
+.thinktank-handoff-sources {
+  display: grid; gap: 9px; background: #153849; border-radius: 10px;
+  padding: 13px; border: 1px solid #588d93;
+}
+.thinktank-handoff-sources strong { font-size: 12px; color: #f2e9d6; }
+.thinktank-handoff-sources a { font-size: 12px; color: #9aece9; }
+.thinktank-handoff-safety { color: #f4d7b4 !important; }
+.thinktank-handoff-boundary {
+  margin: 16px 0 0; color: #aac8d6; font-size: 10px; line-height: 1.65; overflow-wrap: anywhere;
+}
+.thinktank-handoff :is(button,input,textarea,select,a):focus-visible {
+  outline: 3px solid #ffe69d; outline-offset: 3px;
+}
+@media (max-width: 920px) { .thinktank-handoff-layout { grid-template-columns: 1fr; } }
+@media (max-width: 680px) { .thinktank-handoff-heading { flex-direction: column; align-items: start; } .thinktank-handoff-stamp { flex: 0 1 auto; } }
+@media (prefers-reduced-motion: reduce) { .thinktank-handoff * { animation: none !important; transition: none !important; } }
