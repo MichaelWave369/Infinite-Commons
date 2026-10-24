@@ -160,7 +160,7 @@ export function closeChamber(session) {
 
 export function compareChambers(closedSessions) {
   if (!Array.isArray(closedSessions) || closedSessions.length !== COUNCIL_CHAMBERS.length)
-    throw new Error("Convergence requires one closed practice dossier from every chamber.");
+    throw new Error("Convergence requires one closed practice dossier from all three chambers.");
   const ids = new Set();
   const agenda = closedSessions[0]?.agenda;
   for (const session of closedSessions) {
