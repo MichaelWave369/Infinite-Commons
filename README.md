@@ -158,6 +158,16 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## ThinkTank Local Council Handoff / Rung 6
+
+The Commons' Nested Council Chambers wing now includes an **explicitly operator-reviewed, one-way local ThinkTank bridge desk**. Visitors can author or copy a chamber agenda into a separate draft, choose `council` / `trio` / `audit` and their **own installed Ollama model name**, inspect an exact strict 11-field ThinkTank TT-35 JSON contract, then intentionally **download the file** after confirming its limitations.
+
+This is a genuine **file-format handoff to ThinkTank's existing terminal-only governed council runner**, not a live AI connection from the public site. Commons never connects to the local model bridge, transmits the directive, authorizes inference or claims an external decision. Only the separately installed ThinkTank CLI's own **inspect exact bytes → read SHA-256 → explicitly confirm local inference** workflow can start a real local council session. The four remote-provider/auto-run/authority/completion flags are always `false`.
+
+The original three offline practice chambers and five-seat STATION ceremony are **independent** of this outbound file export. The four Commons nodes, PhiSpace, world portals, Wayfinder, Expedition Trail, Shasta and Living City remain unchanged.
+
+See [Rung 6 local ThinkTank export protocol and security boundaries](docs/THINKTANK_LOCAL_HANDOFF_R06.md).
+
 ## Nested Council Chambers / Rung 5
 
 **Infinite Commons now contains three distinct, explicitly offline nested council practice rooms** below the original Grand Roundtable: Inquiry (questions and evidence), Forge (engineering and release safety), and Dreamwell (creativity and fiction). One shared human-entered agenda guides the three rooms' *presentation*, but the fifteen practice statements are **hand-authored fixed fixtures**, not actual AI inference or consensus.
