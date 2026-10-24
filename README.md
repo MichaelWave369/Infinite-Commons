@@ -158,6 +158,16 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## ThinkTank Read-only Return Desk / Rung 7
+
+Commons now has a **local, read-only file inspection desk** after the R6 ThinkTank outbound contract. After independently running the TT-35 CLI on a trusted machine, users can select the local `*-ledger.json` and optional `*-decision-dossier.json` exports to inspect self-reported mode, model, governance outcome, provider-turn references, deterministic FNV basis checksum and structural consistency between paired files.
+
+The Return Desk stores files **only inside the current browser page**. It makes **no model or provider requests**, does not independently replay the ThinkTank kernel, verify signatures or source evidence, or treat any `completed` / `actionAllowed` claim as permission. Checksum consistency is explicitly **not cryptographic authenticity**. File limits, reset controls, malformed-data rejection and test coverage are part of this rung.
+
+The original R6 export, Nested Councils, STATION, portals, expedition, 3D vistas, PhiSpace and Wayfinder remain independent and unchanged.
+
+See [ThinkTank Return Desk R7: format review and limits](docs/THINKTANK_READONLY_RETURN_DESK_R07.md).
+
 ## ThinkTank Local Council Handoff / Rung 6
 
 The Commons' Nested Council Chambers wing now includes an **explicitly operator-reviewed, one-way local ThinkTank bridge desk**. Visitors can author or copy a chamber agenda into a separate draft, choose `council` / `trio` / `audit` and their **own installed Ollama model name**, inspect an exact strict 11-field ThinkTank TT-35 JSON contract, then intentionally **download the file** after confirming its limitations.
