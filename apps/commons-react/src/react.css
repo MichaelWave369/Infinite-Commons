@@ -1032,3 +1032,11 @@
 @media(max-width:760px) { .thinktank-return-files { grid-template-columns: 1fr; } .thinktank-return-metadata { grid-template-columns: repeat(2,minmax(0,1fr)); } .thinktank-return-heading { align-items: start; flex-direction: column; } .thinktank-return-stamp { white-space: normal; } }
 @media(max-width:470px) { .thinktank-return-metadata { grid-template-columns: 1fr; } .thinktank-return-evidence { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media(prefers-reduced-motion:reduce) { .thinktank-return * { animation: none !important; transition: none !important; } }
+
+
+/* R8: unsigned local kernel replay receipt, never an authority badge. */
+.thinktank-replay-report { border-color: #b4b1d6; background: linear-gradient(120deg,#132738,#172740); }
+.thinktank-replay-report code { overflow-wrap: anywhere; font: 11px/1.5 ui-monospace,monospace; color: #b6eadc; }
+.thinktank-replay-report p { max-width: 92ch; }
+.thinktank-replay-report .thinktank-return-warning { margin-top: 14px; color: #ffdfb6; }
+@media(min-width:1150px) { .thinktank-return-files { grid-template-columns: repeat(3,minmax(0,1fr)); } }

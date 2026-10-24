@@ -158,6 +158,14 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Kernel Replay Receipt Desk / Rung 8
+
+The Commons' ThinkTank Return Desk can now optionally read a **ThinkTank offline-kernel replay report** alongside the existing ledger and decision dossier. A separately installed, operator-invoked ThinkTank `council:verify` command (see [ThinkTank PR #52](https://github.com/MichaelWave369/think-tank/pull/52)) uses ThinkTank's actual kernel to independently reconstruct the ledger. Its unsigned report binds to the **exact ledger and optional dossier file bytes** via SHA-256.
+
+Commons recomputes those SHA-256 digests in the visitor's browser and checks the report's session, mode, model, contract digest and optional dossier reference. If any comparison fails, the panel shows **MISMATCH**. Even when all match, it says **UNSIGNED / NOT AUTHENTICATED**, because a forged set of files could pass these structural and byte checks. No models, permissions, STATION, network requests, uploads or evidence-authority promotions.
+
+See [Rung 8 replay receipt contracts, instructions, limitations and tests](docs/THINKTANK_KERNEL_REPLAY_RECEIPT_R08.md). ThinkTank PR #52 and this Commons PR are independent and must each pass CI.
+
 ## ThinkTank Read-only Return Desk / Rung 7
 
 Commons now has a **local, read-only file inspection desk** after the R6 ThinkTank outbound contract. After independently running the TT-35 CLI on a trusted machine, users can select the local `*-ledger.json` and optional `*-decision-dossier.json` exports to inspect self-reported mode, model, governance outcome, provider-turn references, deterministic FNV basis checksum and structural consistency between paired files.
