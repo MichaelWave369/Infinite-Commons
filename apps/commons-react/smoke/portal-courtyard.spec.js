@@ -38,16 +38,20 @@ test("four accessible 3D gateway controls route to the same canonical story pane
     }
     await controls.getByRole("link", { name: /Visit the Grand Roundtable/ }).click();
     await expect(page).toHaveURL(/#roundtable-hall/);
-    await page.getByRole("button", { name: /Legacy Living City/ }).click();
-    // Switching the heavy canvas can lose WebGL on headless CI GPUs.
-    // The safe painted fallback is an intentional supported outcome.
+    // Heavy off-screen WebGL can also lose its context *after* opening the
+    // Roundtable anchor. Check again before assuming the 3D controls exist.
     if (await current.getAttribute("data-renderer") === "webgl2") {
-      await expect(page.getByRole("button", { name: /Legacy Living City/ })).toHaveAttribute("aria-pressed", "true");
-      await page.getByRole("button", { name: /Sisters of Shasta/ }).click();
+      await page.getByRole("button", { name: /Legacy Living City/ }).click();
       if (await current.getAttribute("data-renderer") === "webgl2") {
-        await expect(page.getByRole("button", { name: /Sisters of Shasta/ })).toHaveAttribute("aria-pressed", "true");
-        await page.getByRole("button", { name: /Return to Painted View/ }).click();
+        await expect(page.getByRole("button", { name: /Legacy Living City/ })).toHaveAttribute("aria-pressed", "true");
+        await page.getByRole("button", { name: /Sisters of Shasta/ }).click();
+        if (await current.getAttribute("data-renderer") === "webgl2") {
+          await expect(page.getByRole("button", { name: /Sisters of Shasta/ })).toHaveAttribute("aria-pressed", "true");
+        }
       }
+    }
+    if (await current.getAttribute("data-renderer") === "webgl2") {
+      await page.getByRole("button", { name: /Return to Painted View/ }).click();
     }
     await expect(current).toHaveAttribute("data-renderer", "painted");
   } else {
