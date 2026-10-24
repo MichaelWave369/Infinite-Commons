@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { ThinkTankSignatureDesk } from "./ThinkTankSignatureDesk.jsx";
 import {
   RETURN_DESK_VERSION, RETURN_MAX_BYTES, parseLocalReturnJson,
   reviewLocalLedger, reviewLocalDossier, compareLocalReturn
@@ -17,6 +18,8 @@ export function ThinkTankReturnDesk() {
   const [ledgerHash, setLedgerHash] = useState(null);
   const [dossierHash, setDossierHash] = useState(null);
   const [receipt, setReceipt] = useState(null);
+  const [receiptHash, setReceiptHash] = useState(null);
+  const [resetSerial, setResetSerial] = useState(0);
   const [receiptError, setReceiptError] = useState("");
   const [ledgerError, setLedgerError] = useState("");
   const [dossierError, setDossierError] = useState("");
@@ -36,7 +39,7 @@ export function ThinkTankReturnDesk() {
     fileEpoch.current[kind] += 1;
     const revision = fileEpoch.current[kind];
     const setData = kind === "ledger" ? setLedger : kind === "dossier" ? setDossier : setReceipt;
-    const setHash = kind === "ledger" ? setLedgerHash : kind === "dossier" ? setDossierHash : null;
+    const setHash = kind === "ledger" ? setLedgerHash : kind === "dossier" ? setDossierHash : setReceiptHash;
     const setError = kind === "ledger" ? setLedgerError : kind === "dossier" ? setDossierError : setReceiptError;
     setData(null);
     if (setHash) setHash(null);
@@ -79,6 +82,8 @@ export function ThinkTankReturnDesk() {
     setLedgerHash(null);
     setDossierHash(null);
     setReceipt(null);
+    setReceiptHash(null);
+    setResetSerial(value => value + 1);
     setLedgerError("");
     setDossierError("");
     setReceiptError("");
@@ -206,6 +211,7 @@ export function ThinkTankReturnDesk() {
           <p className="thinktank-return-warning">{receiptMatch.label}. Exact SHA matching prevents accidental receipt/file mix-ups but cannot authenticate the unsigned report's creator. Independently run a trusted ThinkTank verifier on your own machine before relying on its claim. No factual authority or external action permission follows from a PASS.</p>
         </div>
       )}
+      <ThinkTankSignatureDesk reportSha256={receiptHash} resetSerial={resetSerial} />
       <p className="thinktank-return-disclosure">{RETURN_DESK_VERSION} · Review state exists only in the current page, is cleared by refresh/reset, and never changes the Commons council, STATION, PhiSpace, World Portal or Wayfinder permissions. Avoid importing sensitive work into a browser environment you don't trust.</p>
     </section>
   );
