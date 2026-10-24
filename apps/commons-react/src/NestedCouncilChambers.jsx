@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ThinkTankLocalHandoff } from "./ThinkTankLocalHandoff.jsx";
 import {
   COUNCIL_CHAMBERS, CHAMBER_REVIEW_MAX_LENGTH,
   beginChamber, hearChamberSeat, submitChamberReview,
@@ -254,6 +255,7 @@ export function NestedCouncilChambers() {
         Operator questions are unverified input. This is a disposable in-page practice experience.
         The Grand Roundtable's existing five-seat STATION ceremony above stays independent.
       </p>
+      <ThinkTankLocalHandoff suggestedDirective={sessions?.inquiry?.agenda ?? agenda} />
     </section>
   );
 }
