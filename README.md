@@ -158,6 +158,27 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Portal Plaza + Knights of the Nested Roundtables · v0.1
+
+The public React Commons experience now includes an **original four-world
+Portal Plaza** (ΞΦWorld, Nevora, BLACKOUT, Mikey & Ori) and the **Grand
+Roundtable Hall**. The Plaza's portals open playful, accessible **in-page story
+previews**, not live or invented world endpoints.
+
+The Hall hosts a **five-role deterministic offline practice council** with
+explicit agenda entry, visible fixture turns and a **STATION!** ceremony after
+all seats are heard. STATION emits a local in-memory marker, **not** a
+cryptographic seal, AI decision, permission grant or published receipt.
+
+This is the first user-facing milestone toward Infinite Commons as the
+home of independent worlds and independently governed councils. ThinkTank,
+Commonline, and eventual verified third-party collaborators remain
+**future explicit integration points**; no live AI runtime is connected.
+
+See [Portal Plaza / Roundtable / STATION design and tests](docs/PORTAL_PLAZA_ROUNDTABLE_STATION_V0_1.md).
+The original four Commons semantic nodes, appearance packs, PhiSpace owner
+controls, and deterministic bootstrap contracts remain unchanged.
+
 ## Canonical bootstrap contract
 
 By default the CLI reads:
