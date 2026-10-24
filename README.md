@@ -158,6 +158,14 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Signed Replay Key Trust / Rung 9
+
+The ThinkTank Return Desk has an optional, entirely local **Ed25519 signature desk** linked to the R8 verifier report's **exact raw file SHA-256**. Users can upload a detached signature from the companion [ThinkTank R9 signer (PR #53)](https://github.com/MichaelWave369/think-tank/pull/53) and verify cryptographic key possession using browser WebCrypto. A separate optional human-typed public-key SHA-256 pin must come from an **independent trusted channel** before the UI can report a locally pinned key match.
+
+**Cryptographic validity is not identity or factual truth**. The embedded public key cannot certify its own trustworthy origin, and neither a signed report nor a pin grants permission, independently proves ThinkTank ran, verifies model claims, or invokes STATION. All signatures and fingerprint entries stay in browser memory and clear on refresh/reset. R1–R8 are preserved.
+
+See [R9 detached-signature trust protocol and tests](docs/THINKTANK_SIGNED_REPLAY_TRUST_R09.md).
+
 ## Kernel Replay Receipt Desk / Rung 8
 
 The Commons' ThinkTank Return Desk can now optionally read a **ThinkTank offline-kernel replay report** alongside the existing ledger and decision dossier. A separately installed, operator-invoked ThinkTank `council:verify` command (see [ThinkTank PR #52](https://github.com/MichaelWave369/think-tank/pull/52)) uses ThinkTank's actual kernel to independently reconstruct the ledger. Its unsigned report binds to the **exact ledger and optional dossier file bytes** via SHA-256.
