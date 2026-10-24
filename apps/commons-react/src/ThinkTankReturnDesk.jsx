@@ -3,46 +3,66 @@ import {
   RETURN_DESK_VERSION, RETURN_MAX_BYTES, parseLocalReturnJson,
   reviewLocalLedger, reviewLocalDossier, compareLocalReturn
 } from "./thinkTankReturnReview.mjs";
+import {
+  REPLAY_RECEIPT_MAX_BYTES, parseReplayReceipt, compareReplayReceipt
+} from "./thinkTankReplayReceipt.mjs";
 
 /**
- * Read-only two-file review. Only parsed metadata is rendered.
+ * Read-only three-file review. Only parsed metadata and SHA-256 digests are rendered.
  * NO localStorage, remote requests, iframe, imports to governance, or RUN.
  */
 export function ThinkTankReturnDesk() {
   const [ledger, setLedger] = useState(null);
   const [dossier, setDossier] = useState(null);
+  const [ledgerHash, setLedgerHash] = useState(null);
+  const [dossierHash, setDossierHash] = useState(null);
+  const [receipt, setReceipt] = useState(null);
+  const [receiptError, setReceiptError] = useState("");
   const [ledgerError, setLedgerError] = useState("");
   const [dossierError, setDossierError] = useState("");
   const [notice, setNotice] = useState("");
-  const fileEpoch = useRef({ ledger: 0, dossier: 0 });
+  const fileEpoch = useRef({ ledger: 0, dossier: 0, receipt: 0 });
   const ledgerInput = useRef(null);
   const dossierInput = useRef(null);
+  const receiptInput = useRef(null);
   const compared = compareLocalReturn(ledger, dossier);
+  const receiptMatch = compareReplayReceipt(receipt, ledger, ledgerHash, dossier, dossierHash);
+  async function exactFileSha256(bytes) {
+    const digest = await window.crypto.subtle.digest("SHA-256", bytes);
+    return [...new Uint8Array(digest)].map(value => value.toString(16).padStart(2, "0")).join("");
+  }
 
   async function readLocalArtifact(kind, file) {
     fileEpoch.current[kind] += 1;
     const revision = fileEpoch.current[kind];
-    const setData = kind === "ledger" ? setLedger : setDossier;
-    const setError = kind === "ledger" ? setLedgerError : setDossierError;
+    const setData = kind === "ledger" ? setLedger : kind === "dossier" ? setDossier : setReceipt;
+    const setHash = kind === "ledger" ? setLedgerHash : kind === "dossier" ? setDossierHash : null;
+    const setError = kind === "ledger" ? setLedgerError : kind === "dossier" ? setDossierError : setReceiptError;
     setData(null);
+    if (setHash) setHash(null);
     setError("");
     setNotice("");
     if (!file) return;
-    if (file.size === 0 || file.size > RETURN_MAX_BYTES) {
-      setError("File must be nonempty and at most 2 MiB. No file was retained.");
+    const maxBytes = kind === "receipt" ? REPLAY_RECEIPT_MAX_BYTES : RETURN_MAX_BYTES;
+    if (file.size === 0 || file.size > maxBytes) {
+      setError(kind === "receipt" ? "Verifier report must be under 64 KiB." : "File must be nonempty and at most 2 MiB. No file was retained.");
       return;
     }
     try {
-      const raw = await file.text();
+      const bytes = await file.arrayBuffer();
+      const raw = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
       if (fileEpoch.current[kind] !== revision) return;
-      const parsed = parseLocalReturnJson(raw);
-      const outcome = kind === "ledger" ? reviewLocalLedger(parsed) : reviewLocalDossier(parsed);
+      const parsed = kind === "receipt" ? parseReplayReceipt(raw) : parseLocalReturnJson(raw);
+      const outcome = kind === "receipt" ? parsed : kind === "ledger" ? reviewLocalLedger(parsed) : reviewLocalDossier(parsed);
+      const sha = setHash ? await exactFileSha256(bytes) : null;
       if (fileEpoch.current[kind] !== revision) return;
       setData(outcome);
+      if (setHash) setHash(sha);
       setNotice("Local file structure reviewed. No verification of provider identity, authenticity, or factual claims.");
     } catch (error) {
       if (fileEpoch.current[kind] !== revision) return;
       setData(null);
+      if (setHash) setHash(null);
       setError(error instanceof Error ? error.message : "Unsupported file.");
     }
   }
@@ -50,12 +70,18 @@ export function ThinkTankReturnDesk() {
   function forget() {
     fileEpoch.current.ledger += 1;
     fileEpoch.current.dossier += 1;
+    fileEpoch.current.receipt += 1;
     if (ledgerInput.current) ledgerInput.current.value = "";
     if (dossierInput.current) dossierInput.current.value = "";
+    if (receiptInput.current) receiptInput.current.value = "";
     setLedger(null);
     setDossier(null);
+    setLedgerHash(null);
+    setDossierHash(null);
+    setReceipt(null);
     setLedgerError("");
     setDossierError("");
+    setReceiptError("");
     setNotice("Local review cleared from this page. No file data was uploaded.");
   }
 
@@ -64,7 +90,7 @@ export function ThinkTankReturnDesk() {
       aria-labelledby="thinktank-return-heading">
       <div className="thinktank-return-heading">
         <div>
-          <div className="eyebrow">THE RETURN DESK / R7 · PRIVATE FILE VIEWER</div>
+          <div className="eyebrow">THE RETURN DESK / R8 · OPTIONAL KERNEL RECEIPT</div>
           <h2 id="thinktank-return-heading">Inspect a <em>ThinkTank return.</em></h2>
           <p>After running the separately approved ThinkTank CLI, you may inspect its local ledger and optional decision dossier here. Commons reads files in your browser. It cannot prove an AI really ran, or that any claims are true.</p>
         </div>
@@ -84,6 +110,13 @@ export function ThinkTankReturnDesk() {
             onChange={event => { void readLocalArtifact("dossier", event.target.files?.[0]); }} />
           <p>Expected: <code>council-*-decision-dossier.json</code>. ThinkTank may legitimately produce no dossier.</p>
           {dossierError && <p role="alert" className="thinktank-return-error">Dossier rejected: {dossierError}</p>}
+        </div>
+        <div className="thinktank-return-file">
+          <label htmlFor="thinktank-replay-receipt-upload">Choose an offline ThinkTank kernel replay verification report (optional)</label>
+          <input ref={receiptInput} id="thinktank-replay-receipt-upload" type="file" accept=".json,application/json"
+            onChange={event => { void readLocalArtifact("receipt", event.target.files?.[0]); }} />
+          <p>From separately installed ThinkTank <code>npm run council:verify</code>. Commons only compares this unsigned report to locally computed file SHA-256 values.</p>
+          {receiptError && <p role="alert" className="thinktank-return-error">Replay report rejected: {receiptError}</p>}
         </div>
       </div>
       <button type="button" className="thinktank-return-clear" onClick={forget}>
@@ -114,7 +147,7 @@ export function ThinkTankReturnDesk() {
               </div>
             ))}
           </div>
-          <p className="thinktank-return-warning">An uploaded JSON can claim a valid replay or successful provider invocation without either occurring. Commons does not execute ThinkTank's independent replay verifier, attest a provider, or validate the original contract's digest.</p>
+          <p className="thinktank-return-warning">An uploaded JSON can claim a valid replay or successful provider invocation without either occurring. Commons does not execute ThinkTank's replay verifier in this browser or attest a provider. An optional unsigned kernel report may be compared to the exact local file hashes.</p>
         </div>
       )}
       {dossier && (
@@ -151,6 +184,26 @@ export function ThinkTankReturnDesk() {
             ))}
           </ul>
           <p>{compared.level}. Neither a successful comparison nor an FNV checksum independently verifies the event ledger, model execution, authority, external evidence or factual claims.</p>
+        </div>
+      )}
+      {receiptMatch && (
+        <div className="thinktank-return-match thinktank-replay-report" role="region"
+          aria-label="ThinkTank offline kernel replay receipt comparison">
+          <div className="eyebrow">R8 · OFFLINE KERNEL REPORT · UNSIGNED LOCAL FILE</div>
+          <h3>{receiptMatch.allChecksMatch
+            ? "Receipt matches the supplied artifact bytes"
+            : "Receipt does not match all supplied artifacts"}</h3>
+          <p><strong>Report statement:</strong> {receipt.result} (LOCAL OPERATOR FILE, NOT AUTHENTICATED)</p>
+          <p><strong>Replayed projection checksum claimed:</strong> <code>{receipt.finalFingerprint}</code></p>
+          <p><strong>Input ledger SHA-256 claimed:</strong> <code>{receipt.ledgerSha256}</code></p>
+          <ul>
+            {receiptMatch.checks.map(check => (
+              <li key={check.name}>
+                <strong>{check.match ? "MATCH · " : "MISMATCH · "}{check.name}</strong>
+              </li>
+            ))}
+          </ul>
+          <p className="thinktank-return-warning">{receiptMatch.label}. Exact SHA matching prevents accidental receipt/file mix-ups but cannot authenticate the unsigned report's creator. Independently run a trusted ThinkTank verifier on your own machine before relying on its claim. No factual authority or external action permission follows from a PASS.</p>
         </div>
       )}
       <p className="thinktank-return-disclosure">{RETURN_DESK_VERSION} · Review state exists only in the current page, is cleared by refresh/reset, and never changes the Commons council, STATION, PhiSpace, World Portal or Wayfinder permissions. Avoid importing sensitive work into a browser environment you don't trust.</p>
