@@ -158,6 +158,16 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Nested Council Chambers / Rung 5
+
+**Infinite Commons now contains three distinct, explicitly offline nested council practice rooms** below the original Grand Roundtable: Inquiry (questions and evidence), Forge (engineering and release safety), and Dreamwell (creativity and fiction). One shared human-entered agenda guides the three rooms' *presentation*, but the fifteen practice statements are **hand-authored fixed fixtures**, not actual AI inference or consensus.
+
+Visitors advance five familiar seats manually per chamber, inspect a labeled **evidence boundary** for each, write their own unresolved human question, and then close that chamber. After reviewing all three, an optional comparison shows the discipline rules and unverified operator questions side-by-side. All local session state clears on refresh or explicit discard.
+
+This new wing **never grants permission or calls real models**. It does not replace the original Grand Roundtable's five-seat **STATION!**, change the four Commons semantic locations, or modify the Portal Plaza, Wayfinder, Expedition Trail, appearance packs or PhiSpace.
+
+See [Nested Council Chambers R5: UX, authority boundaries and test plan](docs/NESTED_COUNCIL_CHAMBERS_R05.md).
+
 ## Commons Expedition Trail / Rung 4
 
 The **Explorer's Trail** adds a guided, five-threshold journey through the four original fantasy-world story previews and into the **Grand Roundtable**. A session-only route board shows the active stop, its authored clue, inspected-story checkmarks and the next threshold. Only actually opening the **current** in-page story window advances its progress; ordinary portal cards and the optional 3D courtyard HTML buttons obey the same rule.
