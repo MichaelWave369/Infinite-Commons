@@ -158,6 +158,16 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Living Portal Courtyard / Rung 3
+
+The optional 3D Midnight Sierra experience now includes a third **Portal Courtyard** vista alongside Shasta and Living City. Four independently colored original gateway sculptures and a ceremonial **Grand Roundtable beacon** turn the Portal Plaza into a visible place.
+
+Native HTML controls beside the canvas choose the **same** ΞΦWorld, Nevora, BLACKOUT, and Mikey & Ori story previews as the existing Portal Plaza cards. Nothing in the WebGL art transfers accounts, navigates to unverified games, assigns permissions, or speaks to an AI. Keyboard focus follows the opening of a preview, and WebGL-unavailable visitors keep the full HTML fallback.
+
+The Wayfinder's published project doors, offline five-seat STATION practice council, original four Commons nodes, all 20 aesthetics, and owner-controlled PhiSpace remain untouched.
+
+See [Portal Courtyard R3 implementation, boundaries and acceptance checks](docs/LIVING_PORTAL_COURTYARD_R03.md).
+
 ## Living Portal Network / Wayfinder · v0.2
 
 Commons now has a **Wayfinder Desk** beneath the original four fictional Portal Plaza previews. The Desk offers three curated public-project doors: **Field Atlas**, **Field Constellation**, and the **Nevora Codex orientation** (explicitly *not* a Nevora game). Each exact HTTPS destination was found in its owner's repository README; current uptime is **not** claimed.

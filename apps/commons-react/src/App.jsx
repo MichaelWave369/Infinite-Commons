@@ -5,6 +5,7 @@ import { createLocalPreviewController, localPreviewPanel } from "../../../web/ph
 import exampleHome from "../../../web/fixtures/phispace-public.json";
 import { Scene } from "./Scene.jsx";
 import { CommonsNexus } from "./CommonsNexus.jsx";
+import { portalById } from "./commonsPortalRegistry.mjs";
 
 const PANELS = Object.freeze({
   "midnight.radio": {
@@ -95,6 +96,7 @@ function Dialog({ panel, onDismiss, dialogRef }) {
 
 export function App() {
   const [pack, setPack] = useState(safeSavedStyle);
+  const [selectedPortalId, setSelectedPortalId] = useState(null);
   const [panel, setPanel] = useState(null);
   const [previewName, setPreviewName] = useState(null);
   const [importStatus, setImportStatus] = useState("No local PhiSpace selected. Files stay on this device.");
@@ -114,6 +116,22 @@ export function App() {
       for (const key of Object.keys(style)) document.documentElement.style.removeProperty(key);
     };
   }, [pack]);
+
+  function openPortalPreview(id) {
+    if (id === null) {
+      setSelectedPortalId(null);
+      return;
+    }
+    if (!portalById(id)) return;
+    setSelectedPortalId(id);
+    // After React commits the preview, move keyboard focus to its own HTML
+    // region. This works for BOTH 3D overlay controls and standard portal cards.
+    window.requestAnimationFrame(() => {
+      const previewWindow = document.getElementById("portal-story-window");
+      previewWindow?.focus({ preventScroll: true });
+      previewWindow?.scrollIntoView({ block: "start", behavior: "auto" });
+    });
+  }
 
   function visit(node) {
     if (node === "phispace.example") {
@@ -230,7 +248,7 @@ export function App() {
                 <span className="online-badge">● LOCAL-ONLY DEMO</span>
               </div>
             </div>
-            <Scene scene={pack.scene} styleId={pack.id} onVisit={visit} />
+            <Scene scene={pack.scene} styleId={pack.id} onVisit={visit} onPortalPreview={openPortalPreview} />
             <div className="below-scene">
               <div className="story-copy">
                 <div className="eyebrow">THE FIRST THRESHOLD</div>
@@ -260,7 +278,7 @@ export function App() {
               Semantic locations remain unchanged for all {PACKS.length} appearances.
               <span className="sr-only">World fingerprint: {WORLD_FINGERPRINT}.</span>
             </p>
-            <CommonsNexus />
+            <CommonsNexus selectedPortalId={selectedPortalId} onPortalPreview={openPortalPreview} />
           </section>
         </main>
         <footer className="footer">

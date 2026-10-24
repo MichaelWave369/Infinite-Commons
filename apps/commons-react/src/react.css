@@ -623,3 +623,58 @@
 @media(max-width: 940px) { .wayfinder-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media(max-width: 640px) { .wayfinder-grid { grid-template-columns: 1fr; } .wayfinder-header { align-items: flex-start; flex-direction: column; } .wayfinder-summary { white-space: normal; } }
 @media(prefers-reduced-motion:reduce) { .wayfinder-desk * { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
+
+
+/* Living Portal Courtyard R3: decorative WebGL with one HTML gateway interface. */
+.portal-3d-operator {
+  position: absolute;
+  z-index: 7;
+  left: 13px;
+  top: 76px;
+  box-sizing: border-box;
+  width: min(223px, 45%);
+  max-height: calc(100% - 148px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px;
+  border: 1px solid #c1abd7a8;
+  border-radius: 14px;
+  background: rgba(7, 21, 39, .94);
+  color: #f7e8df;
+  box-shadow: 0 10px 30px #000a;
+  backdrop-filter: blur(10px);
+  font: 11px/1.35 system-ui, sans-serif;
+}
+.portal-3d-operator strong { font-size: 10px; letter-spacing: .08em; color: #e8d7ff; }
+.portal-3d-operator > span { font-size: 9px; color: #b8d2df; }
+.portal-3d-gates { display: grid; gap: 6px; grid-template-columns: 1fr; }
+.portal-3d-gates button, .portal-3d-operator a {
+  box-sizing: border-box;
+  background: rgba(28, 56, 81, .96);
+  color: #f3f9ff;
+  border: 1px solid #719fb8;
+  border-radius: 8px;
+  padding: 8px;
+  text-align: left;
+  font: 700 11px/1.35 system-ui,sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+.portal-3d-gates button:hover, .portal-3d-operator a:hover { background: #245579; }
+.portal-3d-gates button > span { font-size: 15px; margin-right: 6px; }
+.portal-3d-operator a { color: #eecfa7; border-color: #a98a68; margin-top: 3px; }
+.portal-3d-operator a:focus-visible,.portal-3d-gates button:focus-visible {
+  outline: 3px solid #fff0a6;
+  outline-offset: 2px;
+}
+.portal-vignette:focus { outline: 2px solid #a2e4da; outline-offset: 4px; }
+@media(max-width: 640px) {
+  .portal-3d-operator { top: 119px; left: 8px; width: min(185px, 47%); padding: 8px; max-height: calc(100% - 179px); }
+  .portal-3d-operator strong { font-size: 9px; }
+  .portal-3d-gates button { font-size: 10px; padding: 6px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .portal-3d-operator *, .portal-vignette { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}

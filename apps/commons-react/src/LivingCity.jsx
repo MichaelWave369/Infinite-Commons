@@ -9,6 +9,7 @@ import { LivingCityWarmth } from "./LivingCityWarmth.jsx";
 import { LivingCityMotion } from "./LivingCityMotion.jsx";
 import { LivingCityArchitecture, PorchFacadeSoul } from "./LivingCityArchitecture.jsx";
 import { ShastaCampus } from "./ShastaCampus.jsx";
+import { PortalCourtyard } from "./PortalCourtyard.jsx";
 
 /**
  * Optional three-dimensional art interpretation of commons.arrival.
@@ -200,23 +201,27 @@ function LivingEnvironment({ reducedMotion, vista, arrayMode }) {
       <PaintedSky />
       <Stars />
       <Clouds reducedMotion={reducedMotion} />
-      {vista === "shasta" ? <ShastaCampus reducedMotion={reducedMotion} arrayMode={arrayMode} /> : (
+      {vista === "portals" ? <PortalCourtyard reducedMotion={reducedMotion} /> : (
         <>
-          <CityInstances />
-          <CityRooflines />
-          <LivingCityDistricts />
-          <LivingCityArchitecture />
-          <LandmarkArchitecture />
+          {vista === "shasta" ? <ShastaCampus reducedMotion={reducedMotion} arrayMode={arrayMode} /> : (
+            <>
+              <CityInstances />
+              <CityRooflines />
+              <LivingCityDistricts />
+              <LivingCityArchitecture />
+              <LandmarkArchitecture />
+            </>
+          )}
+          <Terrace />
+          <TerraceStoneSurface />
+          <EntranceDetails />
+          <LoungeCushions />
+          <LivingCityWarmth />
+          <PorchFacadeSoul />
+          <ArchitecturalAtmosphere />
+          <LivingCityMotion reducedMotion={reducedMotion} />
         </>
       )}
-      <Terrace />
-      <TerraceStoneSurface />
-      <EntranceDetails />
-      <LoungeCushions />
-      <LivingCityWarmth />
-      <PorchFacadeSoul />
-      <ArchitecturalAtmosphere />
-      <LivingCityMotion reducedMotion={reducedMotion} />
     </>
   );
 }
