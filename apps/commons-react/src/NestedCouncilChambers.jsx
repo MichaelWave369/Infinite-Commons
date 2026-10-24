@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ThinkTankLocalHandoff } from "./ThinkTankLocalHandoff.jsx";
+import { ThinkTankReturnDesk } from "./ThinkTankReturnDesk.jsx";
 import {
   COUNCIL_CHAMBERS, CHAMBER_REVIEW_MAX_LENGTH,
   beginChamber, hearChamberSeat, submitChamberReview,
@@ -256,6 +257,7 @@ export function NestedCouncilChambers() {
         The Grand Roundtable's existing five-seat STATION ceremony above stays independent.
       </p>
       <ThinkTankLocalHandoff suggestedDirective={sessions?.inquiry?.agenda ?? agenda} />
+      <ThinkTankReturnDesk />
     </section>
   );
 }
