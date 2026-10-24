@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { OperatorTrustLedger } from "./OperatorTrustLedger.jsx";
+import { newTrustLedger, statusOfTrustKey } from "./operatorTrustLedger.mjs";
 import {
   LOCAL_SIGNED_REPLAY_VERSION, LOCAL_SIGNATURE_MAX_BYTES,
   parseLocalReplaySignature, verifyLocalReplaySignature
@@ -12,6 +14,9 @@ export function ThinkTankSignatureDesk({ reportSha256, resetSerial=0 }) {
   const [pinConfirmed,setPinConfirmed]=useState(false);
   const [check,setCheck]=useState(null);
   const [checking,setChecking]=useState(false);
+  const [keyHistory,setKeyHistory]=useState(newTrustLedger);
+  const keyStatus=statusOfTrustKey(keyHistory,signature?.publicKeyFingerprintSha256);
+  const blockedByLocalHistory=keyStatus==="REVOKED"||keyStatus==="RETIRED";
   const epoch=useRef(0);
   const input=useRef(null);
 
@@ -20,17 +25,18 @@ export function ThinkTankSignatureDesk({ reportSha256, resetSerial=0 }) {
     setCheck(null);
     if(signature&&reportSha256){
       setChecking(true);
-      verifyLocalReplaySignature(signature,reportSha256,fingerprint,pinConfirmed)
+      verifyLocalReplaySignature(signature,reportSha256,fingerprint,pinConfirmed&&!blockedByLocalHistory)
         .then(result=>{if(active){setCheck(result);setError("");}})
         .catch(err=>{if(active){setError(err instanceof Error?err.message:"Signature verification failed.");}})
         .finally(()=>{if(active)setChecking(false);});
     } else setChecking(false);
     return ()=>{active=false};
-  },[signature,reportSha256,fingerprint,pinConfirmed]);
+  },[signature,reportSha256,fingerprint,pinConfirmed,blockedByLocalHistory]);
 
   useEffect(()=>{
     epoch.current+=1;
     setSignature(null);setError("");setFingerprint("");setPinConfirmed(false);setCheck(null);
+    setKeyHistory(newTrustLedger());
     if(input.current)input.current.value="";
   },[resetSerial]);
 
@@ -81,7 +87,9 @@ export function ThinkTankSignatureDesk({ reportSha256, resetSerial=0 }) {
       {checking&&<p role="status">Checking the signature locally…</p>}
       {check&&(
         <div className="signed-replay-results" role="region" aria-label="ThinkTank detached signature cryptographic verification">
-          <h4>{check.locallyPinned
+          <h4>{blockedByLocalHistory&&check.mathematicallyBound
+            ? "Signature valid · local key history blocks current trust"
+            : check.locallyPinned
             ? "Signature valid · human key fingerprint matched"
             : check.mathematicallyBound
               ? "Signature valid · key trust not independently established"
@@ -96,6 +104,11 @@ export function ThinkTankSignatureDesk({ reportSha256, resetSerial=0 }) {
           <p className="thinktank-return-warning">{check.status}. Anyone can generate a different key and sign a fabricated report. Even a matching human pin does not independently prove who holds the key, that an AI ran, or that the underlying claims are true.</p>
         </div>
       )}
+      {blockedByLocalHistory&&signature&&(
+        <p className="thinktank-return-warning" role="status">R10 LOCAL KEY STATUS: {keyStatus}. The journal blocks the current key from being pinned, even if the signature remains mathematically valid. This status is an operator-held note, not a global revocation certificate.</p>
+      )}
+      <OperatorTrustLedger ledger={keyHistory} currentFingerprint={signature?.publicKeyFingerprintSha256 ?? null}
+        onChange={next=>{setKeyHistory(next);setPinConfirmed(false);}} />
       {error&&<p role="alert" className="thinktank-return-error">{error}</p>}
       <p className="thinktank-return-disclosure">{LOCAL_SIGNED_REPLAY_VERSION} · Locally verified with browser WebCrypto. Nothing transmitted, no key persisted, no permissions granted, no STATION.</p>
     </section>
