@@ -564,3 +564,22 @@
     transition: none !important;
   }
 }
+
+/* Compact semantic navigation; keeps the four legacy hotspots unchanged. */
+.commons-top-nav { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
+.commons-top-nav a {
+  text-decoration: none;
+  color: #cfecf8;
+  background: #174166;
+  padding: 8px 11px;
+  border: 1px solid #5893ba;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .035em;
+}
+.commons-top-nav a:hover { background: #25618c; }
+.commons-top-nav a:focus-visible { outline: 3px solid #fff0a6; outline-offset: 3px; }
+@media (max-width: 800px) {
+  .commons-top-nav { width: 100%; }
+}
