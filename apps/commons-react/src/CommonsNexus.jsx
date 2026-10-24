@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { WayfinderDesk } from "./WayfinderDesk.jsx";
+import { ExpeditionTrail } from "./ExpeditionTrail.jsx";
 import {
   PORTALS, PORTAL_STATUSES, portalById, ROUNDTABLE_ROLES,
   ROUNDTABLE_DEFAULT_AGENDA, MAX_AGENDA_LENGTH,
@@ -10,7 +11,10 @@ import {
  * Portal Plaza and Roundtable are owner-governed UI previews, not new global
  * nodes, remote login surfaces or live AI seats. No auto navigation.
  */
-export function CommonsNexus({ selectedPortalId = null, onPortalPreview }) {
+export function CommonsNexus({
+  selectedPortalId = null, onPortalPreview, expedition,
+  onExpeditionStart, onExpeditionNext, onExpeditionFinish, onExpeditionReset
+}) {
   const [agenda, setAgenda] = useState(ROUNDTABLE_DEFAULT_AGENDA);
   const [council, setCouncil] = useState(null);
   const [error, setError] = useState("");
@@ -99,6 +103,10 @@ export function CommonsNexus({ selectedPortalId = null, onPortalPreview }) {
           <p className="portal-boundary">This is an original in-page vignette. No account, external origin, private Porch or agent was opened.</p>
         </section>
       )}
+
+      <ExpeditionTrail expedition={expedition} onStart={onExpeditionStart}
+        onInspect={onPortalPreview} onNext={onExpeditionNext} onFinish={onExpeditionFinish}
+        onReset={onExpeditionReset} />
 
       <WayfinderDesk />
 
