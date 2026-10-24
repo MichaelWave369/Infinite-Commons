@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from "react";
 import trustedSceneHtml from "../../../web/index.html?raw";
+import { PORTALS } from "./commonsPortalRegistry.mjs";
 
 const LivingCity = lazy(() => import("./LivingCity.jsx"));
 const HeritageArchiveDialog = lazy(() => import("./HeritageArchiveDialog.jsx"));
@@ -86,7 +87,7 @@ class ThreeBoundary extends React.Component {
   }
 }
 
-export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
+export function Scene({ scene, onVisit, onPortalPreview, styleId = "midnight-sierra" }) {
   const [threeRequested, setThreeRequested] = useState(false);
   const [vista, setVista] = useState("shasta");
   const [arrayMode, setArrayMode] = useState("beacon");
@@ -108,11 +109,13 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
   const active3D = availableForStyle && threeRequested;
   const use3D = (nextVista) => {
     if (!canUseWebGL2()) {
-      setThreeNotice("WebGL 2 unavailable. The painted Commons remains fully usable.");
+      setThreeNotice("WebGL 2 unavailable. The painted Commons and HTML portal previews remain fully usable.");
       setThreeRequested(false);
       return;
     }
-    setThreeNotice("WebGL 2 visual-only preview. No new Commons locations or permissions.");
+    setThreeNotice(nextVista === "portals"
+      ? "Four original story portals rendered as visual sculptures. Native HTML buttons open the same in-page previews. No live game transfer."
+      : "WebGL 2 visual-only preview. No new Commons locations or permissions.");
     setVista(nextVista);
     setArchiveOpen(false);
     setThreeRequested(true);
@@ -163,9 +166,12 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
       <div className="scene-render-controls" role="group" aria-label="Choose the Midnight Sierra display mode">
         {availableForStyle && (active3D ? (
           <>
-            <button type="button" className="render-toggle" onClick={() => { setArchiveOpen(false); setVista(vista === "shasta" ? "city" : "shasta"); }}>
-              {vista === "shasta" ? "◇ Legacy Living City" : "△ Sisters of Shasta"}
-            </button>
+            <button type="button" className="render-toggle" aria-pressed={vista === "shasta"}
+              onClick={() => use3D("shasta")}>△ Shasta</button>
+            <button type="button" className="render-toggle" aria-pressed={vista === "city"}
+              onClick={() => use3D("city")}>◇ Living City</button>
+            <button type="button" className="render-toggle" aria-pressed={vista === "portals"}
+              onClick={() => use3D("portals")}>◎ Portal Courtyard</button>
             <button type="button" className="render-toggle" onClick={returnToPainted}>
               ◧ Return to Painted View
             </button>
@@ -178,10 +184,30 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
             <button type="button" className="render-toggle" onClick={() => use3D("city")}>
               ◈ Explore Living City 3D
             </button>
+            <button type="button" className="render-toggle" onClick={() => use3D("portals")}>
+              ◎ Explore Portal Courtyard 3D
+            </button>
           </>
         ))}
         {threeNotice && <span className="scene-render-note" role="status">{threeNotice}</span>}
       </div>
+      {active3D && vista === "portals" && (
+        <div className="portal-3d-operator" role="group" aria-label="Explore the four original story gateways">
+          <strong>THE LIVING PORTAL COURTYARD</strong>
+          <span>Visual sculptures · original story windows only</span>
+          <div className="portal-3d-gates">
+            {PORTALS.map(portal => (
+              <button type="button" key={portal.id}
+                onClick={() => onPortalPreview?.(portal.id)}
+                aria-label={"Open " + portal.name + " story preview from 3D courtyard"}>
+                <span aria-hidden="true" style={{ color: portal.color }}>{portal.symbol}</span>
+                {portal.name}
+              </button>
+            ))}
+          </div>
+          <a href="#roundtable-hall">Visit the Grand Roundtable ↓</a>
+        </div>
+      )}
       <button className="hotspot hotspot-door" type="button"
         aria-label="Open the example or locally selected PhiSpace"
         onClick={() => onVisit("phispace.example")}>↗ <span>PHISPACE</span></button>
@@ -198,7 +224,7 @@ export function Scene({ scene, onVisit, styleId = "midnight-sierra" }) {
         onClick={() => onVisit("commons.plaza")}>◇ <span>THE COMMONS</span></button>
       <div className="scene-caption">
         <span className="location-pin">◉ COMMONS / ARRIVAL TERRACE</span>
-        <span className="ambient-note">{active3D && vista === "shasta" ? "Three · Six · Nine · Root Temple · Trihelion · Bloomforge · Visual preview only" : "A thousand windows. A thousand stories."}</span>
+        <span className="ambient-note">{active3D && vista === "portals" ? "Four story worlds · The nested Roundtable beacon · Visual preview only" : active3D && vista === "shasta" ? "Three · Six · Nine · Root Temple · Trihelion · Bloomforge · Visual preview only" : "A thousand windows. A thousand stories."}</span>
       </div>
     </div>
   );
