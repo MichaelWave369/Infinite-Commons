@@ -51,7 +51,8 @@ export function inspectThinkTankLocalContract(contract) {
   if (typeof contract.model !== "string" ||
       contract.model.length > THINKTANK_MODEL_LIMIT ||
       !/^[a-zA-Z0-9][a-zA-Z0-9._:/-]{0,89}$/.test(contract.model) ||
-      contract.model.includes("..")) {
+      contract.model.includes("..") || contract.model.includes("://") ||
+      contract.model.includes("//")) {
     throw new Error("Specify a valid installed local model name.");
   }
   if (!Number.isInteger(contract.maxRoleTurns) || contract.maxRoleTurns !== mode.turns) {
