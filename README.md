@@ -158,6 +158,14 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Operator Trust Ledger / Rung 10
+
+The Commons Return Desk now contains a **local, human-managed public-key history** for the R9 Ed25519 signature reviewer. Visitors can register an independently checked public-key fingerprint with an operator source note, **retire** it during planned rotation, or **revoke** it after suspected compromise. A new key may reference a previously closed predecessor, but **never inherits approval**.
+
+An R9 signature can remain cryptographically valid while its key is RETIRED/REVOKED. In that case, Commons blocks the current locally pinned trust verdict without altering the signature mathematics. Every journal change clears the previous human pin confirmation. This is a **memory-only, append-only practice journal**, not global revocation. Its optional JSON export/import is **unsigned and vulnerable to tampering or rollback**, so imported records never automatically grant key trust.
+
+All prior R1–R9 features, original five-seat STATION, remote-provider boundaries, model contracts, and Worlds remain unchanged. See [Rung 10: operator key continuity and threat boundaries](docs/OPERATOR_TRUST_LEDGER_R10.md).
+
 ## Signed Replay Key Trust / Rung 9
 
 The ThinkTank Return Desk has an optional, entirely local **Ed25519 signature desk** linked to the R8 verifier report's **exact raw file SHA-256**. Users can upload a detached signature from the companion [ThinkTank R9 signer (PR #53)](https://github.com/MichaelWave369/think-tank/pull/53) and verify cryptographic key possession using browser WebCrypto. A separate optional human-typed public-key SHA-256 pin must come from an **independent trusted channel** before the UI can report a locally pinned key match.
