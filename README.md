@@ -158,6 +158,14 @@ PhiSpace controls remain unchanged.
 
 See the [Architectural Soul review ledger](docs/MIDNIGHT_SIERRA_ARCHITECTURAL_SOUL_V0_6.md).
 
+## Independent Trust-History Checkpoints / Rung 11
+
+The Commons' Operator Trust Ledger now includes a **local SHA-256 history checkpoint desk**. Visitors can calculate a deterministic, versioned commitment to all ordered key-history events, then retain its digest and event count **somewhere genuinely independent** of the unsigned journal. On a later visit they can manually enter that independently saved reference to detect a missing revoked-key event, unexpected edits, or rollback to an older snapshot **relative to that reference**. Normal append-only extensions preserve the historical prefix commitment.
+
+This is **conditional tamper detection, not a signed transparency log or guaranteed latest state**. A matching old reference cannot establish that there were no later revocations. An attacker controlling both the journal and the reference can fabricate a matching pair. The in-page generated checkpoint is never automatically treated as trusted. No browser persistence, new agent permissions, live model calls, timestamps or global CA are introduced. R9 signatures and R10 revocation vetoes remain unchanged.
+
+See [Rung 11: checkpoint algorithm, operator workflow, and rollback limits](docs/TRUST_HISTORY_CHECKPOINTS_R11.md).
+
 ## Operator Trust Ledger / Rung 10
 
 The Commons Return Desk now contains a **local, human-managed public-key history** for the R9 Ed25519 signature reviewer. Visitors can register an independently checked public-key fingerprint with an operator source note, **retire** it during planned rotation, or **revoke** it after suspected compromise. A new key may reference a previously closed predecessor, but **never inherits approval**.

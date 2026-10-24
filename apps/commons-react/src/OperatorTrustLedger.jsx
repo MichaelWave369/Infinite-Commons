@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { TrustHistoryCheckpointDesk } from "./TrustHistoryCheckpointDesk.jsx";
 import {
   TRUST_LEDGER_FILENAME, TRUST_LEDGER_MAX_BYTES, TRUST_WARNINGS,
   trustRecords, statusOfTrustKey, addTrustKey, changeTrustKeyStatus,
@@ -180,6 +181,8 @@ export function OperatorTrustLedger({ ledger, onChange, currentFingerprint }) {
           <button type="submit" disabled={!selected||!decisionChecked}>Apply local key status change</button>
         </form>
       </div>
+
+      <TrustHistoryCheckpointDesk ledger={ledger} />
 
       <div className="trust-ledger-import">
         <h4>Restore an unsigned history from your own files</h4>
