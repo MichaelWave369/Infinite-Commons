@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { WayfinderDesk } from "./WayfinderDesk.jsx";
 import { ExpeditionTrail } from "./ExpeditionTrail.jsx";
+import { NestedCouncilChambers } from "./NestedCouncilChambers.jsx";
 import {
   PORTALS, PORTAL_STATUSES, portalById, ROUNDTABLE_ROLES,
   ROUNDTABLE_DEFAULT_AGENDA, MAX_AGENDA_LENGTH,
@@ -199,6 +200,7 @@ export function CommonsNexus({
           <p className="council-fine-print">STATION is the ceremonial end of a local council session, not a crypto seal, permission grant, published receipt, or live AI inference. All state resets on refresh.</p>
         </div>
       </div>
+      <NestedCouncilChambers />
     </section>
   );
 }
