@@ -10,13 +10,12 @@ import {
  * Portal Plaza and Roundtable are owner-governed UI previews, not new global
  * nodes, remote login surfaces or live AI seats. No auto navigation.
  */
-export function CommonsNexus() {
-  const [chosenPortal, setChosenPortal] = useState(null);
+export function CommonsNexus({ selectedPortalId = null, onPortalPreview }) {
   const [agenda, setAgenda] = useState(ROUNDTABLE_DEFAULT_AGENDA);
   const [council, setCouncil] = useState(null);
   const [error, setError] = useState("");
 
-  const selected = portalById(chosenPortal);
+  const selected = portalById(selectedPortalId);
   const readyForStation = council && !council.station && council.cursor === ROUNDTABLE_ROLES.length;
   const openedSeats = council?.cursor ?? 0;
 
@@ -74,7 +73,7 @@ export function CommonsNexus() {
               <div className="portal-gateway">{portal.gateway}</div>
               <button type="button" className="portal-enter"
                 aria-label={"Preview " + portal.name + " original world"}
-                onClick={() => setChosenPortal(portal.id)}>
+                onClick={() => onPortalPreview?.(portal.id)}>
                 Peek through portal <span aria-hidden="true">↗</span>
               </button>
             </div>
@@ -84,13 +83,13 @@ export function CommonsNexus() {
 
       {selected && (
         <section className="portal-vignette" role="region"
-          aria-label={selected.name + " story preview"} aria-live="polite">
+          aria-label={selected.name + " story preview"} aria-live="polite" id="portal-story-window" tabIndex={-1}>
           <div className="portal-vignette-top">
             <div>
               <div className="eyebrow">OFFLINE STORY WINDOW · NOT A LIVE WORLD</div>
               <h3>You glimpse {selected.name}</h3>
             </div>
-            <button type="button" className="nexus-quiet-button" onClick={() => setChosenPortal(null)}>
+            <button type="button" className="nexus-quiet-button" onClick={() => onPortalPreview?.(null)}>
               Return to Portal Plaza ↑
             </button>
           </div>
