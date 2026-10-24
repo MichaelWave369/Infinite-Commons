@@ -167,9 +167,9 @@ export function Scene({ scene, onVisit, onPortalPreview, styleId = "midnight-sie
         {availableForStyle && (active3D ? (
           <>
             <button type="button" className="render-toggle" aria-pressed={vista === "shasta"}
-              onClick={() => use3D("shasta")}>△ Shasta</button>
+              onClick={() => use3D("shasta")}>△ Sisters of Shasta</button>
             <button type="button" className="render-toggle" aria-pressed={vista === "city"}
-              onClick={() => use3D("city")}>◇ Living City</button>
+              onClick={() => use3D("city")}>◇ Legacy Living City</button>
             <button type="button" className="render-toggle" aria-pressed={vista === "portals"}
               onClick={() => use3D("portals")}>◎ Portal Courtyard</button>
             <button type="button" className="render-toggle" onClick={returnToPainted}>
