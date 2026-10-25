@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { reviewedXiCollaborationDoor } from "./xiCommonsDoor.mjs";
 import { WayfinderDesk } from "./WayfinderDesk.jsx";
 import { ExpeditionTrail } from "./ExpeditionTrail.jsx";
 import { NestedCouncilChambers } from "./NestedCouncilChambers.jsx";
@@ -104,6 +105,26 @@ export function CommonsNexus({
           <p className="portal-boundary">This is an original in-page vignette. No account, external origin, private Porch or agent was opened.</p>
         </section>
       )}
+
+      <section className="xi-commons-door" aria-labelledby="xi-commons-heading">
+        <div>
+          <div className="eyebrow">SOVEREIGN COLLABORATION / PUBLIC SOURCE ONLY</div>
+          <h3 id="xi-commons-heading">{reviewedXiCollaborationDoor().title}</h3>
+          <p>Our separately governed Xi ⇄ Φ369 bridge has a public roadmap, capability registry,
+            local intake workbench and synthetic test packet. The real Xi crossing is not connected.</p>
+          <div className="xi-commons-labels">
+            <span>R15–R16 · VERIFIED LOCAL FIXTURES</span>
+            <span>R17 · EXTERNAL GATES BLOCKED</span>
+            <span>R18 · TWO HOST TEST NOT RUN</span>
+          </div>
+          <p className="xi-commons-fine-print">This is not a fifth fictional world, live portal,
+            Xi login, installation route or permission grant. Public site deployment is not confirmed.</p>
+        </div>
+        <a href={reviewedXiCollaborationDoor().href} target="_blank" rel="noopener noreferrer"
+          className="xi-commons-source-link">
+          {reviewedXiCollaborationDoor().label} ↗
+        </a>
+      </section>
 
       <ExpeditionTrail expedition={expedition} onStart={onExpeditionStart}
         onInspect={onPortalPreview} onNext={onExpeditionNext} onFinish={onExpeditionFinish}

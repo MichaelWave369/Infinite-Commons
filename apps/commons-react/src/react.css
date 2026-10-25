@@ -1139,3 +1139,14 @@
 .trust-checkpoint-desk :is(button,input):focus-visible { outline: 3px solid #ffeab4; outline-offset: 3px; }
 @media(max-width:800px){ .trust-checkpoint-columns { grid-template-columns: 1fr; } }
 @media(prefers-reduced-motion:reduce){ .trust-checkpoint-desk * {animation:none!important;transition:none!important;} }
+
+
+/* R17.4 public engineering doorway; intentionally separate from 4 fictional story gates. */
+.xi-commons-door{margin:24px 0;display:grid;grid-template-columns:1.45fr .65fr;align-items:center;gap:18px;padding:clamp(18px,3vw,30px);border:1px solid #63a3a8;border-radius:13px;background:linear-gradient(110deg,#112e3d,#1c2b47)}
+.xi-commons-door h3{font:500 clamp(22px,3vw,32px)/1.2 Georgia,serif;color:#f2e8d7;margin:10px 0}
+.xi-commons-door p{color:#cddfeb;font-size:12px;line-height:1.6;max-width:780px}
+.xi-commons-labels{display:flex;gap:8px;flex-wrap:wrap}.xi-commons-labels span{font-size:10px;padding:7px 9px;border-radius:9px;border:1px solid #668a9e;color:#f5dba9}
+.xi-commons-door .xi-commons-fine-print{font-size:11px;color:#b8cbd9;margin:12px 0 0}
+.xi-commons-source-link{display:inline-block;justify-self:center;text-align:center;border:1px solid #a6fff0;border-radius:8px;padding:13px 16px;background:#15394b;color:#b8ffef;font-weight:750;font-size:12px;text-decoration:none}
+.xi-commons-source-link:hover,.xi-commons-source-link:focus-visible{background:#265469;color:#fff}
+@media(max-width:800px){.xi-commons-door{grid-template-columns:1fr}.xi-commons-source-link{justify-self:start}}
