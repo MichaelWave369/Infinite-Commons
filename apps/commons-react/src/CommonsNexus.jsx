@@ -108,7 +108,7 @@ export function CommonsNexus({
 
       <section className="xi-commons-door" aria-labelledby="xi-commons-heading">
         <div>
-          <div className="eyebrow">SOVEREIGN COLLABORATION / PUBLIC SOURCE ONLY</div>
+          <div className="eyebrow">SOVEREIGN COLLABORATION / VERIFIED PUBLIC WEBSITE</div>
           <h3 id="xi-commons-heading">{reviewedXiCollaborationDoor().title}</h3>
           <p>Our separately governed Xi ⇄ Φ369 bridge has a public roadmap, capability registry,
             local intake workbench and synthetic test packet. The real Xi crossing is not connected.</p>
@@ -117,13 +117,17 @@ export function CommonsNexus({
             <span>R17 · EXTERNAL GATES BLOCKED</span>
             <span>R18 · TWO HOST TEST NOT RUN</span>
           </div>
-          <p className="xi-commons-fine-print">This is not a fifth fictional world, live portal,
-            Xi login, installation route or permission grant. Public site deployment is not confirmed.</p>
+          <p className="xi-commons-fine-print">This is not a fifth fictional world, live Xi protocol portal,
+            Xi login, installation route or permission grant. Only the public static website is verified.</p>
         </div>
-        <a href={reviewedXiCollaborationDoor().href} target="_blank" rel="noopener noreferrer"
-          className="xi-commons-source-link">
-          {reviewedXiCollaborationDoor().label} ↗
-        </a>
+        <div className="xi-commons-actions">
+          <a href={reviewedXiCollaborationDoor().href} target="_blank" rel="noopener noreferrer"
+            className="xi-commons-source-link">
+            {reviewedXiCollaborationDoor().label} ↗
+          </a>
+          <a href={reviewedXiCollaborationDoor().sourceUrl} target="_blank" rel="noopener noreferrer"
+            className="xi-commons-source-link">Canonical GitHub source ↗</a>
+        </div>
       </section>
 
       <ExpeditionTrail expedition={expedition} onStart={onExpeditionStart}
