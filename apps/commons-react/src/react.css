@@ -1150,3 +1150,8 @@
 .xi-commons-source-link{display:inline-block;justify-self:center;text-align:center;border:1px solid #a6fff0;border-radius:8px;padding:13px 16px;background:#15394b;color:#b8ffef;font-weight:750;font-size:12px;text-decoration:none}
 .xi-commons-source-link:hover,.xi-commons-source-link:focus-visible{background:#265469;color:#fff}
 @media(max-width:800px){.xi-commons-door{grid-template-columns:1fr}.xi-commons-source-link{justify-self:start}}
+
+/* R17.6: two deliberately user-clicked destinations, no implicit Xi connection. */
+.xi-commons-actions{display:flex;flex-direction:column;align-items:center;gap:10px}
+.xi-commons-actions .xi-commons-source-link{width:100%}
+@media(max-width:800px){.xi-commons-actions{align-items:flex-start}.xi-commons-actions .xi-commons-source-link{width:auto}}
