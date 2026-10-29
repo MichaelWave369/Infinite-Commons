@@ -1,0 +1,46 @@
+/* Grand Roundtable V2: fully scoped, visual-only skin. No global application overrides. */
+.galactic-rt{--gr-gold:#ecd59a;--gr-lilac:#afa0ff;--gr-surface:#080d21;position:relative;isolation:isolate;margin:clamp(18px,3vw,46px) auto;padding:clamp(15px,2.3vw,30px);border:1px solid #c9a96870;border-radius:26px;color:#f7f2e6;background:linear-gradient(155deg,#131733,#080d20 54%,#171028);box-shadow:0 22px 80px #0008;max-width:1500px;box-sizing:border-box}
+.galactic-rt *{box-sizing:border-box}
+.galactic-rt button{font:inherit;cursor:pointer}
+.galactic-rt button:disabled{opacity:.35;cursor:not-allowed}
+.galactic-rt :is(button,a):focus-visible{outline:3px solid #ffe49e;outline-offset:4px}
+.galactic-rt-header{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.galactic-eyebrow{display:block;color:#bca8ff;letter-spacing:.18em;font-size:.72rem;font-weight:800}
+.galactic-rt-header h2{font-family:Georgia,serif;font-size:clamp(1.8rem,3vw,3.25rem);margin:8px 0;color:#fff7da}
+.galactic-rt-header h2 em{font-weight:normal;color:#c8b9ff}
+.galactic-rt-header p{color:#d2cdea;margin:0;max-width:640px;font-size:.93rem;line-height:1.5}
+.galactic-mode-switch{display:flex;gap:7px;background:#0a1026;padding:6px;border-radius:99px;border:1px solid #a0a5df45}
+.galactic-mode-switch button{border:0;border-radius:99px;background:transparent;color:#c6c9df;padding:11px 17px;min-height:42px}
+.galactic-mode-switch button[aria-pressed=true]{color:#15112a;background:linear-gradient(130deg,#f2d78d,#bea6fb);box-shadow:0 0 20px #b7a2ff4d}
+.galactic-mode-caption{font:700 .72rem ui-monospace,monospace;letter-spacing:.04em;color:#f4d994;margin:18px 0 8px;text-align:center}
+.galactic-stage-wrap{padding:0;overflow:hidden;border-radius:20px;border:1px solid #e9ce9955;background:#060914}
+.galactic-stage{position:relative;aspect-ratio:1672/941;min-height:260px;overflow:hidden;background:radial-gradient(ellipse at 50% 53%,#3e3379 0,#16163c 38%,#050918 88%)}
+.galactic-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none}
+.galactic-starfield{position:absolute;inset:20% 14% 10%;opacity:.55;pointer-events:none;background:radial-gradient(circle at 12% 37%,#9be3ff 0 1px,transparent 2px),radial-gradient(circle at 87% 65%,#f8cf7e 0 1px,transparent 2px),radial-gradient(circle at 43% 22%,#d3bcff 0 1px,transparent 2px),radial-gradient(circle at 70% 49%,#fff 0 1px,transparent 2px)}
+.galactic-heart{position:absolute;left:50%;top:51%;width:22%;aspect-ratio:1;transform:translate(-50%,-50%);display:grid;place-items:center;border-radius:50%;border:1px solid #b9a1fc8c;box-shadow:0 0 20px #ad91ff77,inset 0 0 32px #6b58d66e;pointer-events:none;background:radial-gradient(circle,#cfc5ff61 0%,#4d57c844 26%,transparent 70%)}
+.galactic-heart:before,.galactic-heart:after{content:"";position:absolute;inset:12%;border:2px solid #bfa4ffb8;border-radius:50%;transform:rotate(-32deg) scaleY(.58);box-shadow:0 0 13px #a69bff}
+.galactic-heart:after{transform:rotate(33deg) scaleY(.63)}
+.galactic-heart-inner{font-size:clamp(24px,5vw,72px);text-shadow:0 0 16px #fff,0 0 38px #9588ff;color:#fff8dc;z-index:1}
+.galactic-seat{position:absolute;z-index:2;transform:translate(-50%,-50%);width:clamp(38px,6vw,88px);height:clamp(38px,6vw,88px);border-radius:50%;border:1px solid #c9beffcc;background:radial-gradient(circle at 35% 25%,#4c5289f5,#17133bf0 63%,#090a22);box-shadow:0 0 0 4px #aa98f632,0 0 20px #9482ffa1,inset 0 0 14px #cab9ff62;color:#eeeaff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:3px;transition:transform .18s ease,box-shadow .18s ease}
+.galactic-seat-ring{position:absolute;inset:-9px;border-radius:50%;border:1px dashed #ad9df0b4;pointer-events:none}
+.galactic-seat:hover,.galactic-seat-current{transform:translate(-50%,-50%) scale(1.12);z-index:3;box-shadow:0 0 0 6px #ddc17a50,0 0 28px #e3bd81e0,inset 0 0 20px #b7aeff8a}
+.galactic-seat-assigned{border-color:#eedb9a;background:radial-gradient(circle at 25% 22%,#5e4b80,#171839 72%)}
+.galactic-seat-heard{box-shadow:0 0 0 4px #8ed4b13d,0 0 20px #9deccb7e}
+.galactic-seat-num{font:700 clamp(.7rem,1.5vw,1.05rem) ui-monospace,monospace;letter-spacing:.04em}
+.galactic-seat-name{display:block;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;font:700 clamp(.4rem,.75vw,.57rem) ui-sans-serif,sans-serif;letter-spacing:.02em}
+.galactic-dial{position:absolute;z-index:6;transform:translate(-50%,-50%);width:min(320px,46%);max-height:85%;overflow-y:auto;padding:18px 17px 16px;background:radial-gradient(circle at 50% -15%,#443f87d9,transparent 75%),linear-gradient(155deg,#101632f7,#0b0c20f7);color:#eeeaff;border:1px solid #dbc68fee;border-radius:19px;box-shadow:0 15px 55px #000c,0 0 0 8px #d2b36a22,0 0 24px #b8a4ff7d;text-align:center;backdrop-filter:blur(14px)}
+.galactic-dial-close{position:absolute;top:6px;right:8px;width:30px;height:30px;border:0;background:transparent;color:#fff;font-size:1.5rem;line-height:1;border-radius:50%}
+.galactic-dial-orbit{display:flex;align-items:center;justify-content:space-around;max-width:138px;margin:0 auto 8px;padding:7px;border-radius:50%;border-top:1px solid #f0d89a;border-bottom:1px solid #8f8ce0;color:#daccff}
+.galactic-dial-caption{font:800 .65rem ui-monospace,monospace;letter-spacing:.2em;color:#e9cc81}
+.galactic-dial h3{margin:5px 0;font-family:Georgia,serif;font-size:clamp(1.1rem,2vw,1.6rem);color:#fff5dc}
+.galactic-dial p{font-size:.78rem;line-height:1.45;color:#c9cce5;margin:8px 0}
+.galactic-dial-state{color:#f4d68b!important;font-weight:800}
+.galactic-dial-action{display:inline-flex;justify-content:center;align-items:center;min-height:36px;margin-top:5px;padding:9px 12px;background:#e2cb8e;border:0;border-radius:10px;color:#121329!important;font-size:.75rem!important;font-weight:800!important;text-decoration:none!important;line-height:1.2}
+.galactic-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0}
+.galactic-rings{display:flex;align-items:center;gap:10px;color:#efdda9;font:700 .73rem ui-monospace,monospace;white-space:nowrap}
+.galactic-rings button{width:39px;height:39px;border-radius:50%;border:1px solid #e1cd8b8f;background:#252344;color:#fff}
+.galactic-status{color:#d7d1e8;font:700 .72rem ui-monospace,monospace}
+.galactic-return{display:inline-flex;align-items:center;justify-content:center;min-height:39px;border-radius:9px;background:#28254b;border:1px solid #c6b3ff94;color:#f9edce!important;padding:9px 13px;text-decoration:none!important;font-size:.78rem!important}
+.galactic-boundary{font-size:.73rem;color:#b8b5cc;margin:4px 0 0;line-height:1.5}
+@media(max-width:700px){.galactic-rt{padding:12px;border-radius:17px}.galactic-rt-header h2{font-size:1.75rem}.galactic-mode-switch{width:100%}.galactic-mode-switch button{flex:1}.galactic-stage-wrap{overflow-x:auto;scrollbar-color:#8e82c0 #111426}.galactic-stage{min-width:640px;min-height:0}.galactic-seat{width:38px;height:38px}.galactic-seat-ring{inset:-4px}.galactic-seat-name{display:none}.galactic-seat-num{font-size:.67rem}.galactic-dial{width:min(250px,65%);padding:8px 10px;border-radius:14px}.galactic-dial-orbit{display:none}.galactic-dial h3{font-size:1rem}.galactic-dial p{font-size:.69rem;margin:5px 0}.galactic-dial-action{padding:6px;font-size:.68rem!important;min-height:32px}.galactic-mode-caption{font-size:.62rem}.galactic-footer{justify-content:center}.galactic-status{width:100%;text-align:center}}
+@media(prefers-reduced-motion:reduce){.galactic-seat{transition:none}}
