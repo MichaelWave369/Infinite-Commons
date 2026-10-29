@@ -3,6 +3,7 @@ import { reviewedXiCollaborationDoor } from "./xiCommonsDoor.mjs";
 import { WayfinderDesk } from "./WayfinderDesk.jsx";
 import { ExpeditionTrail } from "./ExpeditionTrail.jsx";
 import { NestedCouncilChambers } from "./NestedCouncilChambers.jsx";
+import { GalacticRoundtable } from "./GalacticRoundtable.jsx";
 import {
   PORTALS, PORTAL_STATUSES, portalById, ROUNDTABLE_ROLES,
   ROUNDTABLE_DEFAULT_AGENDA, MAX_AGENDA_LENGTH,
@@ -135,6 +136,8 @@ export function CommonsNexus({
         onReset={onExpeditionReset} />
 
       <WayfinderDesk />
+
+      <GalacticRoundtable openedSeats={openedSeats} councilStarted={Boolean(council)} councilClosed={Boolean(council?.station)} />
 
       <div className="roundtable-hall" id="roundtable-hall">
         <div className="roundtable-story">
