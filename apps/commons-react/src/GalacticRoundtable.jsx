@@ -71,7 +71,7 @@ export function GalacticRoundtable({ openedSeats = 0, councilStarted = false, co
 
       <div className="galactic-stage-wrap">
         <div className="galactic-stage" aria-label={"Galactic council chamber, ring " + (ring + 1) + ", twelve selectable stations"}>
-          <img className="galactic-art" src="/images/galactic-roundtable.svg" alt="" aria-hidden="true" />
+          <img className="galactic-art" src={import.meta.env.BASE_URL + "images/galactic-roundtable.svg"} alt="" aria-hidden="true" />
           <div className="galactic-starfield" aria-hidden="true" />
           <div className="galactic-heart" aria-hidden="true">
             <div className="galactic-heart-inner">⋈</div>
@@ -84,7 +84,7 @@ export function GalacticRoundtable({ openedSeats = 0, councilStarted = false, co
               style={{ left: seat.x + "%", top: seat.y + "%" }}
               aria-label={"Seat " + seat.number + ": " + seat.label + ". Open controls"}
               aria-expanded={chosen?.id === seat.id}
-              aria-controls="galactic-seat-dial"
+              aria-controls={chosen?.id === seat.id ? "galactic-seat-dial" : undefined}
               title={"Seat " + seat.number + " · " + seat.label}
               onClick={() => setSelected(chosen?.id === seat.id ? null : seat.id)}>
               <span className="galactic-seat-ring" aria-hidden="true" />
