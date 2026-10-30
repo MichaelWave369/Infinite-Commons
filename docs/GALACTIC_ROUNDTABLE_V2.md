@@ -56,3 +56,51 @@ New `galacticRoundtable.test.mjs` tests twelve stable coordinates, the original 
 An independent, authorized Xi read-only adapter could eventually populate only the seats backed by verified Xi participant records. Writing messages, streaming, exports, cross-room search and shared control actions would each need separate capability review and host permission. The Xi sovereign bridge's documented external pilot remains blocked until proven otherwise.
 
 **Rule:** Many minds. Many tables. No thrones. A picture is not evidence of a connection.
+
+## Living Council R1 · interactive and atmospheric upgrade (2026-10-29)
+
+The original Grand Roundtable is preserved. Living Council R1 changes only the
+optional `GalacticRoundtable` presentation, its seat geometry and its tests.
+
+- Twelve stations are re-anchored to the luminous *tabletop circles*, not chair backs,
+  in the approved 1672×941 cinematic concept. Order is noon clockwise. Positions
+  are editable normalized coordinates in `galacticRoundtableModel.mjs`.
+- Interactive station dials now focus their accessible Close control on opening,
+  return focus to the originating station on explicit close or Escape, and dismiss
+  when clicking outside. Content reports only actual offline practice roles.
+- CSS adds restrained core breathing, a slow seat ring and radial orbit, and a
+  short dial appearance transition. `prefers-reduced-motion: reduce` disables all.
+- The dial overlays the artwork on desktop and docks below the scrollable scene
+  on mobile so controls remain usable without distorting seat coordinates.
+- Legends distinguish role, unassigned and fixture-turn-heard states. Additional
+  visual rings do not introduce users or authenticated Xi presence.
+- A WebP-first `<picture>` slot attempts a local `images/galactic-roundtable.webp`
+  file, and falls back to the existing original SVG if the WebP is unavailable.
+  **The approved full-quality WebP is NOT yet in the Git repository.** The
+  current developer session has a locally staged 1672×941 WebP and the binary
+  still needs a separately reviewed file upload to `public/images/`. Do not
+  describe the actual cinematic artwork as deployed until the file is confirmed.
+
+### Artwork staging acceptance
+
+Keep the complete user-approved image under the repository-relative path:
+
+`apps/commons-react/public/images/galactic-roundtable.webp`
+
+The source file is an original image produced for this Commons redesign, optimized
+to 1672×941 WebP (about 333 KB). Do not fetch it from a remote CDN at runtime.
+After uploading, confirm 200 OK at the GitHub Pages project-base path, image
+natural dimensions, and alignment of all twelve controls on desktop and mobile.
+
+### R1 checks
+
+```sh
+npm test --prefix apps/commons-react
+npm run build --prefix apps/commons-react
+npm run test:browser --prefix apps/commons-react
+```
+
+The new `smoke/galactic-roundtable.spec.mjs` covers 12 station controls,
+focus and Escape, Xi disconnected state, ring paging, mobile aspect ratio,
+scrollability and reduced motion. This R1 does not grant new permissions,
+network clients, model calls, access to private Xi messages, or authority.
