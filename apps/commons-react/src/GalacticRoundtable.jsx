@@ -16,10 +16,13 @@ function initialMode() {
 /** A decorative, locally bundled image; controls live in accessible DOM above it. */
 function CouncilArtwork() {
   const root = import.meta.env.BASE_URL;
+  const [useFallback, setUseFallback] = useState(false);
+  // A missing optional WebP must never blank the room; SVG remains bundled.
   return (
     <picture className="galactic-picture" aria-hidden="true">
-      <source type="image/webp" srcSet={root + "images/galactic-roundtable.webp"} />
+      {!useFallback && <source type="image/webp" srcSet={root + "images/galactic-roundtable.webp"} />}
       <img className="galactic-art" src={root + "images/galactic-roundtable.svg"}
+        onError={() => setUseFallback(true)}
         alt="" loading="lazy" decoding="async" />
     </picture>
   );
