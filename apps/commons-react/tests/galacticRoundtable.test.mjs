@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  GALACTIC_RING_SIZE, GALACTIC_SEAT_POINTS,
+  GALACTIC_RING_SIZE, GALACTIC_MAX_RING, GALACTIC_SEAT_POINTS,
+  GALACTIC_ART_ASPECT_RATIO, clampGalacticRing,
   normalizeGalacticMode, galacticSeats
 } from "../src/galacticRoundtableModel.mjs";
 import { ROUNDTABLE_ROLES } from "../src/commonsPortalRegistry.mjs";
@@ -37,4 +38,25 @@ test("invalid modes and ring indices fail into bounded local presentation", () =
   assert.equal(normalizeGalacticMode("mystery"), "commons");
   assert.equal(galacticSeats("unknown", -3, ROUNDTABLE_ROLES)[0].number, 1);
   assert.equal(galacticSeats("commons", Number.POSITIVE_INFINITY, ROUNDTABLE_ROLES)[0].number, 1);
+});
+
+test("calibrated image hotspots remain on-canvas and unique in clockwise order", () => {
+  assert.equal(GALACTIC_SEAT_POINTS.length, 12);
+  assert.ok(Math.abs(GALACTIC_ART_ASPECT_RATIO - (1672 / 941)) < 1e-8);
+  for (const point of GALACTIC_SEAT_POINTS) {
+    assert.ok(point.x >= 12 && point.x <= 88);
+    assert.ok(point.y >= 24 && point.y <= 75);
+  }
+  const north = GALACTIC_SEAT_POINTS[0];
+  const south = GALACTIC_SEAT_POINTS[6];
+  assert.ok(north.y < 30 && south.y > 68);
+  assert.equal(north.x, south.x);
+});
+test("ring pagination stays in the documented eight-ring range", () => {
+  assert.equal(GALACTIC_MAX_RING, 7);
+  assert.equal(clampGalacticRing(999), 7);
+  assert.equal(clampGalacticRing(-999), 0);
+  assert.equal(clampGalacticRing(NaN), 0);
+  assert.equal(galacticSeats("commons", 999, ROUNDTABLE_ROLES)[0].number, 85);
+  assert.equal(galacticSeats("commons", 999, ROUNDTABLE_ROLES)[11].number, 96);
 });
