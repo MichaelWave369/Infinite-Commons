@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  GALACTIC_RING_SIZE, GALACTIC_MAX_RING, GALACTIC_SEAT_POINTS,\n  GALACTIC_ART_ASPECT_RATIO, clampGalacticRing,
+  GALACTIC_RING_SIZE, GALACTIC_MAX_RING, GALACTIC_SEAT_POINTS,
+  GALACTIC_ART_ASPECT_RATIO, clampGalacticRing,
   normalizeGalacticMode, galacticSeats
 } from "../src/galacticRoundtableModel.mjs";
 import { ROUNDTABLE_ROLES } from "../src/commonsPortalRegistry.mjs";
