@@ -302,3 +302,5 @@ export function MoreBounceXR() {
     </section>
   );
 }
+
+export default MoreBounceXR;
