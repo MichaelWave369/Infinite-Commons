@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BEAT_COUNT, beatProgress } from "./moreBounceR2.mjs";
 
-export function MoreBounceArcade({ round, clock, onStart, onHit, theme }) {
+export function MoreBounceArcade({ round, onStart, onHit, theme }) {
+  const [clock, setClock] = useState(0);
+  useEffect(() => {
+    if (round?.status !== "running") return;
+    const tick = () => setClock(performance.now());
+    tick();
+    const timer = window.setInterval(tick, 60);
+    return () => window.clearInterval(timer);
+  }, [round?.status, round?.startedAt]);
   const running = round?.status === "running";
   const done = round?.status === "done";
   const progress = beatProgress(round, clock);
