@@ -5,6 +5,7 @@ import { createLocalPreviewController, localPreviewPanel } from "../../../web/ph
 import exampleHome from "../../../web/fixtures/phispace-public.json";
 import { Scene } from "./Scene.jsx";
 import { CommonsNexus } from "./CommonsNexus.jsx";
+const MoreBounceXR = React.lazy(() => import("./MoreBounceXR.jsx"));
 import { portalById } from "./commonsPortalRegistry.mjs";
 import {
   beginExpedition, expeditionActivePortalId, inspectExpeditionStory,
@@ -101,6 +102,7 @@ function Dialog({ panel, onDismiss, dialogRef }) {
 export function App() {
   const [pack, setPack] = useState(safeSavedStyle);
   const [selectedPortalId, setSelectedPortalId] = useState(null);
+  const [clubOpen, setClubOpen] = useState(false);
   const [expedition, setExpedition] = useState(null);
   const [panel, setPanel] = useState(null);
   const [previewName, setPreviewName] = useState(null);
@@ -205,7 +207,7 @@ export function App() {
             <span className="brand-symbol" aria-hidden="true">✳</span>
             <span><strong>INFINITE COMMONS</strong><small>A world you can visit</small></span>
           </a>
-          <nav aria-label="Commons destinations" className="commons-top-nav"><a href="#portal-plaza">WORLD PORTALS ↓</a><a href="#portal-wayfinder">WAYFINDER ↓</a><a href="#galactic-roundtable">GRAND ROUNDTABLE ↓</a><a href="#nested-council-chambers">COUNCIL CHAMBERS ↓</a><a href="#thinktank-local-handoff">THINKTANK BRIDGE ↓</a><a href="#thinktank-return-desk">RETURN DESK ↓</a></nav>
+          <nav aria-label="Commons destinations" className="commons-top-nav"><a href="#portal-plaza">WORLD PORTALS ↓</a><a href="#more-bounce-entry">MORE BOUNCE ↓</a><a href="#portal-wayfinder">WAYFINDER ↓</a><a href="#galactic-roundtable">GRAND ROUNDTABLE ↓</a><a href="#nested-council-chambers">COUNCIL CHAMBERS ↓</a><a href="#thinktank-local-handoff">THINKTANK BRIDGE ↓</a><a href="#thinktank-return-desk">RETURN DESK ↓</a></nav>
           <span className="prototype-label">REACT EXPERIENCE · PUBLIC DEMO</span>
         </header>
         <main id="main-content" className="layout">
@@ -291,6 +293,26 @@ export function App() {
               onExpeditionNext={() => setExpedition(current => advanceExpedition(current))}
               onExpeditionFinish={() => setExpedition(current => finishExpedition(current))}
               onExpeditionReset={() => setExpedition(current => current?.finished ? beginExpedition() : null)} />
+            <div id="more-bounce-entry">
+              {clubOpen ? (
+                <React.Suspense fallback={<p role="status">Opening the More Bounce venue…</p>}>
+                  <MoreBounceXR />
+                </React.Suspense>
+              ) : (
+                <section aria-label="More Bounce venue entrance" style={{
+                  margin: "28px 0", padding: "22px", border: "1px solid #745e95",
+                  borderRadius: "18px", background: "linear-gradient(135deg,#0d1a33,#28183b)"
+                }}>
+                  <div className="eyebrow">NEW OPTIONAL DESTINATION · MORE BOUNCE</div>
+                  <h2 style={{ color: "#fff3fa", margin: "8px 0" }}>The Interdimensional Funk Club</h2>
+                  <p>Enter an original 3D venue and connect the real Backspin '96 DJ booth.
+                    WebXR is optional; no live guests or streamed club audio are implied.</p>
+                  <button type="button" className="secondary-btn" onClick={() => setClubOpen(true)}>
+                    Enter More Bounce →
+                  </button>
+                </section>
+              )}
+            </div>
           </section>
         </main>
         <footer className="footer">
