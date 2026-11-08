@@ -6,6 +6,7 @@ import exampleHome from "../../../web/fixtures/phispace-public.json";
 import { Scene } from "./Scene.jsx";
 import { CommonsNexus } from "./CommonsNexus.jsx";
 const MoreBounceXR = React.lazy(() => import("./MoreBounceXR.jsx"));
+const ReelHouseXR = React.lazy(() => import("./ReelHouseXR.jsx"));
 import { portalById } from "./commonsPortalRegistry.mjs";
 import {
   beginExpedition, expeditionActivePortalId, inspectExpeditionStory,
@@ -103,6 +104,7 @@ export function App() {
   const [pack, setPack] = useState(safeSavedStyle);
   const [selectedPortalId, setSelectedPortalId] = useState(null);
   const [clubOpen, setClubOpen] = useState(false);
+  const [theaterOpen, setTheaterOpen] = useState(false);
   const [expedition, setExpedition] = useState(null);
   const [panel, setPanel] = useState(null);
   const [previewName, setPreviewName] = useState(null);
@@ -207,7 +209,7 @@ export function App() {
             <span className="brand-symbol" aria-hidden="true">✳</span>
             <span><strong>INFINITE COMMONS</strong><small>A world you can visit</small></span>
           </a>
-          <nav aria-label="Commons destinations" className="commons-top-nav"><a href="#portal-plaza">WORLD PORTALS ↓</a><a href="#more-bounce-entry">MORE BOUNCE ↓</a><a href="#portal-wayfinder">WAYFINDER ↓</a><a href="#galactic-roundtable">GRAND ROUNDTABLE ↓</a><a href="#nested-council-chambers">COUNCIL CHAMBERS ↓</a><a href="#thinktank-local-handoff">THINKTANK BRIDGE ↓</a><a href="#thinktank-return-desk">RETURN DESK ↓</a></nav>
+          <nav aria-label="Commons destinations" className="commons-top-nav"><a href="#portal-plaza">WORLD PORTALS ↓</a><a href="#more-bounce-entry">MORE BOUNCE ↓</a><a href="#reel-house-entry">REEL HOUSE ↓</a><a href="#portal-wayfinder">WAYFINDER ↓</a><a href="#galactic-roundtable">GRAND ROUNDTABLE ↓</a><a href="#nested-council-chambers">COUNCIL CHAMBERS ↓</a><a href="#thinktank-local-handoff">THINKTANK BRIDGE ↓</a><a href="#thinktank-return-desk">RETURN DESK ↓</a></nav>
           <span className="prototype-label">REACT EXPERIENCE · PUBLIC DEMO</span>
         </header>
         <main id="main-content" className="layout">
@@ -309,6 +311,27 @@ export function App() {
                     WebXR is optional; no live guests or streamed club audio are implied.</p>
                   <button type="button" className="secondary-btn" onClick={() => setClubOpen(true)}>
                     Enter More Bounce →
+                  </button>
+                </section>
+              )}
+            </div>
+            <div id="reel-house-entry">
+              {theaterOpen ? (
+                <React.Suspense fallback={<p role="status">Opening REEL House cinema…</p>}>
+                  <ReelHouseXR onLeave={() => setTheaterOpen(false)} />
+                </React.Suspense>
+              ) : (
+                <section aria-label="REEL House venue entrance" style={{
+                  margin: "28px 0", padding: "22px", border: "1px solid #89628c",
+                  borderRadius: "18px", background: "linear-gradient(135deg,#171026,#47203d)"
+                }}>
+                  <div className="eyebrow">NEW OPTIONAL DESTINATION · REEL HOUSE</div>
+                  <h2 style={{ color: "#fff0e5", margin: "8px 0" }}>The Infinite Commons Cinema</h2>
+                  <p>Take a seat in a real 3D auditorium. Play the CC0 sample or your own authorized
+                    local movie; explore the independent REEL Network without assuming broadcast rights,
+                    public audience sync or live channel feeds.</p>
+                  <button type="button" className="secondary-btn" onClick={() => setTheaterOpen(true)}>
+                    Enter REEL House →
                   </button>
                 </section>
               )}
