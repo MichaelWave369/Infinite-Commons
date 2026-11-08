@@ -197,7 +197,7 @@ class ClubGraphicsBoundary extends React.Component {
 }
 
 export function MoreBounceXR() {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [boothLoaded, setBoothLoaded] = useState(false);
   const [boothRequested, setBoothRequested] = useState(false);
   const [canXR, setCanXR] = useState(false);
