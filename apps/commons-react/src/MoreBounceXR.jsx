@@ -187,6 +187,7 @@ function ClubWorld({ send, enterRef, setNotice }) {
 export function MoreBounceXR() {
   const [show, setShow] = useState(false);
   const [boothLoaded, setBoothLoaded] = useState(false);
+  const [boothRequested, setBoothRequested] = useState(false);
   const [canXR, setCanXR] = useState(false);
   const [connected, setConnected] = useState(false);
   const [enabled, setEnabled] = useState(false);
@@ -253,7 +254,7 @@ export function MoreBounceXR() {
             </button>
             <a href={BACKSPIN_URL} target="_blank" rel="noopener noreferrer">Open original Backspin '96 ↗</a>
             <button type="button" onClick={() => {
-              setShow(false); setBoothLoaded(false); setSnapshot(null); setConnected(false); setEnabled(false);
+              setShow(false); setBoothRequested(false); setBoothLoaded(false); setSnapshot(null); setConnected(false); setEnabled(false);
             }}>Leave the venue</button>
           </div>
           <div className="more-bounce-viewport">
@@ -285,8 +286,12 @@ export function MoreBounceXR() {
             <h3>Original Backspin '96 performance controls</h3>
             <p>Import your own authorized tracks, press Start Dual Audio and tick the optional Commons XR checkbox here. The real audio engine remains in MoreBounceLabs.</p>
             {originReady ? (
-              <iframe ref={booth} title="Artist-owned Backspin '96 DJ booth" src={BACKSPIN_URL}
-                loading="eager" allow="autoplay; fullscreen" onLoad={() => setBoothLoaded(true)} />
+              boothRequested ? (
+                <iframe ref={booth} title="Artist-owned Backspin '96 DJ booth" src={BACKSPIN_URL}
+                  loading="eager" allow="autoplay; fullscreen" onLoad={() => setBoothLoaded(true)} />
+              ) : <button type="button" onClick={() => setBoothRequested(true)}>
+                Load original Backspin booth (user initiated)
+              </button>
             ) : <a href={BACKSPIN_URL} target="_blank" rel="noopener noreferrer">Use the standalone DJ booth on its canonical site</a>}
           </div>
         </>
