@@ -125,7 +125,6 @@ export function MoreBounceXR() {
   const [handEnabled, setHandEnabled] = useState(false);
   const [handStatus, setHandStatus] = useState("Off (controller fallback available)");
   const [arcade, setArcade] = useState(null);
-  const [arcadeClock, setArcadeClock] = useState(0);
   const [arcadeTheme, setArcadeTheme] = useState(null);
   const [connected, setConnected] = useState(false);
   const [enabled, setEnabled] = useState(false);
@@ -144,7 +143,6 @@ export function MoreBounceXR() {
     const i = seed % crates.length;
     setArcadeTheme([crates[i], crates[(i + 1 + seed % (crates.length - 1)) % crates.length]]);
     setArcade(newArcadeRound(now));
-    setArcadeClock(now);
   }, []);
   const originReady = typeof window !== "undefined" && mayConnectBooth(window.location.origin);
   const send = useCallback((type, payload = {}) => {
@@ -159,7 +157,6 @@ export function MoreBounceXR() {
     const timer = window.setInterval(() => {
       const now = performance.now();
       setArcade(current => advanceArcade(current, now));
-      setArcadeClock(now);
     }, 60);
     return () => window.clearInterval(timer);
   }, [arcade?.status]);
@@ -239,7 +236,7 @@ export function MoreBounceXR() {
             trigger the cue and crossfade pads. These controls only work after you enable
             Commons XR control inside the embedded Backspin booth and initialize its audio.
           </p>
-          <MoreBounceArcade round={arcade} clock={arcadeClock} onStart={startArcade}
+          <MoreBounceArcade round={arcade} onStart={startArcade}
             onHit={onArcade} theme={arcadeTheme} />
           <div className="more-bounce-controls">
             <p><strong>Backspin connection:</strong> {!originReady ? "Standalone studio only; live bridge requires the canonical GitHub Pages origin."
