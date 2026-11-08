@@ -14,7 +14,7 @@ test("Rung 2 arcade and OverStrings opt-in work without Backspin audio or XR", a
   const challenge = venue.getByRole("button", { name: "Start challenge" });
   await challenge.click();
   await expect(venue.getByRole("button", { name: "TAP / CUT" })).toBeEnabled();
-  await expect(venue.getByText(/Crate roulette/)).toBeVisible();
+  await expect(venue.getByText(/crate roulette/i)).toBeVisible();
   await venue.getByRole("button", { name: "TAP / CUT" }).click();
   await expect(venue.getByText(/Too early|Good|Perfect|Missed beat/)).toBeVisible();
   await venue.getByRole("button", { name: "Leave the venue" }).click();
