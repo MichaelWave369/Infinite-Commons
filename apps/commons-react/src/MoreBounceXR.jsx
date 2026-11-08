@@ -184,6 +184,18 @@ function ClubWorld({ send, enterRef, setNotice }) {
   );
 }
 
+// Never take the wider Commons down because a device cannot allocate WebGL.
+class ClubGraphicsBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { failed: false }; }
+  static getDerivedStateFromError() { return { failed: true }; }
+  render() {
+    if (this.state.failed) return <p role="status" className="more-bounce-note">
+      WebGL is unavailable here. The original Backspin booth and desktop controls remain accessible below.
+    </p>;
+    return this.props.children;
+  }
+}
+
 export function MoreBounceXR() {
   const [show, setShow] = useState(false);
   const [boothLoaded, setBoothLoaded] = useState(false);
@@ -258,9 +270,11 @@ export function MoreBounceXR() {
             }}>Leave the venue</button>
           </div>
           <div className="more-bounce-viewport">
-            <Canvas camera={{ position: [0, 2.45, 5.8], fov: 63 }} dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }}>
-              <ClubWorld send={send} enterRef={enter} setNotice={setNotice} />
-            </Canvas>
+            <ClubGraphicsBoundary>
+              <Canvas camera={{ position: [0, 2.45, 5.8], fov: 63 }} dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }}>
+                <ClubWorld send={send} enterRef={enter} setNotice={setNotice} />
+              </Canvas>
+            </ClubGraphicsBoundary>
           </div>
           <p className="more-bounce-note" role="status">{notice}</p>
           <p className="more-bounce-note">
