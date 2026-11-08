@@ -16,7 +16,7 @@ test("Rung 2 arcade and OverStrings opt-in work without Backspin audio or XR", a
   await expect(venue.getByRole("button", { name: "TAP / CUT" })).toBeEnabled();
   await expect(venue.getByText(/crate roulette/i)).toBeVisible();
   await venue.getByRole("button", { name: "TAP / CUT" }).click();
-  await expect(venue.getByText(/Too early|Good|Perfect|Missed beat/)).toBeVisible();
+  await expect(venue.locator(".more-bounce-arcade > p[role='status']")).toContainText(/Too early|Good|Perfect|Missed beat/);
   await venue.getByRole("button", { name: "Leave the venue" }).click();
   await expect(venue.getByRole("button", { name: "TAP / CUT" })).toHaveCount(0);
   await expect(page.locator("#galactic-roundtable")).toBeVisible();
