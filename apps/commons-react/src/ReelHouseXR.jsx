@@ -174,7 +174,7 @@ class TheaterGraphicsBoundary extends React.Component {
   }
 }
 
-export function ReelHouseXR() {
+export function ReelHouseXR({ onLeave }) {
   const [videoElement, setVideoElement] = useState(null);
   const [mediaSrc, setMediaSrc] = useState("");
   const [mediaLabel, setMediaLabel] = useState("No movie selected");
@@ -251,6 +251,7 @@ export function ReelHouseXR() {
         </button>
         <a href={REEL_NETWORK_URL} target="_blank" rel="noopener noreferrer">Open REEL Network ↗</a>
         <a href={REEL_THEATER_URL} target="_blank" rel="noopener noreferrer">Open standalone REEL Theater ↗</a>
+        <button type="button" onClick={onLeave}>Leave REEL House</button>
       </div>
       <div className="reel-house-viewport" aria-label="3D cinema auditorium">
         <TheaterGraphicsBoundary>
