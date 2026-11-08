@@ -21,7 +21,9 @@ test("arcade rhythm challenge accepts exactly one hit per beat", () => {
   assert.deepEqual(tapArcade(round, Number.MAX_SAFE_INTEGER), round);
 });
 test("late ticks count each missed beat, never fake hits", () => {
-  const round = advanceArcade(newArcadeRound(0), 10000);
+  const original = newArcadeRound(0);
+  assert.strictEqual(advanceArcade(original, 100), original, "no unnecessary XR parent rerender");
+  const round = advanceArcade(original, 10000);
   assert.equal(round.misses, BEAT_COUNT);
   assert.equal(round.hits, 0);
   assert.equal(round.status, "done");
