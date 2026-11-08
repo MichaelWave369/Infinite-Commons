@@ -14,7 +14,7 @@ export function nextBeatAt(round) {
 }
 export function advanceArcade(round, now) {
   if (!round || round.status !== "running" || !Number.isFinite(now)) return round;
-  let next = { ...round };
+  let next = round;
   while (next.beatIndex < BEAT_COUNT && now > nextBeatAt(next) + BEAT_WINDOW_MS) {
     next = { ...next, beatIndex: next.beatIndex + 1, misses: next.misses + 1,
       combo: 0, last: "Missed beat" };
