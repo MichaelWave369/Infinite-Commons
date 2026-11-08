@@ -51,3 +51,47 @@
     transition-duration: 0ms !important; animation-duration: 0ms !important;
   }
 }
+
+/* Rung 2: accessible rhythm-cabinet controls and explicit hand opt-in. */
+.more-bounce-hands-toggle {
+  display: flex; gap: 10px; align-items: flex-start;
+  border: 1px solid #7285ac; border-radius: 12px;
+  background: #1b2245; padding: 13px 15px; margin: 15px 0 6px;
+  color: #f0e6ff; font: 700 13px/1.5 system-ui, sans-serif;
+}
+.more-bounce-hands-toggle input { flex-shrink: 0; width: 20px; height: 20px; accent-color: #d76ff1; }
+.more-bounce-arcade {
+  margin: 18px 0; padding: clamp(13px, 2vw, 22px);
+  border: 1px solid #f0aa6b; border-radius: 16px;
+  background: linear-gradient(125deg, #251637, #142640 70%, #161a37);
+}
+.more-bounce-arcade-heading { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: center; }
+.more-bounce-arcade-heading h3 { color: #ffe6b5; margin: 7px 0 5px; font: 750 clamp(21px, 3vw, 27px)/1.15 system-ui, sans-serif; }
+.more-bounce-arcade-heading p { max-width: 550px; margin: 6px 0; font-size: 12px; }
+.more-bounce-theme { color: #f4b6ef; font-weight: 750; letter-spacing: .05em; }
+.more-bounce-arcade-pulse {
+  position: relative; height: 44px; overflow: hidden; margin: 19px 0 12px;
+  border: 1px solid #7d6b97; border-right: 4px solid #faf3b1; border-radius: 9px;
+  background: #0b1228;
+}
+.more-bounce-arcade-fill {
+  height: 100%; background: linear-gradient(90deg, #306e95, #e65bd2, #ffe9aa);
+  transition: width 55ms linear; opacity: .91;
+}
+.more-bounce-arcade-pulse span {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font: 850 11px/1.1 system-ui, sans-serif; letter-spacing: .18em;
+  color: white; text-shadow: 0 2px 7px #070814;
+}
+.more-bounce-arcade-score { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; margin: 12px 0; }
+.more-bounce-arcade-score span {
+  min-width: 88px; color: #cbdaf0; font: 720 11px/1.8 system-ui, sans-serif;
+}
+.more-bounce-arcade-score strong { color: #f7e7ba; font-size: 17px; display: block; }
+.more-bounce-venue .more-bounce-arcade-tap {
+  width: 100%; min-height: 58px; font-size: 15px;
+  background: linear-gradient(110deg, #b23d9d, #624ec2);
+}
+@media (prefers-reduced-motion: reduce) {
+  .more-bounce-arcade-fill { transition: none; }
+}

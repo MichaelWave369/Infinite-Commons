@@ -1,97 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Quaternion, Raycaster, Vector3 } from "three";
+import { MoreBounceArcade } from "./MoreBounceArcade.jsx";
+import { XRControllerActions } from "./MoreBounceXRInput.jsx";
+import { newArcadeRound, tapArcade, advanceArcade } from "./moreBounceR2.mjs";
 import { BACKSPIN_URL, MORE_BOUNCE_ORIGIN, XR_CHANNEL, XR_VERSION, COMMONS_VENUE_ID,
   makeXRCommand, mayConnectBooth, validBoothReply } from "./moreBounceProtocol.mjs";
 import "./more-bounce.css";
-
-const clamp = (n, lo, hi) => Math.min(hi, Math.max(lo, n));
-
-function XRControllerActions({ send, enterRef, setNotice }) {
-  const { gl, scene } = useThree();
-  const held = useRef(new Map());
-  const raycaster = useRef(new Raycaster());
-  const origin = useRef(new Vector3());
-  const direction = useRef(new Vector3());
-  const rotation = useRef(new Quaternion());
-  const point = useRef(new Vector3());
-
-  useEffect(() => {
-    gl.xr.enabled = true;
-    gl.xr.setReferenceSpaceType("local-floor");
-    const enter = async () => {
-      try {
-        if (!navigator.xr) throw new Error("WebXR is not supported by this browser.");
-        const session = await navigator.xr.requestSession("immersive-vr", { optionalFeatures: ["local-floor"] });
-        await gl.xr.setSession(session);
-        setNotice("VR venue open. Aim a controller and press trigger. Audio remains in the opt-in Backspin booth.");
-        session.addEventListener("end", () => setNotice("Returned from VR. The Backspin booth stays mounted."));
-      } catch (error) {
-        setNotice(error instanceof Error ? error.message : "Unable to enter VR on this device.");
-      }
-    };
-    enterRef.current = enter;
-    const controllers = [gl.xr.getController(0), gl.xr.getController(1)];
-    function pick(controller) {
-      controller.updateMatrixWorld();
-      controller.getWorldPosition(origin.current);
-      controller.getWorldQuaternion(rotation.current);
-      direction.current.set(0, 0, -1).applyQuaternion(rotation.current).normalize();
-      raycaster.current.set(origin.current, direction.current);
-      return raycaster.current.intersectObjects(scene.children, true)
-        .find((hit) => hit.object.userData.xrAction)?.object.userData;
-    }
-    const onStarts = controllers.map((controller) => () => {
-      const control = pick(controller);
-      if (!control) return;
-      if (control.xrAction === "platter") {
-        controller.getWorldPosition(point.current);
-        held.current.set(controller, { deck: control.xrDeck, lastX: point.current.x,
-          lastAt: performance.now(), moved: false });
-      } else if (control.xrAction === "cue") send("cue", { deck: control.xrDeck });
-      else if (control.xrAction === "crossfade") send("crossfade", { value: control.xrValue });
-    });
-    const onEnds = controllers.map((controller) => () => {
-      const value = held.current.get(controller);
-      if (!value) return;
-      held.current.delete(controller);
-      if (value.moved) send("release", { deck: value.deck });
-      else send("play", { deck: value.deck });
-    });
-    controllers.forEach((controller, index) => {
-      scene.add(controller);
-      controller.addEventListener("selectstart", onStarts[index]);
-      controller.addEventListener("selectend", onEnds[index]);
-    });
-    return () => {
-      enterRef.current = null;
-      controllers.forEach((controller, index) => {
-        controller.removeEventListener("selectstart", onStarts[index]);
-        controller.removeEventListener("selectend", onEnds[index]);
-        scene.remove(controller);
-      });
-      held.current.clear();
-    };
-  }, [gl, scene, send, enterRef, setNotice]);
-
-  useFrame(() => {
-    if (!gl.xr.isPresenting) return;
-    for (const [controller, value] of held.current) {
-      controller.getWorldPosition(point.current);
-      const now = performance.now();
-      const delta = point.current.x - value.lastX;
-      const dt = Math.max(0.008, (now - value.lastAt) / 1000);
-      value.lastX = point.current.x;
-      value.lastAt = now;
-      if (Math.abs(delta) > 0.002 && now - (value.lastSent || 0) > 32) {
-        value.moved = true;
-        value.lastSent = now;
-        send("scratch", { deck: value.deck, value: clamp((delta / dt) * 2.2, -4, 4) });
-      }
-    }
-  });
-  return null;
-}
 
 function Platter({ deck, x, send }) {
   return (
@@ -119,16 +33,19 @@ function Platter({ deck, x, send }) {
   );
 }
 
-function ClubWorld({ send, enterRef, setNotice }) {
+function ClubWorld({ send, enterRef, setNotice, onArcade, handEnabled, setHandStatus, arcade }) {
+  const worldRef = useRef(null);
   return (
     <>
-      <XRControllerActions send={send} enterRef={enterRef} setNotice={setNotice} />
+      <XRControllerActions send={send} enterRef={enterRef} setNotice={setNotice}
+        worldRef={worldRef} onArcade={onArcade} handEnabled={handEnabled} setHandStatus={setHandStatus} />
       <color attach="background" args={["#080b1a"]} />
       <fog attach="fog" args={["#080b1a", 12, 25]} />
       <ambientLight intensity={0.6} />
       <pointLight position={[-3.5, 4, -2]} intensity={45} color="#ff45c6" distance={14} />
       <pointLight position={[3.5, 4, -2]} intensity={45} color="#32c6ff" distance={14} />
       <spotLight position={[0, 5, 1]} angle={0.65} penumbra={0.8} intensity={50} color="#ffe0b2" />
+      <group ref={worldRef}>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, -2.3]}>
         <planeGeometry args={[24, 24]} />
         <meshStandardMaterial color="#12142a" roughness={0.78} />
@@ -175,11 +92,15 @@ function ClubWorld({ send, enterRef, setNotice }) {
         <boxGeometry args={[0.16, 3.7, 0.16]} />
         <meshStandardMaterial color="#6c3ac7" emissive="#5627b4" emissiveIntensity={1.5} />
       </mesh>)}
-      {[ -1, 0, 1 ].map((i) => <group key={i} position={[3.8 + i * 0.9, 0.75, 1.4]}>
+      {[ -1, 0, 1 ].map((i) => <group key={i} position={[3.2 + i * 0.85, 0.75, 1.4]}>
         <mesh><boxGeometry args={[0.7, 1.5, 0.72]} /><meshStandardMaterial color="#1d233d" /></mesh>
-        <mesh position={[0, 0.25, 0.37]}><planeGeometry args={[0.52, 0.6]} />
-          <meshBasicMaterial color={i === 0 ? "#f581c8" : "#3fdbda"} /></mesh>
+        <mesh position={[0, 0.25, 0.38]} userData={{ xrAction: "arcade" }}
+          onClick={(event) => { event.stopPropagation(); onArcade(); }}>
+          <planeGeometry args={[0.62, 0.65]} />
+          <meshBasicMaterial color={arcade?.status === "running" ? "#fff1a1" : i === 0 ? "#f581c8" : "#3fdbda"} />
+        </mesh>
       </group>)}
+      </group>
     </>
   );
 }
@@ -201,12 +122,28 @@ export function MoreBounceXR() {
   const [boothLoaded, setBoothLoaded] = useState(false);
   const [boothRequested, setBoothRequested] = useState(false);
   const [canXR, setCanXR] = useState(false);
+  const [handEnabled, setHandEnabled] = useState(false);
+  const [handStatus, setHandStatus] = useState("Off (controller fallback available)");
+  const [arcade, setArcade] = useState(null);
+  const [arcadeTheme, setArcadeTheme] = useState(null);
   const [connected, setConnected] = useState(false);
   const [enabled, setEnabled] = useState(false);
   const [snapshot, setSnapshot] = useState(null);
   const [notice, setNotice] = useState("Venue preview only. Music begins only in the opt-in original Backspin booth.");
   const booth = useRef(null);
   const enter = useRef(null);
+  const onArcade = useCallback(() => {
+    const now = performance.now();
+    setArcade(current => current?.status === "running" ? tapArcade(current, now) : newArcadeRound(now));
+  }, []);
+  const startArcade = useCallback(() => {
+    const now = performance.now();
+    const crates = ["BOOM BAP", "SPACE DISCO", "DUB BASS", "FUNK BREAK", "SYNTH WAVE", "JAZZ GROOVE"];
+    const seed = Math.floor(now / 1000);
+    const i = seed % crates.length;
+    setArcadeTheme([crates[i], crates[(i + 1 + seed % (crates.length - 1)) % crates.length]]);
+    setArcade(newArcadeRound(now));
+  }, []);
   const originReady = typeof window !== "undefined" && mayConnectBooth(window.location.origin);
   const send = useCallback((type, payload = {}) => {
     const value = makeXRCommand(type, payload);
@@ -214,6 +151,15 @@ export function MoreBounceXR() {
     booth.current.contentWindow.postMessage(value, MORE_BOUNCE_ORIGIN);
     return true;
   }, []);
+
+  useEffect(() => {
+    if (!arcade || arcade.status !== "running") return;
+    const timer = window.setInterval(() => {
+      const now = performance.now();
+      setArcade(current => advanceArcade(current, now));
+    }, 60);
+    return () => window.clearInterval(timer);
+  }, [arcade?.status]);
 
   useEffect(() => {
     if (!show) return;
@@ -252,9 +198,9 @@ export function MoreBounceXR() {
     <section id="more-bounce-club" className="more-bounce-venue" aria-label="More Bounce experimental club">
       <div className="more-bounce-head">
         <div>
-          <p className="more-bounce-kicker">INFINITE COMMONS · EXPERIMENTAL VENUE / RUNG 1</p>
+          <p className="more-bounce-kicker">INFINITE COMMONS · EXPERIMENTAL VENUE / RUNG 2</p>
           <h2>MORE BOUNCE <em>XR</em></h2>
-          <p>The interdimensional funk club. Original Backspin '96 decks meet a walk-in 3D room.</p>
+          <p>The interdimensional funk club. Original Backspin '96 meets an explorable VR booth, real hand tracking and a playable arcade.</p>
         </div>
         {!show && <button type="button" onClick={() => setShow(true)}>Enter the club</button>}
       </div>
@@ -267,22 +213,31 @@ export function MoreBounceXR() {
             <a href={BACKSPIN_URL} target="_blank" rel="noopener noreferrer">Open original Backspin '96 ↗</a>
             <button type="button" onClick={() => {
               setShow(false); setBoothRequested(false); setBoothLoaded(false); setSnapshot(null); setConnected(false); setEnabled(false);
+              setHandEnabled(false); setArcade(null);
             }}>Leave the venue</button>
           </div>
           <div className="more-bounce-viewport">
             <ClubGraphicsBoundary>
               <Canvas camera={{ position: [0, 2.45, 5.8], fov: 63 }} dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: "high-performance" }}>
-                <ClubWorld send={send} enterRef={enter} setNotice={setNotice} />
+                <ClubWorld send={send} enterRef={enter} setNotice={setNotice}
+                onArcade={onArcade} handEnabled={handEnabled} setHandStatus={setHandStatus} arcade={arcade} />
               </Canvas>
             </ClubGraphicsBoundary>
           </div>
           <p className="more-bounce-note" role="status">{notice}</p>
+          <label className="more-bounce-hands-toggle">
+            <input type="checkbox" checked={handEnabled} onChange={event => setHandEnabled(event.target.checked)} />
+            Enable experimental OverStrings hand-pinching on the vinyl (this session only)
+          </label>
+          <p className="more-bounce-note" role="status">Hand tracking: {handStatus}. Physical pinch must begin near a platter; release or tracking loss stops scratching. Controllers stay usable.</p>
           <p className="more-bounce-note">
             Desktop: click turntables for Play/Pause and colored buttons for Cue or cuts.
-            In VR: trigger a platter to play, or hold the trigger and move sideways to scratch;
+            In VR: left stick walks, right stick snap turns; trigger a platter to play, or hold the trigger and move sideways to scratch;
             trigger the cue and crossfade pads. These controls only work after you enable
             Commons XR control inside the embedded Backspin booth and initialize its audio.
           </p>
+          <MoreBounceArcade round={arcade} onStart={startArcade}
+            onHit={onArcade} theme={arcadeTheme} />
           <div className="more-bounce-controls">
             <p><strong>Backspin connection:</strong> {!originReady ? "Standalone studio only; live bridge requires the canonical GitHub Pages origin."
               : connected ? (enabled ? "XR controls permitted for this session" : "Connected; opt-in required inside Backspin")
